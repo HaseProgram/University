@@ -99,13 +99,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    LV settings = {
-	   15,
-	   15,
-	   210,
-	   500,
-	   3,
-	   { TEXT("N"), TEXT("X"), TEXT("Y") },
-	   70
+	   15,									// X position
+	   15,									// Y position
+	   210,									// width
+	   500,									// height
+	   3,									// amount of columns
+	   { TEXT("N"), TEXT("X"), TEXT("Y") },	// name of columns
+	   70									// width of column
    };
 
    hwndListView = createLV(hWnd, settings);
