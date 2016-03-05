@@ -8,6 +8,7 @@
 
 // Global Variables:
 HINSTANCE hInst;                                // The current instance
+HWND hwndListView;
 WCHAR szTitle[MAX_LOADSTRING];                  // Title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // Class name of the main window
 
@@ -96,6 +97,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
+
+   LV settings = {
+	   15,
+	   15,
+	   210,
+	   500,
+	   3,
+	   { TEXT("N"), TEXT("X"), TEXT("Y") },
+	   70
+   };
+
+   hwndListView = createLV(hWnd, settings);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
