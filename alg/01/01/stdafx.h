@@ -8,10 +8,14 @@
 
 // RunTime headers
 #include <stdlib.h>
+#include <stdio.h>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <cmath>
 
 
 // Headers using in application
+#include <CommCtrl.h>
 #include "listview.h"
+#include "combobox.h"

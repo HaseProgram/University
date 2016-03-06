@@ -142,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="01.h" />
+    <ClInclude Include="combobox.h" />
+    <ClInclude Include="init.h" />
     <ClInclude Include="listview.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -149,6 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01.cpp" />
+    <ClCompile Include="combobox.cpp" />
+    <ClCompile Include="init.cpp" />
     <ClCompile Include="listview.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -8,7 +8,8 @@
 
 // Global Variables:
 HINSTANCE hInst;                                // The current instance
-HWND hwndListView;
+HWND hwndListView;								// List view
+HWND hwndComboBox;								// Combo box
 WCHAR szTitle[MAX_LOADSTRING];                  // Title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // Class name of the main window
 
@@ -98,17 +99,28 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   LV settings = {
-	   15,									// X position
-	   15,									// Y position
-	   210,									// width
-	   500,									// height
-	   3,									// amount of columns
-	   { TEXT("N"), TEXT("X"), TEXT("Y") },	// name of columns
-	   70									// width of column
+   LV LVSettings = {
+	   15,											// X position
+	   45,											// Y position
+	   210,											// width
+	   500,											// height
+	   3,											// amount of columns
+	   { TEXT("N"), TEXT("X"), TEXT("Y") },			// name of columns
+	   70											// width of column
    };
 
-   hwndListView = createLV(hWnd, settings);
+   hwndListView = createLV(hWnd, LVSettings);
+
+   CB CBSettings = {
+	   15,											// X position
+	   15,											// Y position
+	   100,											// width
+	   200,											// height
+	   3,											// amount of items
+	   { TEXT("sin"), TEXT("x^2"), TEXT("ln") },	// name of items
+   };
+
+   hwndComboBox = createCB(hWnd, CBSettings);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -134,6 +146,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             int wmId = LOWORD(wParam);
             switch (wmId)
             {
+			case ID_COMBO:
+				if (HIWORD(wParam) == CBN_SELCHANGE)
+				{
+					setNewCurrentIndex(lParam);
+				}
+				break;
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;

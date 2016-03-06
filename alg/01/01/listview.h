@@ -1,5 +1,4 @@
 #pragma once
-#include <CommCtrl.h>
 
 #define ID_TABLE 5000
 #define ID_FIRSTCOLUMN 6000
