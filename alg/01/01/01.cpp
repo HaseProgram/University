@@ -123,12 +123,28 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    hwndComboBox = createCB(hWnd, CBSettings);
 
-   EDIT EDITSettings = {
+   EDIT EDITSettings;
+
+   EDITSettings = {
 	   125,											// X position
 	   15,											// Y position
 	   100,											// width
+	   40,
 	   24,											// height
+	   TEXT(" Start:"),								// Name
 	   ID_EDITBEGINX								// Edit ID
+   };
+
+   createEditField(EDITSettings);
+
+   EDITSettings = {
+	   260,											// X position
+	   15,											// Y position
+	   100,											// width
+	   15,
+	   24,											// height
+	   TEXT(" Palenom:"),							// Name
+	   ID_PALENOM									// Edit ID
    };
 
    createEditField(EDITSettings);
@@ -187,6 +203,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
+			MoveToEx(hdc, 240, 15, NULL);
+			LineTo(hdc, 240, 600);
             EndPaint(hWnd, &ps);
         }
         break;
