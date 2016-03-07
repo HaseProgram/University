@@ -13,6 +13,7 @@ typedef struct {
 	int columnWidth;
 } LV;
 
-HWND createLV(HWND hWnd, LV settings);
+HWND createLV(LV settings);
 BOOL addColumn(HWND hwndLV, LV settings);
 BOOL addItem(HWND hwndLV, int rowIndex, int colIndex, WCHAR* item);
+BOOL addDoubleItem(int ID, int rowIndex, int colIndex, double item);

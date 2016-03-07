@@ -10,5 +10,5 @@ typedef struct {
 	int ID;
 } EDIT;
 
-void createEditField(HWND hWnd, EDIT settings);
-TCHAR* valueFromTextField(HWND hWnd, int ID);
+void createEditField(EDIT settings);
+TCHAR* valueFromTextField(int ID, TCHAR buf[10]);

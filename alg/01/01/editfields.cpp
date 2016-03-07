@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
 extern HINSTANCE hInst;
+extern HWND hWnd;
 
-void createEditField(HWND hWnd, EDIT settings)
+void createEditField(EDIT settings)
 {
 	CreateWindowW(TEXT("static"), TEXT(" Start:"),
 		WS_CHILD | WS_VISIBLE | WS_TABSTOP | SS_CENTERIMAGE,
@@ -15,9 +16,8 @@ void createEditField(HWND hWnd, EDIT settings)
 		hWnd, (HMENU)settings.ID, NULL, NULL);
 }
 
-TCHAR* valueFromTextField(HWND hWnd, int ID)
+TCHAR* valueFromTextField(int ID, TCHAR buf[10])
 {
-	TCHAR buf[10];
 
 	HWND edit = GetDlgItem(hWnd, ID);
 	GetWindowText(edit, buf, 10);

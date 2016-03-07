@@ -1,6 +1,8 @@
 #include "stdafx.h"
 
-HWND createLV(HWND hWnd, LV settings)
+extern HWND hWnd;
+
+HWND createLV(LV settings)
 {
 
 	HWND hwndLV = CreateWindowW(WC_LISTVIEW, TEXT(""),
@@ -39,7 +41,6 @@ BOOL addColumn(HWND hwndLV, LV settings)
 BOOL addItem(HWND hwndLV, int rowIndex, int colIndex, WCHAR* item)
 {
 	LVITEM cell;
-	WCHAR buf[10];
 
 	cell.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_STATE;
 	cell.stateMask = 0;
@@ -63,4 +64,15 @@ BOOL addItem(HWND hwndLV, int rowIndex, int colIndex, WCHAR* item)
 	ListView_SetItemText(hwndLV, rowIndex, colIndex, item);
 
 	return TRUE;
+}
+
+BOOL addDoubleItem(int ID, int rowIndex, int colIndex, double item)
+{
+	HWND hwndLV = GetDlgItem(hWnd, ID);
+	TCHAR buf[128];
+	if(colIndex ==0)
+		swprintf(buf, L"%0.f", item);
+	else 
+		swprintf(buf, L"%f", item);
+	return addItem(hwndLV, rowIndex, colIndex, buf);
 }

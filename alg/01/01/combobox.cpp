@@ -21,7 +21,6 @@ void addItem(HWND hwndComboBox, WCHAR* item)
 	WCHAR buf[10];
 	memset(&buf, 0, sizeof(buf));
 	wcscpy_s(buf, sizeof(buf)/sizeof(WCHAR), (WCHAR*)item);
-	int sdfgsdfg;
 	SendMessage(hwndComboBox, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	SendMessage(hwndComboBox, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }

@@ -8,6 +8,7 @@
 
 // Global Variables:
 HINSTANCE hInst;                                // The current instance
+HWND hWnd;										// Main window
 HWND hwndListView;								// List view
 HWND hwndComboBox;								// Combo box
 WCHAR szTitle[MAX_LOADSTRING];                  // Title bar text
@@ -91,7 +92,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Save the instance handle in a global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
@@ -109,7 +110,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	   70											// width of column
    };
 
-   hwndListView = createLV(hWnd, LVSettings);
+   hwndListView = createLV(LVSettings);
 
    CB CBSettings = {
 	   15,											// X position
@@ -130,7 +131,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	   ID_EDITBEGINX								// Edit ID
    };
 
-   createEditField(hWnd, EDITSettings);
+   createEditField(EDITSettings);
+
+   createSequence();
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -160,6 +163,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if (HIWORD(wParam) == CBN_SELCHANGE)
 				{
 					getNewCurrentItem(lParam);
+					createSequence();
+				}
+				break;
+			case ID_EDITBEGINX:
+				if (HIWORD(wParam) == EN_CHANGE)
+				{
+					createSequence();
 				}
 				break;
             case IDM_ABOUT:
