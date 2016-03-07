@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="01.h" />
     <ClInclude Include="combobox.h" />
+    <ClInclude Include="editfields.h" />
     <ClInclude Include="init.h" />
     <ClInclude Include="listview.h" />
     <ClInclude Include="Resource.h" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="01.cpp" />
     <ClCompile Include="combobox.cpp" />
+    <ClCompile Include="editfields.cpp" />
     <ClCompile Include="init.cpp" />
     <ClCompile Include="listview.cpp" />
     <ClCompile Include="stdafx.cpp">

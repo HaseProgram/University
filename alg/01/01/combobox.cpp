@@ -31,7 +31,7 @@ int currentItem()
 	return currentComboBoxItem;
 }
 
-int setNewCurrentItem(LPARAM lParam)
+int getNewCurrentItem(LPARAM lParam)
 {
 	currentComboBoxItem = SendMessage((HWND)lParam, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	return currentItem();

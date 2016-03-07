@@ -122,6 +122,16 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    hwndComboBox = createCB(hWnd, CBSettings);
 
+   EDIT EDITSettings = {
+	   125,											// X position
+	   15,											// Y position
+	   100,											// width
+	   24,											// height
+	   ID_EDITBEGINX								// Edit ID
+   };
+
+   createEditField(hWnd, EDITSettings);
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -149,7 +159,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case ID_COMBO:
 				if (HIWORD(wParam) == CBN_SELCHANGE)
 				{
-					setNewCurrentIndex(lParam);
+					getNewCurrentItem(lParam);
 				}
 				break;
             case IDM_ABOUT:

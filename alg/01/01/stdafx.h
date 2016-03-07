@@ -12,6 +12,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <math.h>
 #include <cmath>
 
 
@@ -19,3 +20,5 @@
 #include <CommCtrl.h>
 #include "listview.h"
 #include "combobox.h"
+#include "editfields.h"
+#include "init.h"
