@@ -3,6 +3,7 @@
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN
+#define ID_BUTTONAPPLY1 555
 // Windows headers:
 #include <windows.h>
 
@@ -22,3 +23,4 @@
 #include "combobox.h"
 #include "editfields.h"
 #include "init.h"
+#include "interpolation.h"

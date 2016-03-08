@@ -25,13 +25,7 @@ void addItem(HWND hwndComboBox, WCHAR* item)
 	SendMessage(hwndComboBox, CB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
-int currentItem()
-{
-	return currentComboBoxItem;
-}
-
 int getNewCurrentItem(LPARAM lParam)
 {
-	currentComboBoxItem = SendMessage((HWND)lParam, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	return currentItem();
+	return SendMessage((HWND)lParam, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 }

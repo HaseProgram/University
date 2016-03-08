@@ -14,4 +14,3 @@ typedef struct {
 HWND createCB(HWND hWnd, CB settings);
 void addItem(HWND hwndComboBox, WCHAR* item);
 int getNewCurrentItem(LPARAM lParam);
-int currentItem();

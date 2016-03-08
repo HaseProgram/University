@@ -9,5 +9,5 @@ typedef struct {
 double x2(double x);
 function myFunc();
 double getStartValue();
-void createSequence();
+values* createSequence();
 void interface(HWND hWnd, EDIT settings);

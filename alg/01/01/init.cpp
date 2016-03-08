@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
-values Array[30];
+extern int currentFunction;
+extern values Array[30];
 
 double x2(double x)
 {
@@ -9,7 +10,7 @@ double x2(double x)
 
 function myFunc()
 {
-	switch (currentItem())
+	switch (currentFunction)
 	{
 	case 0:
 		return sin;
@@ -32,10 +33,12 @@ double getStartValue()
 	return _wtof(valueFromTextField(ID_EDITBEGINX, buf));
 }
 
-void createSequence() {
+values* createSequence() {
 
 	function f = myFunc();
 	double start = getStartValue();
+
+	int kostyl = currentFunction;						// best code ever
 
 	for (int i = 0; i < 30; i++)
 	{
@@ -45,4 +48,8 @@ void createSequence() {
 		addDoubleItem(ID_TABLE, i, 1, Array[i].X);
 		addDoubleItem(ID_TABLE, i, 2, Array[i].Y);
 	}
+
+	currentFunction = kostyl;							// best code ever
+
+	return Array;
 }

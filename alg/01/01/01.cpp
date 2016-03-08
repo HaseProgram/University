@@ -14,6 +14,9 @@ HWND hwndComboBox;								// Combo box
 WCHAR szTitle[MAX_LOADSTRING];                  // Title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // Class name of the main window
 
+values* Array;
+int currentFunction;
+
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -128,8 +131,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    EDITSettings = {
 	   125,											// X position
 	   15,											// Y position
-	   100,											// width
-	   40,
+	   100,											// width text
+	   40,											// width field
 	   24,											// height
 	   TEXT(" Start:"),								// Name
 	   ID_EDITBEGINX								// Edit ID
@@ -140,8 +143,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    EDITSettings = {
 	   260,											// X position
 	   15,											// Y position
-	   100,											// width
-	   15,
+	   100,											// width text
+	   15,											// width field
 	   24,											// height
 	   TEXT(" Palenom:"),							// Name
 	   ID_PALENOM									// Edit ID
@@ -149,7 +152,22 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    createEditField(EDITSettings);
 
-   createSequence();
+   EDITSettings = {
+	   370,											// X position
+	   15,											// Y position
+	   130,											// width text
+	   45,											// width field
+	   24,											// height
+	   TEXT(" Search X:"),							// Name
+	   ID_SEARCHX									// Edit ID
+   };
+
+   createEditField(EDITSettings);
+
+   CreateWindowW(TEXT("BUTTON"), TEXT("Apply"),
+	   WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 510, 15, 50, 24, hWnd, (HMENU)ID_BUTTONAPPLY1, hInstance, NULL);
+
+   Array = createSequence();
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -178,13 +196,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case ID_COMBO:
 				if (HIWORD(wParam) == CBN_SELCHANGE)
 				{
-					getNewCurrentItem(lParam);
+					currentFunction = getNewCurrentItem(lParam);
 					createSequence();
+					int omg;
+					omg = 0;
+					omg++;
 				}
 				break;
 			case ID_EDITBEGINX:
 				if (HIWORD(wParam) == EN_CHANGE)
 				{
+					int lol;
 					createSequence();
 				}
 				break;

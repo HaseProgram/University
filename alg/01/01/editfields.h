@@ -2,6 +2,7 @@
 
 #define ID_EDITBEGINX 500
 #define ID_PALENOM 500
+#define ID_SEARCHX 500
 
 typedef struct {
 	int XPos;

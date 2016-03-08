@@ -145,6 +145,7 @@
     <ClInclude Include="combobox.h" />
     <ClInclude Include="editfields.h" />
     <ClInclude Include="init.h" />
+    <ClInclude Include="interpolation.h" />
     <ClInclude Include="listview.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="combobox.cpp" />
     <ClCompile Include="editfields.cpp" />
     <ClCompile Include="init.cpp" />
+    <ClCompile Include="interpolation.cpp" />
     <ClCompile Include="listview.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
