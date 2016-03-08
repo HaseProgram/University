@@ -16,6 +16,11 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // Class name of the main window
 
 values* Array;
 int currentFunction;
+int Polynom;
+double SearchX;
+double newtonY;
+double RealY;
+WCHAR out[256];
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -146,8 +151,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	   100,											// width text
 	   15,											// width field
 	   24,											// height
-	   TEXT(" Palenom:"),							// Name
-	   ID_PALENOM									// Edit ID
+	   TEXT(" Polynom:"),							// Name
+	   ID_POLYNOM									// Edit ID
    };
 
    createEditField(EDITSettings);
@@ -165,9 +170,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    createEditField(EDITSettings);
 
    CreateWindowW(TEXT("BUTTON"), TEXT("Apply"),
-	   WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 510, 15, 50, 24, hWnd, (HMENU)ID_BUTTONAPPLY1, hInstance, NULL);
+	   WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 510, 15, 50, 24, hWnd, (HMENU)ID_BUTTONAPPLY, hInstance, NULL);
 
    Array = createSequence();
+
+   TCHAR buf[10];
+   SearchX = _wtof(valueFromTextField(ID_SEARCHX, buf));
+   Polynom = _wtoi(valueFromTextField(ID_POLYNOM, buf));
+   newtonY = newton_method(SearchX, Polynom);
+   RealY = myFunc()(SearchX);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -198,16 +209,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				{
 					currentFunction = getNewCurrentItem(lParam);
 					createSequence();
-					int omg;
-					omg = 0;
-					omg++;
 				}
 				break;
 			case ID_EDITBEGINX:
 				if (HIWORD(wParam) == EN_CHANGE)
 				{
-					int lol;
 					createSequence();
+				}
+				break;
+			case ID_BUTTONAPPLY:
+				if (HIWORD(wParam) == BN_CLICKED)
+				{
+					TCHAR buf[10];
+					SearchX = _wtof(valueFromTextField(ID_SEARCHX, buf));
+					Polynom = _wtoi(valueFromTextField(ID_POLYNOM, buf));
+					newtonY = newton_method(SearchX, Polynom);
+					RealY = myFunc()(SearchX);
+					InvalidateRect(hWnd, 0, true);
 				}
 				break;
             case IDM_ABOUT:
@@ -227,6 +245,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
 			MoveToEx(hdc, 240, 15, NULL);
 			LineTo(hdc, 240, 600);
+			
+			swprintf(out, L"Newton method:  %2.2f ; Real value: %2.2f", newtonY, RealY);
+			TextOutW(hdc, 260, 50, out, wcslen(out));
             EndPaint(hWnd, &ps);
         }
         break;

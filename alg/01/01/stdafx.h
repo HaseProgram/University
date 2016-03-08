@@ -3,7 +3,7 @@
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN
-#define ID_BUTTONAPPLY1 555
+#define ID_BUTTONAPPLY 555
 // Windows headers:
 #include <windows.h>
 
