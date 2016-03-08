@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 extern int currentFunction;
-extern values Array[30];
 
 double x2(double x)
 {
@@ -39,6 +38,9 @@ values* createSequence() {
 	double start = getStartValue();
 
 	int kostyl = currentFunction;						// best code ever
+
+	values* Array;
+	Array = (values*)malloc(30 * sizeof(values));
 
 	for (int i = 0; i < 30; i++)
 	{

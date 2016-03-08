@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-extern values Array[30];
+extern values* Array;
 
 int position(double x)
 {
