@@ -24,3 +24,4 @@
 #include "editfields.h"
 #include "init.h"
 #include "interpolation.h"
+#include "splines.h"

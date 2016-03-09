@@ -19,6 +19,7 @@ int currentFunction;
 int Polynom;
 double SearchX;
 double newtonY;
+double splinesY;
 double RealY;
 WCHAR out[256];
 
@@ -178,6 +179,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    SearchX = _wtof(valueFromTextField(ID_SEARCHX, buf));
    Polynom = _wtoi(valueFromTextField(ID_POLYNOM, buf));
    newtonY = newton_method(SearchX, Polynom);
+   splinesY = splines_method(SearchX);
    RealY = myFunc()(SearchX);
 
    ShowWindow(hWnd, nCmdShow);
@@ -226,6 +228,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					SearchX = _wtof(valueFromTextField(ID_SEARCHX, buf));
 					Polynom = _wtoi(valueFromTextField(ID_POLYNOM, buf));
 					newtonY = newton_method(SearchX, Polynom);
+					splinesY = splines_method(SearchX);
 					RealY = myFunc()(SearchX);
 					InvalidateRect(hWnd, 0, true);
 				}
@@ -248,7 +251,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			MoveToEx(hdc, 240, 15, NULL);
 			LineTo(hdc, 240, 600);
 			
-			swprintf(out, L"Newton method:  %2.9f ; Real value: %2.9f", newtonY, RealY);
+			swprintf(out, L"Newton method:  %2.9f ; Splines method:  %2.9f ; Real value: %2.9f", newtonY, splinesY, RealY);
 			TextOutW(hdc, 260, 50, out, wcslen(out));
             EndPaint(hWnd, &ps);
         }

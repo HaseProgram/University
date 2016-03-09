@@ -148,6 +148,7 @@
     <ClInclude Include="interpolation.h" />
     <ClInclude Include="listview.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="splines.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClCompile Include="init.cpp" />
     <ClCompile Include="interpolation.cpp" />
     <ClCompile Include="listview.cpp" />
+    <ClCompile Include="splines.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
