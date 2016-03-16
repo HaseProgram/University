@@ -22,6 +22,7 @@ double newtonY;
 double splinesY;
 double RealY;
 WCHAR out[256];
+Range range;
 
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -251,7 +252,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			MoveToEx(hdc, 240, 15, NULL);
 			LineTo(hdc, 240, 600);
 			
-			swprintf(out, L"Newton method:  %2.9f ; Splines method:  %2.9f ; Real value: %2.9f", newtonY, splinesY, RealY);
+			swprintf(out, L"Range: %d-%d; Newton method:  %2.9f ; Splines method:  %2.9f ; Real value: %2.9f", range.down, range.up, newtonY, splinesY, RealY);
 			TextOutW(hdc, 260, 50, out, wcslen(out));
             EndPaint(hWnd, &ps);
         }

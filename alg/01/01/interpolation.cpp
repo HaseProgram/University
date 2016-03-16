@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 extern values* Array;
+extern Range range;
 
 int position(double x)
 {
@@ -27,7 +28,6 @@ int position(double x)
 
 Range findRange(int polynom, double x)
 {
-	Range range;
 
 	int pos = position(x);
 
@@ -63,7 +63,7 @@ Range findRange(int polynom, double x)
 
 double newton_method(double x, int polynom)
 {
-	Range range = findRange(polynom, x);
+	findRange(polynom, x);
 
 	double res = Array[range.down].Y, F, den;
 
