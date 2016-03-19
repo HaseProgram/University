@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "Resource.h"
+
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // Исключите редко используемые компоненты из заголовков Windows
@@ -16,6 +18,9 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <stdio.h>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
+
+#include "error.h"
