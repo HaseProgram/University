@@ -143,6 +143,8 @@
   <ItemGroup>
     <ClInclude Include="01.h" />
     <ClInclude Include="convertstring.h" />
+    <ClInclude Include="correctlines.h" />
+    <ClInclude Include="draw.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="listener.h" />
@@ -156,6 +158,8 @@
   <ItemGroup>
     <ClCompile Include="01.cpp" />
     <ClCompile Include="convertstring.cpp" />
+    <ClCompile Include="correctlines.cpp" />
+    <ClCompile Include="draw.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="loadmodel.cpp" />

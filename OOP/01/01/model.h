@@ -37,8 +37,13 @@ struct model
 
 struct context_params
 {
+	HDC hdc;
+	int x;
+	int y;
 	int height;
 	int width;
+	COLORREF bg_color;
+	COLORREF ln_color;
 };
 
 struct view

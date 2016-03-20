@@ -33,6 +33,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (View.Model.fileName)
 			{
 				doit(LOAD, &View);
+				doit(DRAW, &View);
 			}
 			break;
 		case IDM_ABOUT:

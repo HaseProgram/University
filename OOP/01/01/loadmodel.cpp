@@ -53,9 +53,6 @@ int transfer(struct view* View)
 {
 	int error = OK;
 
-	error = read_scene(View);
-	if (error != OK)
-		return error;
 	error = read_nodes_and_edges_number(View);
 	if (error != OK)
 		return error;
@@ -106,13 +103,6 @@ void free_edges(struct view* View)
 	if (View->Model.Edge.Items)
 		free(View->Model.Edge.Items);
 	View->Model.Edge.Number = 0;
-}
-
-int read_scene(struct view* View)
-{
-	if (fscanf_s(View->Model.file, "%d %d", &View->Scene.height, &View->Scene.width) == 2)
-		return OK;
-	return BAD_SCENE_PARAMS;
 }
 
 int read_nodes_and_edges_number(struct view* View)
