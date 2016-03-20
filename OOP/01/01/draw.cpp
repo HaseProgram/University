@@ -46,30 +46,26 @@ int draw_model(struct view View)
 {
 	int error = OK;
 
-	struct line lines;
+	struct line *lines;
 	error = allocate_lines(&lines, View.Model.Edge.Number);
 	if (error != OK)
 	{
 		return error;
 	}
 
-	build_lines(View, &lines);
-
-	int y;
-	y = 0;
-	y++;
+	build_lines(View, lines);
 
 	for (int i = 0; i < View.Model.Edge.Number; i++)
 	{
-		draw_line(View,*(&lines+i));
+		draw_line(View,*(lines+i));
 	}
 
 	return error;
 }
 
-int allocate_lines(struct line* lines, int Number)
+int allocate_lines(struct line** lines, int Number)
 {
-	lines = (line*)malloc(Number*sizeof(struct line));
+	*(lines) = (line*)malloc(Number*sizeof(struct line));
 	if (!lines)
 	{
 		return CANT_ALLOCATE_LINES;
@@ -79,12 +75,15 @@ int allocate_lines(struct line* lines, int Number)
 
 void build_lines(struct view View, struct line* lines)
 {
+	int midX = View.Scene.width / 2;
+	int midY = View.Scene.height / 2;
+
 	for (int i = 0; i < View.Model.Edge.Number; i++)
 	{
-		(lines + i)->x1 = (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->X);
-		(lines + i)->y1 = (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->Y);
-		(lines + i)->x2 = (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->X);
-		(lines + i)->y2 = (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->Y);
+		(lines + i)->x1 = midX + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->X);
+		(lines + i)->y1 = midY + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->Y);
+		(lines + i)->x2 = midX + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->X);
+		(lines + i)->y2 = midY + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->Y);
 	}
 	return;
 }
