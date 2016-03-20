@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "listener.h"
+#include "planner.h"
 #include "model.h"
 #include "loadmodel.h"
 
@@ -17,7 +18,7 @@ extern HINSTANCE hInst;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
-	struct model Model;
+	struct view View;
 	int error = OK;
 
 	switch (message)
@@ -28,10 +29,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wmId)
 		{
 		case IDM_OPEN:
-			Model.fileName = get_model_name();
-			if (Model.fileName)
+			View.Model.fileName = get_model_name();
+			if (View.Model.fileName)
 			{
-				//error = 
+				doit(LOAD, &View);
 			}
 			break;
 		case IDM_ABOUT:

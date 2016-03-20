@@ -5,16 +5,26 @@ enum e_command
 	LOAD, QUIT, DRAW, MODIFY
 };
 
+typedef struct
+{
+	double X, Y, Z;
+} nodecoordinates;
+
+typedef struct
+{
+	int node1, node2;
+} edgecoordinates;
+
 struct node
 {
 	int Number;
-	double* Item;
+	nodecoordinates* Items;
 };
 
 struct edge
 {
 	int Number;
-	int* Item;
+	edgecoordinates* Items;
 };
 
 struct model

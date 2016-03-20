@@ -3,14 +3,14 @@
 #include "model.h"
 #include "loadmodel.h"
 
-int doit(enum e_command command, struct view params)
+int doit(enum e_command command, struct view* View)
 {
 	int error = OK;
 
 	switch (command)
 	{
 	case LOAD:
-		error = load_model(params.Model.fileName);
+		error = load_model(View);
 		break;
 	default:
 		error = BAD_COMMAND;
