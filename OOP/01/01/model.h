@@ -1,10 +1,5 @@
 #pragma once
 
-enum e_command
-{
-	LOAD, QUIT, DRAW, MODIFY
-};
-
 typedef struct
 {
 	double X, Y, Z;
@@ -46,9 +41,20 @@ struct context_params
 	COLORREF ln_color;
 };
 
+enum modification_type
+{
+	ROTATE_XZ, ROTATE_XY, ZOOM
+};
+
+struct modification_params
+{
+	enum modification_type type;
+	double param;
+};
+
 struct view
 {
 	struct model Model;
 	struct context_params Scene;
-	//struct modification_params Modification;
+	struct modification_params Modification;
 };

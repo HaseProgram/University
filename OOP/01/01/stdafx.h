@@ -3,6 +3,8 @@
 // не часто изменяются
 //
 
+#define _USE_MATH_DEFINES
+
 #pragma once
 #include "Resource.h"
 
@@ -18,6 +20,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <stdio.h>
+#include <math.h>
 
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

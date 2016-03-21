@@ -3,6 +3,7 @@
 #include "model.h"
 #include "loadmodel.h"
 #include "draw.h"
+#include "modifymodel.h"
 
 int doit(enum e_command command, struct view* View)
 {
@@ -16,6 +17,13 @@ int doit(enum e_command command, struct view* View)
 	case DRAW:
 		init_context(&View->Scene);
 		error = draw(*View);
+		break;
+	case MODIFY:
+		if (View->Model.fileName)
+		{
+			modify_model(View);
+		}
+		break;
 	default:
 		error = BAD_COMMAND;
 	}

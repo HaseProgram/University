@@ -150,6 +150,7 @@
     <ClInclude Include="listener.h" />
     <ClInclude Include="loadmodel.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="modifymodel.h" />
     <ClInclude Include="planner.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="loadmodel.cpp" />
+    <ClCompile Include="modifymodel.cpp" />
     <ClCompile Include="planner.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

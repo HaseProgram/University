@@ -9,12 +9,12 @@ extern HWND hWnd;
 void init_context(struct context_params* Scene)
 {
 	Scene->hdc = GetDC(hWnd);
-	Scene->x = 15;
+	Scene->x = 405;
 	Scene->y = 15;
 	Scene->height = 670;
 	Scene->width = 1000;
-	Scene->bg_color = 0x00dddddd;
-	Scene->ln_color = 0x0000ff00;
+	Scene->bg_color = 0xFAF9FA;
+	Scene->ln_color = 0x48333A;
 }
 
 int draw(struct view View)
@@ -42,6 +42,8 @@ int draw_scene(struct context_params Scene)
 	return -1;
 }
 
+
+
 int draw_model(struct view View)
 {
 	int error = OK;
@@ -59,6 +61,8 @@ int draw_model(struct view View)
 	{
 		draw_line(View,*(lines+i));
 	}
+
+	free(lines);
 
 	return error;
 }
