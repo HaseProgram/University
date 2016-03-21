@@ -15,13 +15,26 @@ int doit(enum e_command command, struct view* View)
 		error = load_model(View);
 		break;
 	case DRAW:
-		init_context(&View->Scene);
-		error = draw(*View);
+		if (View->Model.fileName)
+		{
+			init_context(&View->Scene);
+			error = draw(*View);
+		}
+		else
+		{
+			error = NO_MODEL;
+		}
 		break;
 	case MODIFY:
 		if (View->Model.fileName)
 		{
 			modify_model(View);
+		}
+		break;
+	case QUIT:
+		if (View->Model.fileName)
+		{
+			close_model(View);
 		}
 		break;
 	default:

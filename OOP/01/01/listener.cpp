@@ -36,49 +36,79 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			View.Model.fileName = get_model_name();
 			if (View.Model.fileName)
 			{
-				doit(LOAD, &View);
-				doit(DRAW, &View);
+				error = doit(LOAD, &View);
+				if (error == OK)
+				{
+					error = doit(DRAW, &View);
+				}
+			}
+			break;
+		case ID_FILE_CLOSE:
+		case VK_ESCAPE:
+			if (View.Model.fileName)
+			{
+				error = doit(QUIT, &View);
 			}
 			break;
 		case ID_BUTTON_ROTATE_UP:
 		case VK_UP:
 			View.Modification.type = ROTATE_XZ;
 			View.Modification.param = 5;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case ID_BUTTON_ROTATE_DOWN:
 		case VK_DOWN:
 			View.Modification.type = ROTATE_XZ;
 			View.Modification.param = -5;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case ID_BUTTON_ROTATE_LEFT:
 		case VK_LEFT:
 			View.Modification.type = ROTATE_XY;
 			View.Modification.param = -5;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case ID_BUTTON_ROTATE_RIGHT:
 		case VK_RIGHT:
 			View.Modification.type = ROTATE_XY;
 			View.Modification.param = 5;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case ID_BUTTON_ZOOM_IN:
+		case VK_HOME:
 			View.Modification.type = ZOOM;
 			View.Modification.param = 1.5;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case ID_BUTTON_ZOOM_OUT:
+		case VK_END:
 			View.Modification.type = ZOOM;
 			View.Modification.param = 0.7;
-			doit(MODIFY, &View);
-			doit(DRAW, &View);
+			error = doit(MODIFY, &View);
+			if (error == OK)
+			{
+				error = doit(DRAW, &View);
+			}
 			break;
 		case IDM_ABOUT:
 			DialogBoxW(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
@@ -91,7 +121,42 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		switch (error)
 		{
-		
+		case BAD_FILE_NAME:
+			MessageBox(NULL, TEXT("Can not open file: wrong file name!"), TEXT("ERROR"), MB_OK);
+			break;
+		case CANT_OPEN_FILE:
+			MessageBox(NULL, TEXT("Can not open file: system error!"), TEXT("ERROR"), MB_OK);
+			break;
+		case BAD_SCENE_PARAMS:
+			MessageBox(NULL, TEXT("Error while file reading: wrong scene settings!"), TEXT("ERROR"), MB_OK);
+			break;
+		case BAD_NUMBERS_OF_ITEMS:
+			MessageBox(NULL, TEXT("Error while file reading: wrong nodes or edges numer!"), TEXT("ERROR"), MB_OK);
+			break;
+		case BAD_COMMAND:
+			MessageBox(NULL, TEXT("Planner error: invalid command!"), TEXT("ERROR"), MB_OK);
+			break;
+		case BAD_NODES_PARAMS:
+			MessageBox(NULL, TEXT("Error while file reading: wrong coordinates structure!"), TEXT("ERROR"), MB_OK);
+			break;
+		case CANT_ALLOCATE_NODES:
+			MessageBox(NULL, TEXT("Memory error: can not allocate memory for nodes array"), TEXT("ERROR"), MB_OK);
+			break;
+		case BAD_EDGES_PARAMS:
+			MessageBox(NULL, TEXT("Error while file reading: wrong edges structure!"), TEXT("ERROR"), MB_OK);
+			break;
+		case CANT_ALLOCATE_EDGES:
+			MessageBox(NULL, TEXT("Memory error: can not allocate memory for edges array"), TEXT("ERROR"), MB_OK);
+			break;
+		case DRAW_SCENE_ERROR:
+			MessageBox(NULL, TEXT("Drawing error: can not draw scene!"), TEXT("ERROR"), MB_OK);
+			break;
+		case CANT_ALLOCATE_LINES:
+			MessageBox(NULL, TEXT("Memory error: can not allocate memory for lines array!"), TEXT("ERROR"), MB_OK);
+			break;
+		case NO_MODEL:
+			MessageBox(NULL, TEXT("No model to draw!"), TEXT("ERROR"), MB_OK);
+			break;
 		}
 		SetFocus(hWnd);
 	}

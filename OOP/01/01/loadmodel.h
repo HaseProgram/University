@@ -10,5 +10,6 @@ int read_scene(struct view* View);
 int read_nodes_and_edges_number(struct view* View);
 int read_nodes(struct view* View);
 int read_edges(struct view* View);
-FILE* open_model(char* modelFileName);
-void close_model(FILE* modelFile);
+void close_model(struct view* View);
+FILE* open_modelfile(char* modelFileName);
+void close_modelfile(FILE* modelFile);

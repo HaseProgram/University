@@ -39,13 +39,13 @@ int load_model(struct view* View)
 	{
 		return BAD_FILE_NAME;
 	}
-	View->Model.file = open_model(View->Model.fileName);
+	View->Model.file = open_modelfile(View->Model.fileName);
 	if (!View->Model.file)
 	{
 		return CANT_OPEN_FILE;
 	}
 	int error = transfer(View);
-	close_model(View->Model.file);
+	close_modelfile(View->Model.file);
 	return error;
 }
 
@@ -81,6 +81,7 @@ void free_nodes(struct view* View)
 {
 	if (View->Model.Node.Items)
 		free(View->Model.Node.Items);
+	View->Model.Node.Items = NULL;
 	View->Model.Node.Number = 0;
 }
 
@@ -102,12 +103,13 @@ void free_edges(struct view* View)
 {
 	if (View->Model.Edge.Items)
 		free(View->Model.Edge.Items);
+	View->Model.Edge.Items = NULL;
 	View->Model.Edge.Number = 0;
 }
 
 int read_nodes_and_edges_number(struct view* View)
 {
-	if (fscanf_s(View->Model.file, "%d %d", &View->Model.Node.Number, &View->Model.Edge.Number) == 2)
+	if (fscanf(View->Model.file, "%d %d\n", &View->Model.Node.Number, &View->Model.Edge.Number) == 2)
 		return OK;
 	return BAD_NUMBERS_OF_ITEMS;
 }
@@ -168,13 +170,21 @@ int read_edges(struct view* View)
 	return error;
 }
 
-FILE* open_model(char* modelFileName)
+void close_model(struct view* View)
+{
+	free_edges(View);
+	free_nodes(View);
+	free(View->Model.fileName);
+	View->Model.fileName = NULL;
+}
+
+FILE* open_modelfile(char* modelFileName)
 {
 	FILE* modelFile = fopen(modelFileName, "r");
 	return modelFile;
 }
 
-void close_model(FILE* modelFile)
+void close_modelfile(FILE* modelFile)
 {
 	fclose(modelFile);
 }
