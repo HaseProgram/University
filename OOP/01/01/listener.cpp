@@ -24,6 +24,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	NMHDR *childNotification;
 	WORD KEY_CODE;
 
+	struct model* modelSettings = &View.Model;
+	struct context_params* sceneSettings = &View.Scene;
+	struct modification_params* modificationSettings = &View.Modification;
+
 	switch (message)
 	{
 	case WM_COMMAND:
@@ -33,81 +37,81 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wmId)
 		{
 		case IDM_OPEN:
-			View.Model.fileName = get_model_name();
-			if (View.Model.fileName)
+			modelSettings->fileName = get_model_name();
+			if (modelSettings->fileName)
 			{
-				error = doit(LOAD, &View);
+				error = doit(LOAD, modelSettings, sceneSettings, modificationSettings);
 				if (error == OK)
 				{
-					error = doit(DRAW, &View);
+					error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 				}
 			}
 			break;
 		case ID_FILE_CLOSE:
 		case VK_ESCAPE:
-			if (View.Model.fileName)
+			if (modelSettings->fileName)
 			{
-				error = doit(QUIT, &View);
+				error = doit(QUIT, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ROTATE_UP:
 		case VK_UP:
-			View.Modification.type = ROTATE_XZ;
-			View.Modification.param = 5;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ROTATE_XZ;
+			modificationSettings->param = 5;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ROTATE_DOWN:
 		case VK_DOWN:
-			View.Modification.type = ROTATE_XZ;
-			View.Modification.param = -5;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ROTATE_XZ;
+			modificationSettings->param = -5;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ROTATE_LEFT:
 		case VK_LEFT:
-			View.Modification.type = ROTATE_XY;
-			View.Modification.param = -5;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ROTATE_XY;
+			modificationSettings->param = -5;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ROTATE_RIGHT:
 		case VK_RIGHT:
-			View.Modification.type = ROTATE_XY;
-			View.Modification.param = 5;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ROTATE_XY;
+			modificationSettings->param = 5;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ZOOM_IN:
 		case VK_HOME:
-			View.Modification.type = ZOOM;
-			View.Modification.param = 1.5;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ZOOM;
+			modificationSettings->param = 1.5;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case ID_BUTTON_ZOOM_OUT:
 		case VK_END:
-			View.Modification.type = ZOOM;
-			View.Modification.param = 0.7;
-			error = doit(MODIFY, &View);
+			modificationSettings->type = ZOOM;
+			modificationSettings->param = 0.7;
+			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
 			if (error == OK)
 			{
-				error = doit(DRAW, &View);
+				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
 			}
 			break;
 		case IDM_ABOUT:

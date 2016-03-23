@@ -6,29 +6,29 @@
 
 extern HWND hWnd;
 
-void init_context(struct context_params* Scene)
+void init_context(struct context_params* sceneSettings)
 {
-	Scene->hdc = GetDC(hWnd);
-	Scene->x = 405;
-	Scene->y = 15;
-	Scene->height = 670;
-	Scene->width = 1000;
-	Scene->bg_color = 0xFAF9FA;
-	Scene->ln_color = 0x48333A;
+	sceneSettings->hdc = GetDC(hWnd);
+	sceneSettings->x = 405;
+	sceneSettings->y = 15;
+	sceneSettings->height = 670;
+	sceneSettings->width = 1000;
+	sceneSettings->bg_color = 0xFAF9FA;
+	sceneSettings->ln_color = 0x48333A;
 }
 
-int draw(struct view View)
+int draw(struct context_params sceneSettings, struct model modelSettings)
 {
 	int error;
 
-	error = draw_scene(View.Scene);
+	error = draw_scene(sceneSettings);
 	if (error != OK)
 	{
 		error = DRAW_SCENE_ERROR;
 		return error;
 	}
 	
-	error = draw_model(View);
+	error = draw_model(sceneSettings, modelSettings);
 	return error;
 }
 
@@ -44,25 +44,27 @@ int draw_scene(struct context_params Scene)
 
 
 
-int draw_model(struct view View)
+int draw_model(struct context_params sceneSettings, struct model modelSettings)
 {
 	int error = OK;
 
+	struct edge* edgeArray = &modelSettings.Edge;
 	struct line *lines;
-	error = allocate_lines(&lines, View.Model.Edge.Number);
+	error = allocate_lines(&lines, edgeArray->Number);
 	if (error != OK)
 	{
 		return error;
 	}
 
-	build_lines(View, lines);
+	build_lines(sceneSettings, modelSettings, lines);
 
-	for (int i = 0; i < View.Model.Edge.Number; i++)
+	for (int i = 0; i < edgeArray->Number; i++)
 	{
-		draw_line(View,*(lines+i));
+		draw_line(sceneSettings,*(lines+i));
 	}
 
 	free(lines);
+	lines = NULL;
 
 	return error;
 }
@@ -77,28 +79,34 @@ int allocate_lines(struct line** lines, int Number)
 	return OK;
 }
 
-void build_lines(struct view View, struct line* lines)
+void build_lines(struct context_params sceneSettings, struct model modelSettings, struct line* lines)
 {
-	int midX = View.Scene.width / 2;
-	int midY = View.Scene.height / 2;
+	int midX = sceneSettings.width / 2;
+	int midY = sceneSettings.height / 2;
 
-	for (int i = 0; i < View.Model.Edge.Number; i++)
+	struct node* nodeArray = &modelSettings.Node;
+	struct edge* edgeArray = &modelSettings.Edge;
+
+	struct edgecoordinates *edgeCoords = edgeArray->Items;
+	struct nodecoordinates *nodeCoords = nodeArray->Items;
+
+	for (int i = 0; i < modelSettings.Edge.Number; i++)
 	{
-		(lines + i)->x1 = midX + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->X);
-		(lines + i)->y1 = midY + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node1)->Y);
-		(lines + i)->x2 = midX + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->X);
-		(lines + i)->y2 = midY + (int)((View.Model.Node.Items + (View.Model.Edge.Items + i)->node2)->Y);
+		lines[i].x1 = midX + (int)((nodeCoords + edgeCoords[i].node1)->X);
+		lines[i].y1 = midY + (int)((nodeCoords + edgeCoords[i].node1)->Y);
+		lines[i].x2 = midX + (int)((nodeCoords + edgeCoords[i].node2)->X);
+		lines[i].y2 = midY + (int)((nodeCoords + edgeCoords[i].node2)->Y);
 	}
 	return;
 }
 
-int draw_line(struct view View, struct line lines)
+int draw_line(struct context_params sceneSettings, struct line lines)
 {
-	reverse_y(&lines, View.Scene.height);
+	reverse_y(&lines, sceneSettings.height);
 
-	SelectObject(View.Scene.hdc, CreatePen(PS_SOLID, 2, View.Scene.ln_color));
-	MoveToEx(View.Scene.hdc, View.Scene.x + lines.x1, View.Scene.y + lines.y1, NULL);
+	SelectObject(sceneSettings.hdc, CreatePen(PS_SOLID, 2, sceneSettings.ln_color));
+	MoveToEx(sceneSettings.hdc, sceneSettings.x + lines.x1, sceneSettings.y + lines.y1, NULL);
 
-	return LineTo(View.Scene.hdc, View.Scene.x + lines.x2, View.Scene.y + lines.y2);
+	return LineTo(sceneSettings.hdc, sceneSettings.x + lines.x2, sceneSettings.y + lines.y2);
 
 }

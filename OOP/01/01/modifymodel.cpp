@@ -2,58 +2,68 @@
 #include "modifymodel.h"
 #include "model.h"
 
-void modify_model(struct view* View)
+void modify_model(struct model* modelSettings, struct modification_params modificationSettings)
 {
-	switch (View->Modification.type)
+	switch (modificationSettings.type)
 	{
 	case ROTATE_XZ:
-		rot_xz(View);
+		rot_xz(modelSettings, modificationSettings);
 		break;
 	case ROTATE_XY:
-		rot_xy(View);
+		rot_xy(modelSettings, modificationSettings);
 		break;
 	case ZOOM:
-		zoom(View);
+		zoom(modelSettings, modificationSettings);
 		break;
 	}
 }
 
-void rot_xz(struct view* View)
+void rot_xz(struct model* modelSettings, struct modification_params modificationSettings)
 {
-	double teta = (View->Modification.param) / 180.0 * M_PI;
+	double teta = (modificationSettings.param) / 180.0 * M_PI;
 	double newX, newZ;
 
-	for (int i = 0; i < View->Model.Node.Number; i++)
+	struct node* nodeArray = &modelSettings->Node;
+	struct nodecoordinates *nodeCoords = nodeArray->Items;
+
+	for (int i = 0; i < nodeArray->Number; i++)
 	{
-		newX = ((View->Model.Node.Items + i)->X) * cos(teta) + ((View->Model.Node.Items + i)->Z) * sin(teta);
-		newZ = ((View->Model.Node.Items + i)->Z) * cos(teta) - ((View->Model.Node.Items + i)->X) * sin(teta);
-		(View->Model.Node.Items + i)->X = newX;
-		(View->Model.Node.Items + i)->Z = newZ;
+		newX = nodeCoords[i].X * cos(teta) + nodeCoords[i].Z * sin(teta);
+		newZ = nodeCoords[i].Z * cos(teta) - nodeCoords[i].X * sin(teta);
+		nodeCoords[i].X = newX;
+		nodeCoords[i].Z = newZ;
 	}
 }
 
-void rot_xy(struct view* View)
+void rot_xy(struct model* modelSettings, struct modification_params modificationSettings)
 {
-	double teta = (View->Modification.param) / 180.0 * M_PI;
+	double teta = (modificationSettings.param) / 180.0 * M_PI;
 	double newX, newY;
 
-	for (int i = 0; i < View->Model.Node.Number; i++)
+	struct node* nodeArray = &modelSettings->Node;
+	struct nodecoordinates *nodeCoords = nodeArray->Items;
+
+	for (int i = 0; i < nodeArray->Number; i++)
 	{
 
-		newX = ((View->Model.Node.Items + i)->X) * cos(teta) + ((View->Model.Node.Items + i)->Y) * sin(teta);
-		newY = ((View->Model.Node.Items + i)->Y) * cos(teta) - ((View->Model.Node.Items + i)->X) * sin(teta);
-		(View->Model.Node.Items + i)->X = newX;
-		(View->Model.Node.Items + i)->Y = newY;
+		newX = nodeCoords[i].X * cos(teta) + nodeCoords[i].Y * sin(teta);
+		newY = nodeCoords[i].Y * cos(teta) - nodeCoords[i].X * sin(teta);
+		nodeCoords[i].X = newX;
+		nodeCoords[i].Z = newY;
 	}
 }
 
-void zoom(struct view* View)
+void zoom(struct model* modelSettings, struct modification_params modificationSettings)
 {
-	double k = View->Modification.param;
-	for (int i = 0; i < View->Model.Node.Number; i++)
+	double k = modificationSettings.param;
+
+	struct node* nodeArray = &modelSettings->Node;
+	struct nodecoordinates *nodeCoords = nodeArray->Items;
+
+	for (int i = 0; i < nodeArray->Number; i++)
 	{
-		(View->Model.Node.Items + i)->X *= k;
-		(View->Model.Node.Items + i)->Y *= k;
-		(View->Model.Node.Items + i)->Z *= k;
+		nodeCoords[i].X *= k;
+		nodeCoords[i].Y *= k;
+		nodeCoords[i].Z *= k;
 	}
 }

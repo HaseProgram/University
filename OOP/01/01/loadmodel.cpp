@@ -33,41 +33,41 @@ char* get_model_name()
 	}
 }
 
-int load_model(struct view* View)
+int load_model(struct model* modelSettings)
 {
-	if (!View->Model.fileName)
+	if (!modelSettings->fileName)
 	{
 		return BAD_FILE_NAME;
 	}
-	View->Model.file = open_modelfile(View->Model.fileName);
-	if (!View->Model.file)
+	modelSettings->file = open_modelfile(modelSettings->fileName);
+	if (!modelSettings->file)
 	{
 		return CANT_OPEN_FILE;
 	}
-	int error = transfer(View);
-	close_modelfile(View->Model.file);
+	int error = transfer(modelSettings);
+	close_modelfile(modelSettings->file);
 	return error;
 }
 
-int transfer(struct view* View)
+int transfer(struct model* modelSettings)
 {
 	int error = OK;
 
-	error = read_nodes_and_edges_number(View);
+	error = read_nodes_and_edges_number(modelSettings);
 	if (error != OK)
 		return error;
-	error = read_nodes(View);
+	error = read_nodes(modelSettings);
 	if (error != OK)
 		return error;
-	error = read_edges(View);
+	error = read_edges(modelSettings);
 	
 	return error;
 }
 
-int allocate_nodes(struct view* View)
+int allocate_nodes(struct node* nodeArray)
 {
-	View->Model.Node.Items = (nodecoordinates*)calloc(View->Model.Node.Number, sizeof(nodecoordinates));
-	if (!View->Model.Node.Items)
+	nodeArray->Items = (nodecoordinates*)calloc(nodeArray->Number, sizeof(nodecoordinates));
+	if (!nodeArray->Items)
 	{
 		return CANT_ALLOCATE_NODES;
 	}
@@ -77,20 +77,19 @@ int allocate_nodes(struct view* View)
 	}
 }
 
-void free_nodes(struct view* View)
+void free_nodes(struct node* nodeArray)
 {
-	if (View->Model.Node.Items)
-		free(View->Model.Node.Items);
-	View->Model.Node.Items = NULL;
-	View->Model.Node.Number = 0;
+	if (nodeArray->Items)
+		free(nodeArray->Items);
+	nodeArray->Items = NULL;
+	nodeArray->Number = 0;
 }
 
-int allocate_edges(struct view* View)
+int allocate_edges(struct edge* edgeArray)
 {
-	View->Model.Edge.Items = (edgecoordinates*)calloc(View->Model.Edge.Number, sizeof(edgecoordinates));
-	if (!View->Model.Edge.Items)
+	edgeArray->Items = (edgecoordinates*)calloc(edgeArray->Number, sizeof(edgecoordinates));
+	if (!edgeArray->Items)
 	{
-		free_nodes(View);
 		return CANT_ALLOCATE_EDGES;
 	}
 	else
@@ -99,31 +98,39 @@ int allocate_edges(struct view* View)
 	}
 }
 
-void free_edges(struct view* View)
+void free_edges(struct edge* edgeArray)
 {
-	if (View->Model.Edge.Items)
-		free(View->Model.Edge.Items);
-	View->Model.Edge.Items = NULL;
-	View->Model.Edge.Number = 0;
+	if (edgeArray->Items)
+		free(edgeArray->Items);
+	edgeArray->Items = NULL;
+	edgeArray->Number = 0;
 }
 
-int read_nodes_and_edges_number(struct view* View)
+int read_nodes_and_edges_number(struct model* modelSettings)
 {
-	if (fscanf(View->Model.file, "%d %d\n", &View->Model.Node.Number, &View->Model.Edge.Number) == 2)
+	struct node* nodeArray = &modelSettings->Node;
+	struct edge* edgeArray = &modelSettings->Edge;
+
+	if (fscanf(modelSettings->file, "%d %d\n", &nodeArray->Number, &edgeArray->Number) == 2)
 		return OK;
 	return BAD_NUMBERS_OF_ITEMS;
 }
 
-int read_nodes(struct view* View)
+int read_nodes(struct model* modelSettings)
 {
 	double x, y, z;
-	int error = allocate_nodes(View);
+	struct node* nodeArray = &modelSettings->Node;
+
+	int error = allocate_nodes(nodeArray);
 	if (error != OK)
 		return error;
+
+	nodecoordinates* nodeCoordinates;
+	nodeCoordinates = nodeArray->Items;
 	
-	for (int i = 0; (error == OK) && (i < View->Model.Node.Number); i++)
+	for (int i = 0; (error == OK) && (i < nodeArray->Number); i++)
 	{
-		if (fscanf(View->Model.file, "%lf %lf %lf", &x, &y, &z) != 3)
+		if (fscanf(modelSettings->file, "%lf %lf %lf", &x, &y, &z) != 3)
 		{
 			error = BAD_NODES_PARAMS;
 		}
@@ -131,51 +138,61 @@ int read_nodes(struct view* View)
 		{
 			if (error == OK)
 			{
-				(View->Model.Node.Items + i)->X = x;
-				(View->Model.Node.Items + i)->Y = y;
-				(View->Model.Node.Items + i)->Z = z;
+				nodeCoordinates[i].X = x;
+				nodeCoordinates[i].Y = y;
+				nodeCoordinates[i].Z = z;
 			}
 		}
 	}
 	return error;
 }
 
-int read_edges(struct view* View)
+int read_edges(struct model* modelSettings)
 {
 	int n1, n2;
-	int error = allocate_edges(View);
+
+	struct node* nodeArray = &modelSettings->Node;
+	struct edge* edgeArray = &modelSettings->Edge;
+
+	int error = allocate_edges(edgeArray);
 	if (error != OK)
 	{
-		free_nodes(View);
+		free_nodes(nodeArray);
 		return error;
 	}
 
-	for (int i = 0; (error == OK) && (i < View->Model.Edge.Number); i++)
+	edgecoordinates* edgeCoordinates;
+	edgeCoordinates = edgeArray->Items;
+
+	for (int i = 0; (error == OK) && (i < edgeArray->Number); i++)
 	{
-		if (fscanf(View->Model.file, "%d %d ", &n1, &n2) != 2 || 
+		if (fscanf(modelSettings->file, "%d %d ", &n1, &n2) != 2 ||
 			n1 < 0 || 
 			n2 < 0 || 
-			n1 > View->Model.Node.Number || 
-			n2 > View->Model.Node.Number)
+			n1 > nodeArray->Number ||
+			n2 > nodeArray->Number)
 		{
-			free_nodes(View);
+			free_nodes(nodeArray);
 			error = BAD_EDGES_PARAMS;
 		}
 		else
 		{
-			(View->Model.Edge.Items + i)->node1 = n1;
-			(View->Model.Edge.Items + i)->node2 = n2;
+			edgeCoordinates[i].node1 = n1;
+			edgeCoordinates[i].node2 = n2;
 		}
 	}
 	return error;
 }
 
-void close_model(struct view* View)
+void close_model(struct model* modelSettings)
 {
-	free_edges(View);
-	free_nodes(View);
-	free(View->Model.fileName);
-	View->Model.fileName = NULL;
+	struct node* nodeArray = &modelSettings->Node;
+	struct edge* edgeArray = &modelSettings->Edge;
+
+	free_nodes(nodeArray);
+	free_edges(edgeArray);
+	free(modelSettings->fileName);
+	modelSettings->fileName = NULL;
 }
 
 FILE* open_modelfile(char* modelFileName)

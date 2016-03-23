@@ -1,14 +1,14 @@
 #pragma once
 
-typedef struct
+struct nodecoordinates
 {
 	double X, Y, Z;
-} nodecoordinates;
+};
 
-typedef struct
+struct edgecoordinates
 {
 	int node1, node2;
-} edgecoordinates;
+};
 
 struct node
 {

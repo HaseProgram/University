@@ -1,12 +1,12 @@
 #pragma once
 
-void init_context(struct context_params* Scene);
-int draw(struct view View);
+void init_context(struct context_params* sceneSettings);
+int draw(struct context_params sceneSettings, struct model modelSettings);
 int draw_scene(struct context_params Scene);
-int draw_model(struct view View);
-void build_lines(struct view View, struct line* lines);
+int draw_model(struct context_params sceneSettings, struct model modelSettings);
+void build_lines(struct context_params sceneSettings, struct model modelSettings, struct line* lines);
 int allocate_lines(struct line** lines, int Number);
-int draw_line(struct view View, struct line lines);
+int draw_line(struct context_params sceneSettings, struct line lines);
 
 struct line
 {

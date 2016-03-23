@@ -5,20 +5,20 @@
 #include "draw.h"
 #include "modifymodel.h"
 
-int doit(enum e_command command, struct view* View)
+int doit(enum e_command command, struct model* modelSettings, struct context_params* sceneSettings, struct modification_params* modificationSettings)
 {
 	int error = OK;
 
 	switch (command)
 	{
 	case LOAD:
-		error = load_model(View);
+		error = load_model(modelSettings);
 		break;
 	case DRAW:
-		if (View->Model.fileName)
+		if (modelSettings->fileName)
 		{
-			init_context(&View->Scene);
-			error = draw(*View);
+			init_context(sceneSettings);
+			error = draw(*sceneSettings,*modelSettings);
 		}
 		else
 		{
@@ -26,15 +26,15 @@ int doit(enum e_command command, struct view* View)
 		}
 		break;
 	case MODIFY:
-		if (View->Model.fileName)
+		if (modelSettings->fileName)
 		{
-			modify_model(View);
+			modify_model(modelSettings, *modificationSettings);
 		}
 		break;
 	case QUIT:
-		if (View->Model.fileName)
+		if (modelSettings->fileName)
 		{
-			close_model(View);
+			close_model(modelSettings);
 		}
 		break;
 	default:
