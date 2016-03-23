@@ -49,7 +49,7 @@ void rot_xy(struct model* modelSettings, struct modification_params modification
 		newX = nodeCoords[i].X * cos(teta) + nodeCoords[i].Y * sin(teta);
 		newY = nodeCoords[i].Y * cos(teta) - nodeCoords[i].X * sin(teta);
 		nodeCoords[i].X = newX;
-		nodeCoords[i].Z = newY;
+		nodeCoords[i].Y = newY;
 	}
 }
 
