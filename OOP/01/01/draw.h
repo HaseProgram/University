@@ -12,3 +12,14 @@ struct line
 {
 	int x1, x2, y1, y2;
 };
+
+struct context_params
+{
+	HDC hdc;
+	int x;
+	int y;
+	int height;
+	int width;
+	COLORREF bg_color;
+	COLORREF ln_color;
+};

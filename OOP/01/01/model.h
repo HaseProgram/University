@@ -1,5 +1,13 @@
 #pragma once
 
+struct node* getNodeArray(struct model* modelSettings);
+struct edge* getEdgeArray(struct model* modelSettings);
+int getNodeArrayCount(struct node* nodeArray);
+int getEdgeArrayCount(struct edge* edgeArray);
+struct nodecoordinates* getNodeArrayItems(struct node* nodeArray);
+struct edgecoordinates* getEdgeArrayItems(struct edge* edgeArray);
+
+
 struct nodecoordinates
 {
 	double X, Y, Z;
@@ -24,37 +32,6 @@ struct edge
 
 struct model
 {
-	char* fileName;
-	FILE* file;
 	struct node Node;
 	struct edge Edge;
-};
-
-struct context_params
-{
-	HDC hdc;
-	int x;
-	int y;
-	int height;
-	int width;
-	COLORREF bg_color;
-	COLORREF ln_color;
-};
-
-enum modification_type
-{
-	ROTATE_XZ, ROTATE_XY, ZOOM
-};
-
-struct modification_params
-{
-	enum modification_type type;
-	double param;
-};
-
-struct view
-{
-	struct model Model;
-	struct context_params Scene;
-	struct modification_params Modification;
 };

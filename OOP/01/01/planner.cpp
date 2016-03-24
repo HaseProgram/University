@@ -1,24 +1,26 @@
 #include "stdafx.h"
-#include "planner.h"
 #include "model.h"
+#include "modifymodel.h"
 #include "loadmodel.h"
 #include "draw.h"
-#include "modifymodel.h"
+#include "planner.h"
 
-int doit(enum e_command command, struct model* modelSettings, struct context_params* sceneSettings, struct modification_params* modificationSettings)
+int doit(enum e_command command, struct argument Argument)
 {
 	int error = OK;
+
+	static struct model modelSettings;
 
 	switch (command)
 	{
 	case LOAD:
-		error = load_model(modelSettings);
+		error = load_model(&modelSettings, Argument.load);
 		break;
 	case DRAW:
-		if (modelSettings->fileName)
+		if (&Argument.load)
 		{
-			init_context(sceneSettings);
-			error = draw(*sceneSettings,*modelSettings);
+			init_context(&Argument.sceneSettings);
+			error = draw(Argument.sceneSettings,modelSettings);
 		}
 		else
 		{
@@ -26,15 +28,15 @@ int doit(enum e_command command, struct model* modelSettings, struct context_par
 		}
 		break;
 	case MODIFY:
-		if (modelSettings->fileName)
+		if (Argument.load)
 		{
-			modify_model(modelSettings, *modificationSettings);
+			modify_model(&modelSettings, Argument.modificationSettings);
 		}
 		break;
 	case QUIT:
-		if (modelSettings->fileName)
+		if (Argument.load)
 		{
-			close_model(modelSettings);
+			close_model(&modelSettings, &Argument.load);
 		}
 		break;
 	default:

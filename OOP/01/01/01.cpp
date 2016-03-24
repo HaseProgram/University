@@ -4,6 +4,7 @@
 #include "01.h"
 #include "model.h"
 #include "interface.h"
+#include "loadmodel.h"
 
 #define MAX_LOADSTRING 100
 
@@ -13,7 +14,6 @@ HWND hWnd;										// Main window
 WCHAR szTitle[MAX_LOADSTRING];                  // Title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // Class name of the main window
 
-struct view View;
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -97,6 +97,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	{
 		return FALSE;
 	}
+
+	struct stream* LStream = &Stream;
+	Stream.type = FROM_FILE;
 
 	initButtons();
 

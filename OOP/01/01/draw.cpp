@@ -48,9 +48,9 @@ int draw_model(struct context_params sceneSettings, struct model modelSettings)
 {
 	int error = OK;
 
-	struct edge* edgeArray = &modelSettings.Edge;
+	struct edge* edgeArray = getEdgeArray(&modelSettings);
 	struct line *lines;
-	error = allocate_lines(&lines, edgeArray->Number);
+	error = allocate_lines(&lines, getEdgeArrayCount(edgeArray));
 	if (error != OK)
 	{
 		return error;
@@ -58,7 +58,7 @@ int draw_model(struct context_params sceneSettings, struct model modelSettings)
 
 	build_lines(sceneSettings, modelSettings, lines);
 
-	for (int i = 0; i < edgeArray->Number; i++)
+	for (int i = 0; i < getEdgeArrayCount(edgeArray); i++)
 	{
 		draw_line(sceneSettings,*(lines+i));
 	}
@@ -84,18 +84,23 @@ void build_lines(struct context_params sceneSettings, struct model modelSettings
 	int midX = sceneSettings.width / 2;
 	int midY = sceneSettings.height / 2;
 
-	struct node* nodeArray = &modelSettings.Node;
-	struct edge* edgeArray = &modelSettings.Edge;
+	struct node* nodeArray = getNodeArray(&modelSettings);
+	struct edge* edgeArray = getEdgeArray(&modelSettings);
 
-	struct edgecoordinates *edgeCoords = edgeArray->Items;
-	struct nodecoordinates *nodeCoords = nodeArray->Items;
+	struct edgecoordinates *edgeCoords = getEdgeArrayItems(edgeArray);
+	struct nodecoordinates *nodeCoords = getNodeArrayItems(nodeArray);
 
-	for (int i = 0; i < modelSettings.Edge.Number; i++)
+	int n1, n2;
+
+	for (int i = 0; i < getEdgeArrayCount(edgeArray); i++)
 	{
-		lines[i].x1 = midX + (int)((nodeCoords + edgeCoords[i].node1)->X);
-		lines[i].y1 = midY + (int)((nodeCoords + edgeCoords[i].node1)->Y);
-		lines[i].x2 = midX + (int)((nodeCoords + edgeCoords[i].node2)->X);
-		lines[i].y2 = midY + (int)((nodeCoords + edgeCoords[i].node2)->Y);
+		n1 = edgeCoords[i].node1;
+		n2 = edgeCoords[i].node2;
+
+		lines[i].x1 = midX + (int)nodeCoords[n1].X;
+		lines[i].y1 = midY + (int)nodeCoords[n1].Y;
+		lines[i].x2 = midX + (int)nodeCoords[n2].X;
+		lines[i].y2 = midY + (int)nodeCoords[n2].Y;
 	}
 	return;
 }

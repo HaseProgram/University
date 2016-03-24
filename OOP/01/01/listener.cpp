@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "listener.h"
 #include "interface.h"
-#include "planner.h"
 #include "model.h"
+#include "modifymodel.h"
+#include "draw.h"
+#include "planner.h"
 #include "loadmodel.h"
 
 extern HINSTANCE hInst;
-extern struct view View;
 extern HWND hWnd;
 
 //
@@ -24,9 +25,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	NMHDR *childNotification;
 	WORD KEY_CODE;
 
-	struct model* modelSettings = &View.Model;
-	struct context_params* sceneSettings = &View.Scene;
-	struct modification_params* modificationSettings = &View.Modification;
+	static struct argument Argument;
+	struct modification_params* modificationSet = &Argument.modificationSettings;
 
 	switch (message)
 	{
@@ -37,81 +37,86 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wmId)
 		{
 		case IDM_OPEN:
-			modelSettings->fileName = get_model_name();
-			if (modelSettings->fileName)
+			switch (Stream.type)
 			{
-				error = doit(LOAD, modelSettings, sceneSettings, modificationSettings);
-				if (error == OK)
-				{
-					error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
-				}
+			case FROM_FILE:
+					Argument.load = get_model_name();
+					if (Argument.load)
+					{
+						error = doit(LOAD, Argument);
+						if (error == OK)
+						{
+							error = doit(DRAW, Argument);
+						}
+					}
+				break;
 			}
 			break;
 		case ID_FILE_CLOSE:
 		case VK_ESCAPE:
-			if (modelSettings->fileName)
+			if (Argument.load)
 			{
-				error = doit(QUIT, modelSettings, sceneSettings, modificationSettings);
+				error = doit(QUIT, Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_UP:
 		case VK_UP:
-			modificationSettings->type = ROTATE_XZ;
-			modificationSettings->param = 5;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ROTATE_XZ;
+			modificationSet->param = 5;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_DOWN:
 		case VK_DOWN:
-			modificationSettings->type = ROTATE_XZ;
-			modificationSettings->param = -5;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ROTATE_XZ;
+			modificationSet->param = -5;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_LEFT:
 		case VK_LEFT:
-			modificationSettings->type = ROTATE_XY;
-			modificationSettings->param = -5;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ROTATE_XY;
+			modificationSet->param = -5;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_RIGHT:
 		case VK_RIGHT:
-			modificationSettings->type = ROTATE_XY;
-			modificationSettings->param = 5;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ROTATE_XY;
+			modificationSet->param = 5;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case ID_BUTTON_ZOOM_IN:
 		case VK_HOME:
-			modificationSettings->type = ZOOM;
-			modificationSettings->param = 1.5;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ZOOM;
+			modificationSet->param = 1.5;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case ID_BUTTON_ZOOM_OUT:
 		case VK_END:
-			modificationSettings->type = ZOOM;
-			modificationSettings->param = 0.7;
-			error = doit(MODIFY, modelSettings, sceneSettings, modificationSettings);
+			modificationSet->type = ZOOM;
+			modificationSet->param = 0.7;
+			error = doit(MODIFY, Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, modelSettings, sceneSettings, modificationSettings);
+				error = doit(DRAW, Argument);
 			}
 			break;
 		case IDM_ABOUT:

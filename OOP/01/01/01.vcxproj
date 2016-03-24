@@ -164,6 +164,7 @@
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="loadmodel.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="modifymodel.cpp" />
     <ClCompile Include="planner.cpp" />
     <ClCompile Include="stdafx.cpp">

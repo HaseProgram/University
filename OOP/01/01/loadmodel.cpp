@@ -33,33 +33,35 @@ char* get_model_name()
 	}
 }
 
-int load_model(struct model* modelSettings)
+int load_model(struct model* modelSettings, char* filename)
 {
-	if (!modelSettings->fileName)
+	if (!filename)
 	{
 		return BAD_FILE_NAME;
 	}
-	modelSettings->file = open_modelfile(modelSettings->fileName);
-	if (!modelSettings->file)
+
+	FILE* modelFile = open_modelfile(filename);
+
+	if (!modelFile)
 	{
 		return CANT_OPEN_FILE;
 	}
-	int error = transfer(modelSettings);
-	close_modelfile(modelSettings->file);
+	int error = transfer(modelSettings, modelFile);
+	close_modelfile(modelFile);
 	return error;
 }
 
-int transfer(struct model* modelSettings)
+int transfer(struct model* modelSettings, FILE* modelFile)
 {
 	int error = OK;
 
-	error = read_nodes_and_edges_number(modelSettings);
+	error = read_nodes_and_edges_number(modelSettings, modelFile);
 	if (error != OK)
 		return error;
-	error = read_nodes(modelSettings);
+	error = read_nodes(modelSettings, modelFile);
 	if (error != OK)
 		return error;
-	error = read_edges(modelSettings);
+	error = read_edges(modelSettings, modelFile);
 	
 	return error;
 }
@@ -106,32 +108,32 @@ void free_edges(struct edge* edgeArray)
 	edgeArray->Number = 0;
 }
 
-int read_nodes_and_edges_number(struct model* modelSettings)
+int read_nodes_and_edges_number(struct model* modelSettings, FILE* modelFile)
 {
-	struct node* nodeArray = &modelSettings->Node;
-	struct edge* edgeArray = &modelSettings->Edge;
+	struct node* nodeArray = getNodeArray(modelSettings);
+	struct edge* edgeArray = getEdgeArray(modelSettings);
 
-	if (fscanf(modelSettings->file, "%d %d\n", &nodeArray->Number, &edgeArray->Number) == 2)
+	if (fscanf(modelFile, "%d %d\n", &nodeArray->Number, &edgeArray->Number) == 2)
 		return OK;
 	return BAD_NUMBERS_OF_ITEMS;
 }
 
-int read_nodes(struct model* modelSettings)
+int read_nodes(struct model* modelSettings, FILE* modelFile)
 {
 	double x, y, z;
-	struct node* nodeArray = &modelSettings->Node;
+	struct node* nodeArray = getNodeArray(modelSettings);
 
 	int error = allocate_nodes(nodeArray);
 	if (error != OK)
 		return error;
 
-	nodecoordinates* nodeCoordinates;
-	nodeCoordinates = nodeArray->Items;
+	nodecoordinates* nodeCoordinates = getNodeArrayItems(nodeArray);
 	
-	for (int i = 0; (error == OK) && (i < nodeArray->Number); i++)
+	for (int i = 0; (error == OK) && (i < getNodeArrayCount(nodeArray)); i++)
 	{
-		if (fscanf(modelSettings->file, "%lf %lf %lf", &x, &y, &z) != 3)
+		if (fscanf(modelFile, "%lf %lf %lf", &x, &y, &z) != 3)
 		{
+			free_nodes(nodeArray);
 			error = BAD_NODES_PARAMS;
 		}
 		else
@@ -147,12 +149,12 @@ int read_nodes(struct model* modelSettings)
 	return error;
 }
 
-int read_edges(struct model* modelSettings)
+int read_edges(struct model* modelSettings, FILE* modelFile)
 {
 	int n1, n2;
 
-	struct node* nodeArray = &modelSettings->Node;
-	struct edge* edgeArray = &modelSettings->Edge;
+	struct node* nodeArray = getNodeArray(modelSettings);
+	struct edge* edgeArray = getEdgeArray(modelSettings);
 
 	int error = allocate_edges(edgeArray);
 	if (error != OK)
@@ -164,15 +166,16 @@ int read_edges(struct model* modelSettings)
 	edgecoordinates* edgeCoordinates;
 	edgeCoordinates = edgeArray->Items;
 
-	for (int i = 0; (error == OK) && (i < edgeArray->Number); i++)
+	for (int i = 0; (error == OK) && (i < getEdgeArrayCount(edgeArray)); i++)
 	{
-		if (fscanf(modelSettings->file, "%d %d ", &n1, &n2) != 2 ||
+		if (fscanf(modelFile, "%d %d ", &n1, &n2) != 2 ||
 			n1 < 0 || 
 			n2 < 0 || 
-			n1 > nodeArray->Number ||
-			n2 > nodeArray->Number)
+			n1 > getNodeArrayCount(nodeArray) ||
+			n2 > getNodeArrayCount(nodeArray))
 		{
 			free_nodes(nodeArray);
+			free_edges(edgeArray);
 			error = BAD_EDGES_PARAMS;
 		}
 		else
@@ -184,15 +187,14 @@ int read_edges(struct model* modelSettings)
 	return error;
 }
 
-void close_model(struct model* modelSettings)
+void close_model(struct model* modelSettings, char** fileName)
 {
-	struct node* nodeArray = &modelSettings->Node;
-	struct edge* edgeArray = &modelSettings->Edge;
+	struct node* nodeArray = getNodeArray(modelSettings);
+	struct edge* edgeArray = getEdgeArray(modelSettings);
 
 	free_nodes(nodeArray);
 	free_edges(edgeArray);
-	free(modelSettings->fileName);
-	modelSettings->fileName = NULL;
+	*fileName = NULL;
 }
 
 FILE* open_modelfile(char* modelFileName)
