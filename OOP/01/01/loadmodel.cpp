@@ -163,8 +163,7 @@ int read_edges(struct model* modelSettings, FILE* modelFile)
 		return error;
 	}
 
-	edgecoordinates* edgeCoordinates;
-	edgeCoordinates = edgeArray->Items;
+	edgecoordinates* edgeCoordinates = getEdgeArrayItems(edgeArray);
 
 	for (int i = 0; (error == OK) && (i < getEdgeArrayCount(edgeArray)); i++)
 	{
@@ -199,8 +198,7 @@ void close_model(struct model* modelSettings, char** fileName)
 
 FILE* open_modelfile(char* modelFileName)
 {
-	FILE* modelFile = fopen(modelFileName, "r");
-	return modelFile;
+	return fopen(modelFileName, "r");
 }
 
 void close_modelfile(FILE* modelFile)
