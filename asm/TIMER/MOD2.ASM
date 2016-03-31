@@ -1,0 +1,69 @@
+StacSeg SEGMENT PARA STACK 'STACK'
+	DW	128h DUP (?)
+StacSeg ENDS
+
+
+CodeSeg SEGMENT PUBLIC 'CODE'
+    ASSUME CS:CodeSeg, SS:StacSeg
+	
+	PUBLIC Time
+	EXTRN Main:NEAR
+	
+Time: 
+	MOV AH,2h
+	INT 1Ah	
+	
+	MOV BX,CX		
+	MOV CL,4
+	SHR BH,CL
+
+	MOV AH,2h
+	MOV DL,BH
+	ADD DL,'0'
+	INT 21h
+		
+	AND CH,1111b
+	MOV DL,CH
+	ADD DL,'0'
+	INT 21h
+	MOV DL,':' 
+	INT 21h
+		
+	MOV BH,BL
+	MOV CH,BH
+	SHR BH,CL 
+		
+	MOV AH,2h
+	MOV DL,BH
+	ADD DL,'0'
+	INT 21h
+
+	AND CH,1111b
+	MOV DL,CH
+	ADD DL,'0'
+	INT 21h
+	MOV DL,':'
+	INT 21h
+		
+	MOV BH,DH
+	MOV CH,BH
+	SHR BH,CL 
+
+	
+	MOV AH,2h
+	MOV DL,BH
+	ADD DL,'0'
+	INT 21h
+	
+	AND CH,1111b
+	MOV DL,CH
+	ADD DL,'0'
+	INT 21h
+	
+	MOV DL,13
+	INT 21h 
+       	
+	JMP Main	
+	           	
+CodeSeg ENDS
+     END Time	 

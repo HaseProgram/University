@@ -40,89 +40,93 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			switch (Stream.type)
 			{
 			case FROM_FILE:
-					Argument.load = get_model_name();
-					if (Argument.load)
+				Argument.load = get_model_name();
+				if (&Argument.load)
+				{
+					error = doit(LOAD, &Argument);
+					if (error == OK)
 					{
-						error = doit(LOAD, Argument);
-						if (error == OK)
-						{
-							error = doit(DRAW, Argument);
-						}
+						error = doit(DRAW, &Argument);
 					}
+				}
 				break;
 			}
 			break;
 		case ID_FILE_CLOSE:
 		case VK_ESCAPE:
-			if (Argument.load)
+			if (&Argument.load)
 			{
-				error = doit(QUIT, Argument);
+				error = doit(QUIT, &Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_UP:
 		case VK_UP:
 			modificationSet->type = ROTATE_XZ;
 			modificationSet->param = 5;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_DOWN:
 		case VK_DOWN:
 			modificationSet->type = ROTATE_XZ;
 			modificationSet->param = -5;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_LEFT:
 		case VK_LEFT:
 			modificationSet->type = ROTATE_XY;
 			modificationSet->param = -5;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case ID_BUTTON_ROTATE_RIGHT:
 		case VK_RIGHT:
 			modificationSet->type = ROTATE_XY;
 			modificationSet->param = 5;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case ID_BUTTON_ZOOM_IN:
 		case VK_HOME:
 			modificationSet->type = ZOOM;
 			modificationSet->param = 1.5;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case ID_BUTTON_ZOOM_OUT:
 		case VK_END:
 			modificationSet->type = ZOOM;
 			modificationSet->param = 0.7;
-			error = doit(MODIFY, Argument);
+			error = doit(MODIFY, &Argument);
 			if (error == OK)
 			{
-				error = doit(DRAW, Argument);
+				error = doit(DRAW, &Argument);
 			}
 			break;
 		case IDM_ABOUT:
 			DialogBoxW(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
+			if (&Argument.load)
+			{
+				error = doit(QUIT, &Argument);
+			}
 			DestroyWindow(hWnd);
 			break;
 		default:

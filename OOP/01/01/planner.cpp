@@ -5,22 +5,22 @@
 #include "draw.h"
 #include "planner.h"
 
-int doit(enum e_command command, struct argument Argument)
+int doit(enum e_command command, struct argument* Argument)
 {
 	int error = OK;
 
-	static struct model modelSettings;
+	static struct model modelSettings = init();
 
 	switch (command)
 	{
 	case LOAD:
-		error = load_model(&modelSettings, Argument.load);
+		error = load_model(&modelSettings, Argument->load);
 		break;
 	case DRAW:
-		if (&Argument.load)
+		if (Argument->load)
 		{
-			init_context(&Argument.sceneSettings);
-			error = draw(Argument.sceneSettings,modelSettings);
+			init_context(&Argument->sceneSettings);
+			error = draw(Argument->sceneSettings,modelSettings);
 		}
 		else
 		{
@@ -28,15 +28,16 @@ int doit(enum e_command command, struct argument Argument)
 		}
 		break;
 	case MODIFY:
-		if (Argument.load)
+		if (Argument->load)
 		{
-			modify_model(&modelSettings, Argument.modificationSettings);
+			modify_model(&modelSettings, Argument->modificationSettings);
 		}
 		break;
 	case QUIT:
-		if (Argument.load)
+		if (Argument->load)
 		{
-			close_model(&modelSettings, &Argument.load);
+			close_model(&modelSettings, &Argument->load);
+			delete_scene(Argument->sceneSettings);
 		}
 		break;
 	default:

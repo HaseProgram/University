@@ -1,5 +1,7 @@
 #pragma once
 
+struct model init();
+
 struct node* getNodeArray(struct model* modelSettings);
 struct edge* getEdgeArray(struct model* modelSettings);
 int getNodeArrayCount(struct node* nodeArray);

@@ -42,6 +42,15 @@ int draw_scene(struct context_params Scene)
 	return -1;
 }
 
+int delete_scene(struct context_params Scene)
+{
+	SelectObject(Scene.hdc, CreatePen(PS_SOLID, 1, 0xFFFFFF));
+	SelectObject(Scene.hdc, CreateSolidBrush(0xFFFFFF));
+
+	if (Rectangle(Scene.hdc, Scene.x, Scene.y, Scene.x + Scene.width, Scene.y + Scene.height))
+		return OK;
+	return -1;
+}
 
 
 int draw_model(struct context_params sceneSettings, struct model modelSettings)

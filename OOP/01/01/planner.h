@@ -12,4 +12,4 @@ struct argument
 	struct modification_params modificationSettings;
 };
 
-int doit(enum e_command command, struct argument Argument);
+int doit(enum e_command command, struct argument* Argument);
