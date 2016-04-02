@@ -2,7 +2,7 @@
 #include "modifymodel.h"
 #include "model.h"
 
-void modify_model(struct model* modelSettings, struct modification_params modificationSettings)
+int modify_model(struct model* modelSettings, struct modification_params modificationSettings)
 {
 	switch (modificationSettings.type)
 	{
@@ -16,6 +16,7 @@ void modify_model(struct model* modelSettings, struct modification_params modifi
 		zoom(modelSettings, modificationSettings);
 		break;
 	}
+	return OK;
 }
 
 void rot_xz(struct model* modelSettings, struct modification_params modificationSettings)

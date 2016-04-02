@@ -19,7 +19,6 @@ int doit(enum e_command command, struct argument* Argument)
 	case DRAW:
 		if (Argument->load)
 		{
-			init_context(&Argument->sceneSettings);
 			error = draw(Argument->sceneSettings,modelSettings);
 		}
 		else
@@ -30,14 +29,18 @@ int doit(enum e_command command, struct argument* Argument)
 	case MODIFY:
 		if (Argument->load)
 		{
-			modify_model(&modelSettings, Argument->modificationSettings);
+			error = modify_model(&modelSettings, Argument->modificationSettings);
+		}
+		else
+		{
+			error = NO_MODEL;
 		}
 		break;
 	case QUIT:
 		if (Argument->load)
 		{
-			close_model(&modelSettings, &Argument->load);
-			delete_scene(Argument->sceneSettings);
+			error = close_model(&modelSettings, &Argument->load);
+			//error = delete_scene(Argument->sceneSettings);
 		}
 		break;
 	default:

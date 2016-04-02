@@ -2,10 +2,7 @@
 #include "listener.h"
 #include "interface.h"
 #include "model.h"
-#include "modifymodel.h"
-#include "draw.h"
 #include "planner.h"
-#include "loadmodel.h"
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
@@ -25,8 +22,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	NMHDR *childNotification;
 	WORD KEY_CODE;
 
+
+
 	static struct argument Argument;
 	struct modification_params* modificationSet = &Argument.modificationSettings;
+	init_context(&Argument.sceneSettings);
 
 	switch (message)
 	{
@@ -40,6 +40,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			switch (Stream.type)
 			{
 			case FROM_FILE:
+
 				Argument.load = get_model_name();
 				if (&Argument.load)
 				{

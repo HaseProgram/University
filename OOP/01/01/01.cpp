@@ -101,6 +101,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	struct stream* LStream = &Stream;
 	Stream.type = FROM_FILE;
 
+
 	initButtons();
 
 	ShowWindow(hWnd, nCmdShow);

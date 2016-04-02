@@ -145,12 +145,16 @@
     <ClInclude Include="convertstring.h" />
     <ClInclude Include="correctlines.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="edge.h" />
+    <ClInclude Include="edgecoordinates.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="listener.h" />
     <ClInclude Include="loadmodel.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="modifymodel.h" />
+    <ClInclude Include="node.h" />
+    <ClInclude Include="nodecoordinates.h" />
     <ClInclude Include="planner.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -161,11 +165,15 @@
     <ClCompile Include="convertstring.cpp" />
     <ClCompile Include="correctlines.cpp" />
     <ClCompile Include="draw.cpp" />
+    <ClCompile Include="edge.cpp" />
+    <ClCompile Include="edgecoordinates.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="listener.cpp" />
     <ClCompile Include="loadmodel.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modifymodel.cpp" />
+    <ClCompile Include="node.cpp" />
+    <ClCompile Include="nodecoordinates.cpp" />
     <ClCompile Include="planner.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

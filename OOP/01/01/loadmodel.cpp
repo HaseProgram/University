@@ -1,68 +1,89 @@
 #include "stdafx.h"
 #include "model.h"
 #include "loadmodel.h"
-#include "convertstring.h"
-
-char* get_model_name()
-{
-	char *modelFileName;
-	char bufFileName[MAX_PATH * 2] = "";
-	OPENFILENAME ofn;
-
-	ZeroMemory(&ofn, sizeof(OPENFILENAME));
-
-	ofn.lStructSize = sizeof(OPENFILENAME);
-	ofn.hwndOwner = NULL;
-	ofn.lpstrFilter = (LPCWSTR)TEXT("3D model (*.model)\0*.model\0 All files (*.*)\0*.*\0");
-	ofn.lpstrFile = (LPWSTR)bufFileName;
-	ofn.nMaxFile = MAX_PATH;
-	ofn.lpstrTitle = (LPCWSTR)TEXT("Choose 3D model file");
-	ofn.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-	ofn.lpstrDefExt = (LPCWSTR)TEXT("*.model");
-
-	if (GetOpenFileName(&ofn))
-	{
-		delete_zero_symbols(bufFileName);
-		modelFileName = (char*)calloc(strlen(bufFileName) + 1, sizeof(char));
-		strcpy(modelFileName, bufFileName);
-		return modelFileName;
-	}
-	else
-	{
-		return NULL;
-	}
-}
 
 int load_model(struct model* modelSettings, char* filename)
 {
+	struct model bufModelSettings;
 	if (!filename)
 	{
 		return BAD_FILE_NAME;
 	}
 
-	FILE* modelFile = open_modelfile(filename);
+	LFILE modelFile = open_modelfile(filename);
 
 	if (!modelFile)
 	{
 		return CANT_OPEN_FILE;
 	}
-	int error = transfer(modelSettings, modelFile);
+	int error = transfer(&bufModelSettings, modelFile);
 	close_modelfile(modelFile);
+	if (error == OK)
+	{
+		close_model(modelSettings, NULL);
+		*modelSettings = bufModelSettings;
+	}
+
 	return error;
 }
 
-int transfer(struct model* modelSettings, FILE* modelFile)
+int allocate_memory(model* modelSettings, struct node** nodeArray, struct edge** edgeArray)
+{
+	*nodeArray = getNodeArray(modelSettings);
+	*edgeArray = getEdgeArray(modelSettings);
+	int error = OK;
+	error = allocate_nodes(*nodeArray);
+	if (error != OK)
+	{
+		return error;
+	}
+	error = allocate_edges(*edgeArray);
+	if (error != OK)
+	{
+		free_nodes(*nodeArray);
+	}
+	return error;
+}
+
+int free_memory(struct node* nodeArray, struct edge* edgeArray)
+{
+	free_nodes(nodeArray);
+	free_edges(edgeArray);
+}
+
+int read_from_file(model* modelSettings, LFILE modelFile, struct node* nodeArray, struct edge* edgeArray)
+{
+	int error = read_nodes(modelSettings, modelFile);
+	if (error != OK)
+	{
+		return error;
+	}
+	error = read_edges(modelSettings, modelFile);
+	return error;
+}
+
+int transfer(struct model* modelSettings, LFILE modelFile)
 {
 	int error = OK;
 
 	error = read_nodes_and_edges_number(modelSettings, modelFile);
 	if (error != OK)
 		return error;
-	error = read_nodes(modelSettings, modelFile);
+
+	node* nodeArray;
+	edge* edgeArray;
+
+	error = allocate_memory(modelSettings, &nodeArray, &edgeArray);
 	if (error != OK)
+	{
 		return error;
-	error = read_edges(modelSettings, modelFile);
-	
+	}
+
+	error = read_from_file(modelSettings, modelFile, nodeArray, edgeArray);
+	if (error != OK)
+	{
+		free_memory(nodeArray, edgeArray);
+	}
 	return error;
 }
 
@@ -108,7 +129,7 @@ void free_edges(struct edge* edgeArray)
 	edgeArray->Number = 0;
 }
 
-int read_nodes_and_edges_number(struct model* modelSettings, FILE* modelFile)
+int read_nodes_and_edges_number(struct model* modelSettings, LFILE modelFile)
 {
 	struct node* nodeArray = getNodeArray(modelSettings);
 	struct edge* edgeArray = getEdgeArray(modelSettings);
@@ -118,54 +139,41 @@ int read_nodes_and_edges_number(struct model* modelSettings, FILE* modelFile)
 	return BAD_NUMBERS_OF_ITEMS;
 }
 
-int read_nodes(struct model* modelSettings, FILE* modelFile)
+int read_nodes(struct model* modelSettings, LFILE modelFile)
 {
 	double x, y, z;
+
+	int error = OK;
 	struct node* nodeArray = getNodeArray(modelSettings);
-
-	int error = allocate_nodes(nodeArray);
-	if (error != OK)
-		return error;
-
 	nodecoordinates* nodeCoordinates = getNodeArrayItems(nodeArray);
 	
 	for (int i = 0; (error == OK) && (i < getNodeArrayCount(nodeArray)); i++)
 	{
 		if (fscanf(modelFile, "%lf %lf %lf", &x, &y, &z) != 3)
 		{
-			free_nodes(nodeArray);
 			error = BAD_NODES_PARAMS;
 		}
 		else
 		{
 			if (error == OK)
 			{
-				nodeCoordinates[i].X = x;
-				nodeCoordinates[i].Y = y;
-				nodeCoordinates[i].Z = z;
+				setNodeCoordinates(nodeCoordinates + i,x,y,z);
 			}
 		}
 	}
 	return error;
 }
 
-int read_edges(struct model* modelSettings, FILE* modelFile)
+int read_edges(struct model* modelSettings, LFILE modelFile)
 {
 	int n1, n2;
+	int error = OK;
 
-	struct node* nodeArray = getNodeArray(modelSettings);
 	struct edge* edgeArray = getEdgeArray(modelSettings);
-
-	int error = allocate_edges(edgeArray);
-	if (error != OK)
-	{
-		free_nodes(nodeArray);
-		return error;
-	}
-
+	struct node* nodeArray = getNodeArray(modelSettings);
 	edgecoordinates* edgeCoordinates = getEdgeArrayItems(edgeArray);
 
-	for (int i = 0; (error == OK) && (i < getEdgeArrayCount(edgeArray)); i++)
+	for (int i = 0; error == OK && i < getEdgeArrayCount(edgeArray); i++)
 	{
 		if (fscanf(modelFile, "%d %d ", &n1, &n2) != 2 ||
 			n1 < 0 || 
@@ -173,35 +181,37 @@ int read_edges(struct model* modelSettings, FILE* modelFile)
 			n1 > getNodeArrayCount(nodeArray) ||
 			n2 > getNodeArrayCount(nodeArray))
 		{
-			free_nodes(nodeArray);
-			free_edges(edgeArray);
 			error = BAD_EDGES_PARAMS;
 		}
 		else
 		{
-			edgeCoordinates[i].node1 = n1;
-			edgeCoordinates[i].node2 = n2;
+			setEdgeCoordinates(edgeCoordinates + i, n1, n2);
 		}
 	}
 	return error;
 }
 
-void close_model(struct model* modelSettings, char** fileName)
+int close_model(struct model* modelSettings, char** fileName)
 {
 	struct node* nodeArray = getNodeArray(modelSettings);
 	struct edge* edgeArray = getEdgeArray(modelSettings);
 
 	free_nodes(nodeArray);
 	free_edges(edgeArray);
-	*fileName = NULL;
+	
+	if (fileName != NULL)
+	{
+		*fileName = NULL;
+	}
+	return OK;
 }
 
-FILE* open_modelfile(char* modelFileName)
+LFILE open_modelfile(char* modelFileName)
 {
 	return fopen(modelFileName, "r");
 }
 
-void close_modelfile(FILE* modelFile)
+void close_modelfile(LFILE modelFile)
 {
 	fclose(modelFile);
 }

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "modifymodel.h"
+#include "draw.h"
+
 enum e_command
 {
 	LOAD, QUIT, DRAW, MODIFY

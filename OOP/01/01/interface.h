@@ -7,4 +7,19 @@
 #define ID_BUTTON_ZOOM_IN 5004
 #define ID_BUTTON_ZOOM_OUT 5005
 
+#include <Commdlg.h>
+
+enum load_type
+{
+	FROM_FILE, FROM_DATABASE
+};
+
+static struct stream
+{
+	enum load_type type;
+} Stream;
+
+void init_context(struct context_params* sceneSettings);
+
+char* get_model_name();
 void initButtons();

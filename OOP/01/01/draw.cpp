@@ -6,17 +6,6 @@
 
 extern HWND hWnd;
 
-void init_context(struct context_params* sceneSettings)
-{
-	sceneSettings->hdc = GetDC(hWnd);
-	sceneSettings->x = 405;
-	sceneSettings->y = 15;
-	sceneSettings->height = 670;
-	sceneSettings->width = 1000;
-	sceneSettings->bg_color = 0xFAF9FA;
-	sceneSettings->ln_color = 0x48333A;
-}
-
 int draw(struct context_params sceneSettings, struct model modelSettings)
 {
 	int error;
@@ -52,6 +41,13 @@ int delete_scene(struct context_params Scene)
 	return -1;
 }
 
+int free_lines(struct line* lines)
+{
+	free(lines);
+	lines = NULL;
+	return OK;
+}
+
 
 int draw_model(struct context_params sceneSettings, struct model modelSettings)
 {
@@ -72,8 +68,7 @@ int draw_model(struct context_params sceneSettings, struct model modelSettings)
 		draw_line(sceneSettings,*(lines+i));
 	}
 
-	free(lines);
-	lines = NULL;
+	error = free_lines(lines);
 
 	return error;
 }
