@@ -1,69 +1,92 @@
-StacSeg SEGMENT PARA STACK 'STACK'
-	DW	128h DUP (?)
-StacSeg ENDS
+SSTACK SEGMENT PARA STACK 'STACK'
+	DB 64 DUP('STACK___')
+SSTACK ENDS
 
 
-CodeSeg SEGMENT PUBLIC 'CODE'
-    ASSUME CS:CodeSeg, SS:StacSeg
+CSEG SEGMENT PUBLIC 'CODE'
+    ASSUME CS:CSEG, SS:SSTACK
 	
-	PUBLIC Time
-	EXTRN Main:NEAR
+	PUBLIC CLOCKS
 	
-Time: 
-	MOV AH,2h
-	INT 1Ah	
-	
-	MOV BX,CX		
-	MOV CL,4
-	SHR BH,CL
+CLOCKS 	PROC 
 
-	MOV AH,2h
-	MOV DL,BH
-	ADD DL,'0'
-	INT 21h
+	MOV DL, 13		; переводим каретку в начало
+	MOV AH, 02H
+	INT 21H 
+
+	MOV AH, 02H		; 2 функци€ прерывани€ биоса возвращает врем€
+	INT 1AH	
+	
+	MOV BX, CX
+	
+	MOV CL, 4
+	
+	XOR AX, AX            ;дес€тки часов
+	MOV AX, BX
+
+	
+	SHR AH, CL
+	MOV AL, AH
+       	CALL OUTPUT 
+          
+       	XOR AX, AX           ;единицы часов
+	MOV AX, BX
+	SHL AH, CL     
+	SHR AH, CL
+	MOV AL, AH
+        CALL OUTPUT                 
+          
+        XOR AX, AX            ;ƒвоеточие
+        MOV DL, ':'
+	MOV AH, 02H
+	INT 21H 
+          
+    XOR AX, AX            ;дес€тки минут
+	MOV AX, BX
+	SHR AL, CL
+        CALL OUTPUT                
+          
+        XOR AX, AX            ;единицы минут
+	MOV AX, BX
+	SHL AL, CL     
+	SHR AL, CL
+        CALL OUTPUT 
 		
-	AND CH,1111b
-	MOV DL,CH
-	ADD DL,'0'
-	INT 21h
-	MOV DL,':' 
-	INT 21h
+	XOR AX, AX            ;ƒвоеточие
+    MOV DL, ':'
+	MOV AH, 02H
+	INT 21H 
 		
-	MOV BH,BL
-	MOV CH,BH
-	SHR BH,CL 
-		
-	MOV AH,2h
-	MOV DL,BH
-	ADD DL,'0'
-	INT 21h
+	XOR AX, AX            ;дес€тки секунд
+	MOV AX, DX
+	SHR AH, CL
+	MOV AL, AH
+        CALL OUTPUT                
+          
+        XOR AX, AX            ;единицы секунд
+	MOV AX, DX
+	SHL AH, CL    
+	SHR AH, CL
+	MOV AL, AH
+        CALL OUTPUT 
+	    
+	RET	
+	           
+OUTPUT: 
+	PUSH DX   
+    
+	MOV DL, AL
+	ADD DL, '0'  
+	
+	MOV AH, 02H
+	INT 21H 
+	
+	
+	
+    	POP DX  
 
-	AND CH,1111b
-	MOV DL,CH
-	ADD DL,'0'
-	INT 21h
-	MOV DL,':'
-	INT 21h
-		
-	MOV BH,DH
-	MOV CH,BH
-	SHR BH,CL 
-
-	
-	MOV AH,2h
-	MOV DL,BH
-	ADD DL,'0'
-	INT 21h
-	
-	AND CH,1111b
-	MOV DL,CH
-	ADD DL,'0'
-	INT 21h
-	
-	MOV DL,13
-	INT 21h 
-       	
-	JMP Main	
-	           	
-CodeSeg ENDS
-     END Time	 
+	RET
+	          
+CLOCKS ENDP	
+CSEG ENDS
+     END	        

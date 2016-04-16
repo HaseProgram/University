@@ -1,40 +1,42 @@
-StacSeg SEGMENT PARA STACK 'STACK'
-	DW	128h DUP (?)
-StacSeg  ENDS
+SSTACK SEGMENT PARA STACK 'STACK'
+	DB 64 DUP('STACK___')
+SSTACK ENDS
 
-CodeSeg SEGMENT PUBLIC 'CODE'
-     ASSUME CS:CodeSeg, SS:StacSeg
+CSEG SEGMENT PUBLIC 'CODE'
+     ASSUME CS:CSEG, SS:SSTACK
 	
-	PUBLIC Main
-	EXTRN Time:NEAR
+	EXTRN CLOCKS:NEAR
 
-Main:	MOV AX, 0
+SHOWTIME: CALL CLOCKS
+
+BUFF:	MOV AX, 0
           
-       	INT 16H		;читаем скан код нажатой клавиши
+       	INT 16H		;читаем код нажатой клавиши
                                          
-	CMP AH, 02H ;1
-	JZ Time
-	CMP AH, 03H ;2
-	JZ Time
-	CMP AH, 04H ;3
-	JZ Time
-	CMP AH, 05H ;4
-	JZ Time
-	CMP AH, 06H ;5
-	JZ Time
-	CMP AH, 07H ;6
-	JZ Time
-	CMP AH, 08H ;7
-	JZ Time
-	CMP AH, 09H ;8
-	JZ Time
-	CMP AH, 0AH ;9
-	JZ Time
-	CMP AH, 0BH ;0
-	JZ Time
+	CMP AH, 02H
+	JZ SHOWTIME
+	CMP AH, 03H
+	JZ SHOWTIME
+	CMP AH, 04H
+	JZ SHOWTIME
+	CMP AH, 05H
+	JZ SHOWTIME
+	CMP AH, 06H
+	JZ SHOWTIME
+	CMP AH, 07H
+	JZ SHOWTIME
+	CMP AH, 08H
+	JZ SHOWTIME
+	CMP AH, 09H
+	JZ SHOWTIME
+	CMP AH, 0AH
+	JZ SHOWTIME
+	CMP AH, 0BH
+	JZ SHOWTIME
 
-	CMP AH, 01H 	    
-        JNZ Main              ;если не нажато ESC,
+	CMP AH, 01H 	     
+        JNZ BUFF	;если не нажато ESC,
+         
 
 
 	MOV AH, 4CH
@@ -42,5 +44,5 @@ Main:	MOV AX, 0
 	INT 21H
 
 
-CodeSeg ENDS
-     END Main
+CSEG ENDS
+     END BUFF
