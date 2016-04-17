@@ -279,7 +279,6 @@ void brez_nst(scene sceneSettings, line Line)
 		}
 
 		double m = (double)dy / dx;
-		//double e = m - 0.5;
 
 		double e = I / 2;
 		m *= I;
@@ -288,7 +287,6 @@ void brez_nst(scene sceneSettings, line Line)
 
 
 		pixel_with_alpha(curr_x, curr_y, e / I, sceneSettings);
-		//DrawPointBright(graphics, new Point(curr_x, curr_y), color, e / i_max);
 
 		for (int i = 1; i < dx + 1; ++i)
 		{
@@ -312,52 +310,7 @@ void brez_nst(scene sceneSettings, line Line)
 
 			}
 			pixel_with_alpha(curr_x, curr_y, e / I, sceneSettings);
-			//DrawPointBright(graphics, new Point(curr_x, curr_y), color, e / i_max);
 		}
-
-		/*
-		tan = dy / dx;
-
-		if (tan > 1)
-		{
-			double w = dx;
-			dx = dy;
-			dy = w;
-			tan = 1 / tan;
-			fl = 1;
-		}
-		else
-			fl = 0;
-
-		f_err = I / 2.0;
-
-		tan *= I;
-		W = I - tan;
-
-		double x = Line.x1;
-		double y = Line.y1;
-		//SetPixel(sceneSettings.hdc, x, y, int(f_err));
-		pixel_with_alpha(x, y, int(f_err), sceneSettings);
-		for (double i = 1; i < dx + 1; i++)
-		{
-			if (f_err > W)
-			{
-				x += sx;
-				y += sy;
-				f_err -= W;
-			}
-			else
-			{
-				if (fl)
-					y += sy;
-				else
-					x += sx;
-				f_err += tan;
-			}
-			//SetPixel(sceneSettings.hdc, floor(x), floor(y), int(f_err));
-			pixel_with_alpha(floor(x), floor(y), int(f_err), sceneSettings);
-		}
-		*/
 	}
 
 }
