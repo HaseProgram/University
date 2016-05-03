@@ -1,5 +1,6 @@
 #pragma once
 #include "iterator.h"
+#include "error.h"
 #include <cstdarg>
 
 template <typename type_t>
@@ -72,6 +73,10 @@ void List<type_t>::addlast(type_t data)
 	listItem* temp;
 
 	temp = new listItem;
+	if (!temp)
+	{
+		throw MemoryError();
+	}
 	temp->Prev = NULL;
 	temp->Next = NULL;
 	temp->data = data;
@@ -97,6 +102,10 @@ void List<type_t>::addfirst(type_t data)
 	listItem* temp;
 
 	temp = new listItem;
+	if (!temp)
+	{
+		throw MemoryError();
+	}
 	temp->Prev = NULL;
 	temp->Next = NULL;
 	temp->data = data;
@@ -120,6 +129,11 @@ template <typename type_t>
 void List<type_t>::print()
 {
 	listItem* item = this->head;
+
+	if (!item)
+	{
+		throw PrintError();
+	}
 
 	while (item != NULL)
 	{
