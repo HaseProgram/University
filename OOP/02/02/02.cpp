@@ -15,6 +15,16 @@ int main()
 	myList.addlast(4);
 	myList.addfirst(0);
 	myList.print();
+
+	List<int> myNewList(3, 5, 6, 7);
+
+	List<int> myVeryNewList = myNewList;
+	myVeryNewList.print();
+
+	List<int> myBigList;
+	myBigList = myList + myNewList;
+	myBigList.print();
+
 	system("pause");
 	return 0;
 }

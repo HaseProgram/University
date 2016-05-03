@@ -3,6 +3,8 @@
 #include "error.h"
 #include <cstdarg>
 
+//using namespace std;
+
 template <typename type_t>
 class List
 {
@@ -21,6 +23,8 @@ private:
 
 public:
 	List();
+	List(const List<type_t>& object);
+	List(List<type_t>&& object);
 	List(size_t size, type_t data, ...);
 	~List();
 
@@ -28,6 +32,18 @@ public:
 	void addfirst(type_t data);
 
 	void print();
+
+	void clear();
+
+	List<type_t>& operator=(const List<type_t> &right);
+	List<type_t> operator+(const List<type_t> &right);
+	//List<type_t> operator-(const List<type_t>& right);
+	//bool operator==(const List<type_t>& left, const List<type_t>& right);
+	//bool operator!=(const List<type_t>& left, const List<type_t>& right);
+	//bool operator>=(const List<type_t>& left, const List<type_t>& right);
+	//bool operator<=(const List<type_t>& left, const List<type_t>& right);
+	//bool operator>(const List<type_t>& left, const List<type_t>& right);
+	//bool operator<(const List<type_t>& left, const List<type_t>& right);
 
 	friend class iterator<typename type_t>;
 
@@ -40,6 +56,22 @@ List<type_t>::List()
 	this->head = NULL;
 	this->tail = NULL;
 	this->size = 0;
+}
+
+template <typename type_t>
+List<type_t>::List(const List<type_t>& object)
+{
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
+
+	listItem* item = object.head;
+
+	while (item != NULL)
+	{
+		this->addlast(item->data);
+		item = item->Next;
+	}
 }
 
 template <typename type_t>
@@ -64,7 +96,8 @@ List<type_t>::List(size_t size, type_t data, ...)
 template <typename type_t>
 List<type_t>::~List()
 {
-
+	//std::cout << "DESTRUCT" << std::endl;
+	clear();
 }
 
 template <typename type_t>
@@ -141,4 +174,47 @@ void List<type_t>::print()
 		item = item->Next;
 	}
 	std::cout << std::endl;
+}
+
+template <typename type_t>
+void List<type_t>::clear()
+{
+	listItem* item = this->head;
+
+	while (head)
+	{
+		this->tail = this->head->Next;
+		delete this->head;
+		this->head = this->tail;
+	}
+	this->size = 0;
+}
+
+template <typename type_t>
+List<type_t>& List<type_t>::operator=(const List<type_t> &right)
+{
+	this->clear();
+
+	listItem* item = right.head;
+
+	while (item != NULL)
+	{
+		this->addlast(item->data);
+		item = item->Next;
+	}
+	return *this;
+}
+
+template <typename type_t>
+List<type_t> List<type_t>::operator+(const List<type_t> &right)
+{
+	this->size += right.size;
+	listItem* item;
+	item = right.head;
+	while (item)
+	{
+		this->addlast(item->data);
+		item = item->Next;
+	}
+	return *this;
 }

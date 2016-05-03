@@ -141,6 +141,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="error.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="iterator_base.h" />
     <ClInclude Include="list.h" />
