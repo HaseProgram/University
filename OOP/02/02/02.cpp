@@ -12,6 +12,9 @@
 int main()
 {
 	List<int> myList(3, 1, 2, 3);
+	myList.addlast(4);
+	myList.addfirst(0);
+	myList.print();
 	system("pause");
 	return 0;
 }

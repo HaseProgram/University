@@ -14,13 +14,19 @@ class List
 	};
 
 private:
-	listItem* item;
+	listItem* head;
+	listItem* tail;
 	size_t size;
 
 public:
 	List();
 	List(size_t size, type_t data, ...);
 	~List();
+
+	void addlast(type_t data);
+	void addfirst(type_t data);
+
+	void print();
 
 	friend class iterator<typename type_t>;
 
@@ -30,30 +36,26 @@ public:
 template <typename type_t>
 List<type_t>::List()
 {
-	this->item = NULL;
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
 }
 
 template <typename type_t>
 List<type_t>::List(size_t size, type_t data, ...)
 {
-	this->size = size;
+
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
+
 	va_list arg;
 	va_start(arg, data);
-	this->item = new listItem;
-	this->item->Prev = NULL;
-	this->item->Next = NULL;
-	this->item->data = data;
-
-	listItem* temp;
-
+	this->addlast(data);
 	for (size_t i = 0; i < size - 1; i++)
 	{
-		temp = new listItem;
-		temp->Prev = this->item;
-		temp->Next = NULL;
-		temp->data = va_arg(arg, type_t);
-		this->item->Next = temp;
-		this->item = this->item->Next;
+		data = va_arg(arg, type_t);
+		this->addlast(data);
 	}
 	va_end(arg);
 }
@@ -62,4 +64,67 @@ template <typename type_t>
 List<type_t>::~List()
 {
 
+}
+
+template <typename type_t>
+void List<type_t>::addlast(type_t data)
+{
+	listItem* temp;
+
+	temp = new listItem;
+	temp->Prev = NULL;
+	temp->Next = NULL;
+	temp->data = data;
+
+	if (this->head == NULL)
+	{
+		this->head = temp;
+		this->tail = temp;
+	}
+	else
+	{
+		temp->Prev = this->tail;
+		this->tail->Next = temp;
+		this->tail = temp;
+	}
+	this->size++;
+}
+
+
+template <typename type_t>
+void List<type_t>::addfirst(type_t data)
+{
+	listItem* temp;
+
+	temp = new listItem;
+	temp->Prev = NULL;
+	temp->Next = NULL;
+	temp->data = data;
+
+	if (this->head == NULL)
+	{
+		this->head = temp;
+		this->tail = temp;
+	}
+	else
+	{
+		temp->Next = this->head;
+		this->head->Prev = temp;
+		this->head = temp;
+	}
+	this->size++;
+}
+
+
+template <typename type_t>
+void List<type_t>::print()
+{
+	listItem* item = this->head;
+
+	while (item != NULL)
+	{
+		std::cout << item->data << " ";
+		item = item->Next;
+	}
+	std::cout << std::endl;
 }
