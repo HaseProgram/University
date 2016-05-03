@@ -11,8 +11,8 @@
 
 int main()
 {
-	List<int> myList(3,1,2,3);
+	List<int> myList(3, 1, 2, 3);
 	system("pause");
-    return 0;
+	return 0;
 }
 

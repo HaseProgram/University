@@ -6,12 +6,12 @@ template <typename type_t>
 class List
 {
 
-struct listItem
-{
-	listItem* Prev;
-	listItem* Next;
-	type_t data;
-};
+	struct listItem
+	{
+		listItem* Prev;
+		listItem* Next;
+		type_t data;
+	};
 
 private:
 	listItem* item;

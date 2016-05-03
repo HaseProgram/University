@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4875580B-73E3-41B0-97E0-69DC8A73BBE0}</ProjectGuid>
+    <ProjectGuid>{DE950C9B-4EC9-43DD-93A5-6096A9A5C5B2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>My2</RootNamespace>
+    <RootNamespace>My02</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -141,14 +141,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="iterator.h" />
     <ClInclude Include="iterator_base.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="iterator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2.cpp" />
+    <ClCompile Include="02.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
