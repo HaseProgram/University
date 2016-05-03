@@ -54,6 +54,24 @@ void rot_xy(struct model* modelSettings, struct modification_params modification
 	}
 }
 
+void rot_yz(struct model* modelSettings, struct modification_params modificationSettings)
+{
+	double teta = (modificationSettings.param) / 180.0 * M_PI;
+	double newY, newZ;
+
+	struct node* nodeArray = &modelSettings->Node;
+	struct nodecoordinates *nodeCoords = nodeArray->Items;
+
+	for (int i = 0; i < nodeArray->Number; i++)
+	{
+
+		newY = nodeCoords[i].Y * cos(teta) + nodeCoords[i].Z * sin(teta);
+		newZ = nodeCoords[i].Z * cos(teta) - nodeCoords[i].Y * sin(teta);
+		nodeCoords[i].Y = newY;
+		nodeCoords[i].Z = newZ;
+	}
+}
+
 void zoom(struct model* modelSettings, struct modification_params modificationSettings)
 {
 	double k = modificationSettings.param;

@@ -5,6 +5,7 @@
 
 void draw(efigure figure, params parameters, int alg, scene sceneSettings)
 {
+																																							alg = 2;
 	switch (figure)
 	{
 	case ELLIPSE:
@@ -176,6 +177,7 @@ void circle_average(params parameters, scene sceneSettings)
 
 void circle_standart(params parameters, scene sceneSettings)
 {
+	SelectObject(sceneSettings.hdc, CreatePen(PS_SOLID, 1, sceneSettings.ln_color));
 	Ellipse(sceneSettings.hdc,
 		parameters.centerX - parameters.radiusMax,
 		parameters.centerY - parameters.radiusMax,
@@ -189,6 +191,6 @@ void spektre(int alg, params parameters, scene sceneSettings)
 	parameters.centerY = 290;
 	for (; parameters.radiusMax >= parameters.radiusMin; parameters.radiusMax -= parameters.radiusStep)
 	{
-		draw(CIRCLE, parameters, alg, sceneSettings);
+		draw(CIRCLE, parameters, 3, sceneSettings);
 	}
 }

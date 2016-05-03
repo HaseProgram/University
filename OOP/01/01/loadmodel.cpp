@@ -49,6 +49,7 @@ int free_memory(struct node* nodeArray, struct edge* edgeArray)
 {
 	free_nodes(nodeArray);
 	free_edges(edgeArray);
+	return 0;
 }
 
 int read_from_file(model* modelSettings, LFILE modelFile, struct node* nodeArray, struct edge* edgeArray)

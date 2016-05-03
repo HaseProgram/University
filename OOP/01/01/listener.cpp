@@ -62,6 +62,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTON_ROTATE_UP:
 		case VK_UP:
+		case 104:
 			modificationSet->type = ROTATE_XZ;
 			modificationSet->param = 5;
 			error = doit(MODIFY, &Argument);
@@ -72,6 +73,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTON_ROTATE_DOWN:
 		case VK_DOWN:
+		case 98:
 			modificationSet->type = ROTATE_XZ;
 			modificationSet->param = -5;
 			error = doit(MODIFY, &Argument);
@@ -82,6 +84,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTON_ROTATE_LEFT:
 		case VK_LEFT:
+		case 100:
 			modificationSet->type = ROTATE_XY;
 			modificationSet->param = -5;
 			error = doit(MODIFY, &Argument);
@@ -92,6 +95,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTON_ROTATE_RIGHT:
 		case VK_RIGHT:
+		case 102:
 			modificationSet->type = ROTATE_XY;
 			modificationSet->param = 5;
 			error = doit(MODIFY, &Argument);
@@ -119,9 +123,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				error = doit(DRAW, &Argument);
 			}
-			break;
-		case IDM_ABOUT:
-			DialogBoxW(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
 			if (&Argument.load)
