@@ -38,14 +38,11 @@ public:
 	void clear();
 
 	List<type_t>& operator=(const List<type_t> &right);
-	List<type_t> operator+(const List<type_t> &right);
-	List<type_t> operator-(const List<type_t> &right);
+	List<type_t> operator+(const List<type_t> &right) const;
+	List<type_t>& operator+=(const List<type_t> &right);
+	List<type_t> operator-(const List<type_t> &right) const;
 
 	bool operator==(const List<type_t> &right) const;
-	bool operator<(const List<type_t> &right) const;
-	bool operator<=(const List<type_t> &right) const;
-	bool operator>(const List<type_t> &right) const;
-	bool operator>=(const List<type_t> &right) const;
 	bool operator!=(const List<type_t> &right) const;
 
 
@@ -64,6 +61,21 @@ List<type_t>::List()
 
 template <typename type_t>
 List<type_t>::List(const List<type_t>& object)
+{
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
+
+	listItem* item = object.head;
+
+	while (item != NULL)
+	{
+		this->addlast(item->data);
+		item = item->Next;
+	}
+}
+template <typename type_t>
+List<type_t>::List(List<type_t>&& object)
 {
 	this->head = NULL;
 	this->tail = NULL;
@@ -233,24 +245,48 @@ void List<type_t>::clear()
 template <typename type_t>
 List<type_t>& List<type_t>::operator=(const List<type_t> &right)
 {
-	this->clear();
-
-	listItem* item = right.head;
-
-	while (item != NULL)
+	if (*this != right)
 	{
-		this->addlast(item->data);
-		item = item->Next;
+		this->clear();
+
+		listItem* item = right.head;
+
+		while (item != NULL)
+		{
+			this->addlast(item->data);
+			item = item->Next;
+		}
 	}
 	return *this;
 }
 
 template <typename type_t>
-List<type_t> List<type_t>::operator+(const List<type_t> &right)
+List<type_t> List<type_t>::operator+(const List<type_t> &right) const
 {
-	this->size += right.size;
+	List<type_t> result = *this;
+
+	result.size += right.size;
+
 	listItem* item;
 	item = right.head;
+
+	while (item)
+	{
+		result.addlast(item->data);
+		item = item->Next;
+	}
+	return result;
+}
+
+
+template <typename type_t>
+List<type_t>& List<type_t>::operator+=(const List<type_t> &right)
+{
+	List<type_t> temp = right;
+
+	this->size += temp.size;
+	listItem* item;
+	item = temp.head;
 	while (item)
 	{
 		this->addlast(item->data);
@@ -259,18 +295,20 @@ List<type_t> List<type_t>::operator+(const List<type_t> &right)
 	return *this;
 }
 
-
 template <typename type_t>
-List<type_t> List<type_t>::operator-(const List<type_t> &right)
+List<type_t> List<type_t>::operator-(const List<type_t> &right) const
 {
+	List<type_t> result = *this;
+
 	listItem* item;
 	item = right.head;
+
 	while (item)
 	{
-		this->remove(item->data);
+		result.remove(item->data);
 		item = item->Next;
 	}
-	return *this;
+	return result;
 }
 
 template <typename type_t>
@@ -292,4 +330,25 @@ bool List<type_t>::operator==(const List<type_t> &right) const
 		item2 = item2->Next;
 	}
 	return true;
+}
+
+template <typename type_t>
+bool List<type_t>::operator!=(const List<type_t> &right) const
+{
+	if (this->size != right.size)
+	{
+		return true;
+	}
+	listItem* item1 = this->head;
+	listItem* item2 = right.head;
+	while (item1 && item2)
+	{
+		if (item1->data != item2->data)
+		{
+			return true;
+		}
+		item1 = item1->Next;
+		item2 = item2->Next;
+	}
+	return false;
 }

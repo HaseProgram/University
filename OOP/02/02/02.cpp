@@ -23,19 +23,22 @@ int main()
 	myBigList = myList + myNewList;
 	myBigList.print();
 
-	myBigList.remove(0);
-	myBigList.print();
+	//myBigList.remove(0);
+	//myBigList.print();
 
 	myBigList.remove(2);
-	myBigList.print();
+	//myBigList.print();
 
-	myBigList.remove(7);
-	myBigList.print();
+	//myBigList.remove(7);
+	//myBigList.print();
 
-	std::cout << myBigList.count() << std::endl;
+	//std::cout << myBigList.count() << std::endl;
 
+	myList.print();
 	myList = myList - myBigList;
 	myList.print();
+
+	////////////////////////////////////////////////////////////
 
 	if (myList == myList)
 	{
@@ -55,6 +58,34 @@ int main()
 		std::cout << "== worked nice (it was !=)" << std::endl;
 	}
 
+	////////////////////////////////////////////////////////////
+
+	if (myList != myList)
+	{
+		std::cout << "!= worked bad (it was !=)" << std::endl;
+	}
+	else
+	{
+		std::cout << "!= worked nice (it was !=)" << std::endl;
+	}
+
+	if (myList != myBigList)
+	{
+		std::cout << "!= worked nice (it was !=)" << std::endl;
+	}
+	else
+	{
+		std::cout << "!= worked bad (it was !=)" << std::endl;
+	}
+
+	////////////////////////////////////////////////////////////
+
+	myBigList += myList;
+	myBigList.print();
+	myBigList += myBigList;
+	myBigList.print();
+	myList += myList;
+	myList.print();
 
 	system("pause");
 	return 0;
