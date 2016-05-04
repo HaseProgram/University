@@ -90,6 +90,14 @@ int main()
 	myBigList -= myList;
 	myBigList.print();
 
+	iterator<int> myListIterator(myList);
+	myListIterator++;
+	//++myListIterator;
+	int i;
+	myListIterator >> i;
+
+	std::cout << i << std::endl;
+
 	system("pause");
 	return 0;
 }

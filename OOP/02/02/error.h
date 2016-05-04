@@ -33,3 +33,14 @@ public:
 	}
 
 };
+
+class IndexError : public Error
+{
+
+public:
+	const char* out()
+	{
+		return "Index is out of range";
+	}
+
+};
