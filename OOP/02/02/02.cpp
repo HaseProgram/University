@@ -87,6 +87,9 @@ int main()
 	myList += myList;
 	myList.print();
 
+	myBigList -= myList;
+	myBigList.print();
+
 	system("pause");
 	return 0;
 }

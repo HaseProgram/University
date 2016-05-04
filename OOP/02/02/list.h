@@ -41,6 +41,7 @@ public:
 	List<type_t> operator+(const List<type_t> &right) const;
 	List<type_t>& operator+=(const List<type_t> &right);
 	List<type_t> operator-(const List<type_t> &right) const;
+	List<type_t>& operator-=(const List<type_t> &right);
 
 	bool operator==(const List<type_t> &right) const;
 	bool operator!=(const List<type_t> &right) const;
@@ -309,6 +310,21 @@ List<type_t> List<type_t>::operator-(const List<type_t> &right) const
 		item = item->Next;
 	}
 	return result;
+}
+
+template <typename type_t>
+List<type_t>& List<type_t>::operator-=(const List<type_t> &right)
+{
+	List<type_t> temp = right;
+
+	listItem* item;
+	item = temp.head;
+	while (item)
+	{
+		this->remove(item->data);
+		item = item->Next;
+	}
+	return *this;
 }
 
 template <typename type_t>
