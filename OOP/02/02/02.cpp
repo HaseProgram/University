@@ -5,8 +5,6 @@
 
 #include "list.h"
 #include "iterator.h"
-//using namespace std;
-
 
 
 int main()
@@ -24,6 +22,20 @@ int main()
 	List<int> myBigList;
 	myBigList = myList + myNewList;
 	myBigList.print();
+
+	myBigList.remove(0);
+	myBigList.print();
+
+	myBigList.remove(2);
+	myBigList.print();
+
+	myBigList.remove(7);
+	myBigList.print();
+
+	std::cout << myBigList.count() << std::endl;
+
+	myList = myList - myBigList;
+	myList.print();
 
 	system("pause");
 	return 0;

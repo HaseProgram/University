@@ -3,8 +3,6 @@
 #include "error.h"
 #include <cstdarg>
 
-//using namespace std;
-
 template <typename type_t>
 class List
 {
@@ -31,13 +29,17 @@ public:
 	void addlast(type_t data);
 	void addfirst(type_t data);
 
+	int remove(type_t data);
+
+	int count();
+
 	void print();
 
 	void clear();
 
 	List<type_t>& operator=(const List<type_t> &right);
 	List<type_t> operator+(const List<type_t> &right);
-	//List<type_t> operator-(const List<type_t>& right);
+	List<type_t> operator-(const List<type_t> &right);
 	//bool operator==(const List<type_t>& left, const List<type_t>& right);
 	//bool operator!=(const List<type_t>& left, const List<type_t>& right);
 	//bool operator>=(const List<type_t>& left, const List<type_t>& right);
@@ -96,7 +98,6 @@ List<type_t>::List(size_t size, type_t data, ...)
 template <typename type_t>
 List<type_t>::~List()
 {
-	//std::cout << "DESTRUCT" << std::endl;
 	clear();
 }
 
@@ -157,6 +158,45 @@ void List<type_t>::addfirst(type_t data)
 	this->size++;
 }
 
+template <typename type_t>
+int List<type_t>::remove(type_t data)
+{
+	int deleted = 0;
+	listItem* item = this->head;
+	listItem* next;
+
+	while (item)
+	{
+		next = item->Next;
+		if (item->data == data)
+		{
+			if (item->Prev)
+			{
+				item->Prev->Next = item->Next;
+			}
+			else 
+			{
+				this->head = item->Next;
+			}
+			if (item->Next)
+			{
+				item->Next->Prev = item->Prev;
+			}
+			delete item;
+			deleted++;
+			this->size--;
+		}
+		item = next;
+	}
+	return deleted;
+}
+
+
+template <typename type_t>
+int List<type_t>::count()
+{
+	return this->size;
+}
 
 template <typename type_t>
 void List<type_t>::print()
@@ -179,9 +219,7 @@ void List<type_t>::print()
 template <typename type_t>
 void List<type_t>::clear()
 {
-	listItem* item = this->head;
-
-	while (head)
+	while (this->head)
 	{
 		this->tail = this->head->Next;
 		delete this->head;
@@ -214,6 +252,20 @@ List<type_t> List<type_t>::operator+(const List<type_t> &right)
 	while (item)
 	{
 		this->addlast(item->data);
+		item = item->Next;
+	}
+	return *this;
+}
+
+
+template <typename type_t>
+List<type_t> List<type_t>::operator-(const List<type_t> &right)
+{
+	listItem* item;
+	item = right.head;
+	while (item)
+	{
+		this->remove(item->data);
 		item = item->Next;
 	}
 	return *this;
