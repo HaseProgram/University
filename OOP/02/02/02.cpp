@@ -80,11 +80,11 @@ int main()
 	}
 	catch (Error &err)
 	{
-		std::cout << err.what << std::endl;
+		std::cout << err.out() << std::endl;
 	}
 	catch (ItError &err)
 	{
-		std::cout << err.out << std::endl;
+		std::cout << err.out() << std::endl;
 	}
 
 	system("pause");
