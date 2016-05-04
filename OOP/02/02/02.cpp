@@ -57,6 +57,7 @@ int main()
 		std::cout << std::endl;
 
 		std::cout << "=========================================================" << std::endl;
+		std::cout << std::endl;
 		int value;
 
 		std::cout << "Creating iterator object of myBigList and print value using >>" << std::endl;
@@ -77,6 +78,14 @@ int main()
 		myIterator >> value;
 		std::cout << value << std::endl;
 		std::cout << std::endl;
+
+		std::cout << "=========================================================" << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "MyList -= MyigList (exception)" << std::endl;
+		myList -= myBigList;
+		myList.print();
+		
 	}
 	catch (Error &err)
 	{
