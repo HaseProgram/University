@@ -37,6 +37,25 @@ int main()
 	myList = myList - myBigList;
 	myList.print();
 
+	if (myList == myList)
+	{
+		std::cout << "== worked nice (it was ==)" << std::endl;
+	}
+	else
+	{
+		std::cout << "== worked bad (it was ==)" << std::endl;
+	}
+	
+	if (myList == myBigList)
+	{
+		std::cout << "== worked bad (it was !=)" << std::endl;
+	}
+	else
+	{
+		std::cout << "== worked nice (it was !=)" << std::endl;
+	}
+
+
 	system("pause");
 	return 0;
 }

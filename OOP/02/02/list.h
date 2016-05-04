@@ -40,12 +40,14 @@ public:
 	List<type_t>& operator=(const List<type_t> &right);
 	List<type_t> operator+(const List<type_t> &right);
 	List<type_t> operator-(const List<type_t> &right);
-	//bool operator==(const List<type_t>& left, const List<type_t>& right);
-	//bool operator!=(const List<type_t>& left, const List<type_t>& right);
-	//bool operator>=(const List<type_t>& left, const List<type_t>& right);
-	//bool operator<=(const List<type_t>& left, const List<type_t>& right);
-	//bool operator>(const List<type_t>& left, const List<type_t>& right);
-	//bool operator<(const List<type_t>& left, const List<type_t>& right);
+
+	bool operator==(const List<type_t> &right) const;
+	bool operator<(const List<type_t> &right) const;
+	bool operator<=(const List<type_t> &right) const;
+	bool operator>(const List<type_t> &right) const;
+	bool operator>=(const List<type_t> &right) const;
+	bool operator!=(const List<type_t> &right) const;
+
 
 	friend class iterator<typename type_t>;
 
@@ -269,4 +271,25 @@ List<type_t> List<type_t>::operator-(const List<type_t> &right)
 		item = item->Next;
 	}
 	return *this;
+}
+
+template <typename type_t>
+bool List<type_t>::operator==(const List<type_t> &right) const
+{
+	if (this->size != right.size)
+	{
+		return false;
+	}
+	listItem* item1 = this->head;
+	listItem* item2 = right.head;
+	while (item1)
+	{
+		if (item1->data != item2->data)
+		{
+			return false;
+		}
+		item1 = item1->Next;
+		item2 = item2->Next;
+	}
+	return true;
 }
