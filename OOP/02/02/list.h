@@ -31,7 +31,9 @@ public:
 
 	int remove(type_t data);
 
-	int count();
+	type_t searchByIndex(size_t index) const;
+
+	int count() const;
 
 	void print();
 
@@ -75,6 +77,7 @@ List<type_t>::List(const List<type_t>& object)
 		item = item->Next;
 	}
 }
+
 template <typename type_t>
 List<type_t>::List(List<type_t>&& object)
 {
@@ -207,8 +210,26 @@ int List<type_t>::remove(type_t data)
 }
 
 
+template<typename type_t>
+type_t List<type_t>::searchByIndex(size_t index) const
+{
+	listItem* item = this->head;
+	
+	size_t i = 0;
+	for (; i < index && item; i++)
+	{
+		item = item->Next;
+	}
+	if (!item || i != index)
+	{
+		throw Index();
+	}
+	return item->data;
+}
+
+
 template <typename type_t>
-int List<type_t>::count()
+int List<type_t>::count() const
 {
 	return this->size;
 }
@@ -285,7 +306,6 @@ List<type_t>& List<type_t>::operator+=(const List<type_t> &right)
 {
 	List<type_t> temp = right;
 
-	this->size += temp.size;
 	listItem* item;
 	item = temp.head;
 	while (item)

@@ -14,9 +14,18 @@ public:
 	iterator<type_t>& operator[](const size_t& n);				// obj[i]
 	iterator<type_t>& operator++();								// ++obj
 	iterator<type_t> operator++(type_t);						// obj++
+	iterator<type_t>& operator+=(const size_t n);				// obj += n
 	iterator<type_t>& operator--();								// --obj
 	iterator<type_t> operator--(type_t);						// obj--
-	void operator>>(type_t& data);							// get value
+	iterator<type_t>& operator-=(const size_t n);				// obj -= n
+	void operator>>(type_t& data);								// get value
+
+	bool operator !=(const iterator<type_t>& right) const;
+	bool operator ==(const iterator<type_t>& right) const;
+	bool operator <(const iterator<type_t>& right) const;
+	bool operator >(const iterator<type_t>& right) const;
+	bool operator <=(const iterator<type_t>& right) const;
+	bool operator >=(const iterator<type_t>& right) const;
 
 
 private:
@@ -124,6 +133,17 @@ iterator<type_t> iterator<type_t>::operator++(type_t)
 }
 
 template <typename type_t>
+iterator<type_t>& iterator<type_t>::operator+=(const size_t n)
+{
+	for (size_t i = 0; i < n; i++)
+	{
+		++(*this);
+	}
+	return *this;
+}
+
+
+template <typename type_t>
 iterator<type_t>& iterator<type_t>::operator--()
 {
 	if (this->start())
@@ -143,7 +163,66 @@ iterator<type_t> iterator<type_t>::operator--(type_t)
 }
 
 template <typename type_t>
+iterator<type_t>& iterator<type_t>::operator-=(const size_t n)
+{
+	for (size_t i = 0; i < n; i++)
+	{
+		--(*this);
+	}
+	return *this;
+}
+
+
+template <typename type_t>
 void iterator<type_t>::operator>>(type_t& data)
 {
 	data = this->value();
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator==(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current == right.current;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator!=(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current != right.current;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator<(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current < right.current;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator>(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current > right.current;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator<=(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current <= right.current;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator>=(const iterator<type_t> &right) const
+{
+	if (this->list != right.list)
+		throw Compare();
+	return this->current >= right.current;
 }

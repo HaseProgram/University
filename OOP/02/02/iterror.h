@@ -33,3 +33,14 @@ public:
 	}
 
 };
+
+class Compare : public ItError
+{
+
+public:
+	const char* out()
+	{
+		return "Cannot compare different copies of Lists!";
+	}
+
+};
