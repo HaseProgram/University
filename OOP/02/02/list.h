@@ -33,6 +33,8 @@ public:
 
 	type_t searchByIndex(size_t index) const;
 
+	void update(size_t index, type_t data) const;
+
 	int count() const;
 
 	void print();
@@ -222,6 +224,24 @@ type_t List<type_t>::searchByIndex(size_t index) const
 		throw Index();
 	}
 	return item->data;
+}
+
+
+template <typename type_t>
+void List<type_t>::update(size_t index, type_t data) const
+{
+	listItem* item = this->head;
+
+	size_t i = 0;
+	for (; i < index && item; i++)
+	{
+		item = item->Next;
+	}
+	if (!item || i != index)
+	{
+		throw Index();
+	}
+	item->data = data;
 }
 
 

@@ -61,6 +61,11 @@ int main()
 		myBigList.print();
 		std::cout << std::endl;
 
+		std::cout << "MyBigList (1) update -> 9" << std::endl;
+		myBigList.update(0, 9);
+		myBigList.print();
+		std::cout << std::endl;
+
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;
 		int value;
@@ -79,8 +84,13 @@ int main()
 		std::cout << std::endl;
 
 		std::cout << "Using [5] to get 5 item and print it (>>)" << std::endl;
-		myIterator[5];
-		myIterator >> value;
+		myIterator[5] >> value;
+		std::cout << value << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "Using [2] << 9 to set 9 in 2item and print it (>>)" << std::endl;
+		myIterator[2] << 9;
+		myIterator[2] >> value;
 		std::cout << value << std::endl;
 		std::cout << std::endl;
 

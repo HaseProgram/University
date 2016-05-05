@@ -20,6 +20,7 @@ public:
 	iterator<type_t> operator--(type_t);						// obj--
 	iterator<type_t>& operator-=(const size_t n);				// obj -= n
 	void operator>>(type_t& data);								// get value
+	void operator<<(type_t data);								// set value
 
 	bool operator !=(const iterator<type_t>& right) const;
 	bool operator ==(const iterator<type_t>& right) const;
@@ -185,6 +186,12 @@ template <typename type_t>
 void iterator<type_t>::operator>>(type_t& data)
 {
 	data = this->value();
+}
+
+template <typename type_t>
+void iterator<type_t>::operator<<(type_t data)
+{
+	this->list->update(this->current, data);
 }
 
 template <typename type_t>
