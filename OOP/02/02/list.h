@@ -48,10 +48,7 @@ public:
 	bool operator==(const List<type_t> &right) const;
 	bool operator!=(const List<type_t> &right) const;
 
-
 	friend class iterator<typename type_t>;
-
-
 };
 
 template <typename type_t>

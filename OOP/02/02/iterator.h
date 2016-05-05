@@ -9,6 +9,7 @@ class iterator : public iterator_base
 {
 public:
 	iterator(const List<type_t> &list);
+	~iterator();
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
 	iterator<type_t>& operator[](const size_t& n);				// obj[i]
@@ -46,6 +47,13 @@ iterator<type_t>::iterator(const List<type_t> &list)
 {
 	this->current = 0;
 	this->list = &list;
+}
+
+template <typename type_t>
+iterator<type_t>::~iterator()
+{
+	this->current = 0;
+	this->list = NULL;
 }
 
 template <typename type_t>

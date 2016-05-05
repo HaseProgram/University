@@ -56,6 +56,11 @@ int main()
 		myBigList.print();
 		std::cout << std::endl;
 
+		std::cout << "MyBigList = MyBigList + MyList" << std::endl;
+		myBigList = myBigList + myList;
+		myBigList.print();
+		std::cout << std::endl;
+
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;
 		int value;
