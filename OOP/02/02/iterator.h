@@ -2,14 +2,19 @@
 #include "iterator_base.h"
 #include "iterror.h"
 
+#define lLeft true
+#define lRight false
+
 template <class type_t>class List;
 
 template <typename type_t>
 class iterator : public iterator_base
 {
 public:
-	iterator(const List<type_t> &list);
+	iterator(List<type_t> &list);
 	~iterator();
+
+	void del(bool key);
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
 	iterator<type_t>& operator[](const size_t& n);				// obj[i]
@@ -19,7 +24,7 @@ public:
 	iterator<type_t>& operator--();								// --obj
 	iterator<type_t> operator--(type_t);						// obj--
 	iterator<type_t>& operator-=(const size_t n);				// obj -= n
-	void operator>>(type_t& data);								// get value
+	void operator*(type_t& data);								// get value
 	void operator<<(type_t data);								// set value
 
 	bool operator !=(const iterator<type_t>& right) const;
@@ -29,22 +34,22 @@ public:
 	bool operator <=(const iterator<type_t>& right) const;
 	bool operator >=(const iterator<type_t>& right) const;
 
-
 private:
-	const List<type_t>* list;
+	List<type_t>* list;
 	void first();
 	void prev();
 	void next();
 	void last();
-	bool start();
-	bool end();
+
+	bool isstart();
+	bool isend();
 
 	const type_t value() const;
 
 };
 
 template <typename type_t>
-iterator<type_t>::iterator(const List<type_t> &list)
+iterator<type_t>::iterator(List<type_t> &list)
 {
 	this->current = 0;
 	this->list = &list;
@@ -57,6 +62,28 @@ iterator<type_t>::~iterator()
 	this->list = NULL;
 }
 
+template <typename type_t>	
+void iterator<type_t>::del(bool key)
+{
+	if (key)
+	{
+		if (isstart())
+		{
+			throw Range();
+		}
+		this->list->deletebyindex(this->current - 1);
+		this->current--;
+	}
+	else
+	{
+		if (isend())
+		{
+			throw Range();
+		}
+		this->list->deletebyindex(this->current + 1);
+	}
+}
+
 template <typename type_t>
 void iterator<type_t>::first()
 {
@@ -66,7 +93,7 @@ void iterator<type_t>::first()
 template <typename type_t>
 void iterator<type_t>::last()
 {
-	this->current = this->list->count() - 1;
+	this->current = this->list->length() - 1;
 }
 
 template <typename type_t>
@@ -82,15 +109,15 @@ void iterator<type_t>::prev()
 }
 
 template <typename type_t>
-bool iterator<type_t>::end()
+bool iterator<type_t>::isend()
 {
-	return this->current == this->list->count() - 1;
+	return this->current >= this->list->length() - 1;
 }
 
 template <typename type_t>
-bool iterator<type_t>::start()
+bool iterator<type_t>::isstart()
 {
-	return this->current == 0;
+	return this->current <= 0;
 }
 
 template <typename type_t>
@@ -110,12 +137,12 @@ iterator<type_t>& iterator<type_t>::operator=(const iterator<type_t>& right)
 template <typename type_t>
 iterator<type_t>& iterator<type_t>::operator[](const size_t& n)
 {
-	if (n < 0 || n > this->list->count() - 1)
+	if (n < 0 || n > this->list->length() - 1)
 	{
 		throw Index();
 	}
 	this->first();
-	for (int i = 0; i < n; i++)
+	for (size_t i = 0; i < n; i++)
 	{
 		this->next();
 	}
@@ -125,7 +152,7 @@ iterator<type_t>& iterator<type_t>::operator[](const size_t& n)
 template <typename type_t>
 iterator<type_t>& iterator<type_t>::operator++()
 {
-	if (this->end())
+	if (this->isend())
 	{
 		throw Range();
 	}
@@ -155,7 +182,7 @@ iterator<type_t>& iterator<type_t>::operator+=(const size_t n)
 template <typename type_t>
 iterator<type_t>& iterator<type_t>::operator--()
 {
-	if (this->start())
+	if (this->isstart())
 	{
 		throw Range();
 	}
@@ -183,7 +210,7 @@ iterator<type_t>& iterator<type_t>::operator-=(const size_t n)
 
 
 template <typename type_t>
-void iterator<type_t>::operator>>(type_t& data)
+void iterator<type_t>::operator*(type_t& data)
 {
 	data = this->value();
 }
