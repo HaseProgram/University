@@ -131,7 +131,7 @@ void List<type_t>::addfirst(type_t data)
 }
 
 template <typename type_t>
-void List<type_t>::addbyindex(size_t index, type_t data, int key) // добавить по индексу справа или слева
+void List<type_t>::addbyindex(size_t index, type_t data, int key)
 {
 
 	listItem* newItem;

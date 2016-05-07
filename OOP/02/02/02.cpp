@@ -106,6 +106,12 @@ int main()
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;
 		
+		std::cout << "Using last() o.del(lRight) (Exception)" << std::endl;
+		std::cout << myBigList;
+		myIterator.last();
+		myIterator.del(lRight);
+		std::cout << myBigList << std::endl;
+
 	}
 	catch (Error &err)
 	{
