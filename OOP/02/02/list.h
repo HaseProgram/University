@@ -21,6 +21,8 @@ private:
 	
 	List(const List<type_t>& object);
 	List<type_t>& operator=(const List<type_t> &right);
+	void addbyindex(size_t index, type_t data, int key);
+	void update(size_t index, type_t data) const;
 	
 public:
 	List();
@@ -36,13 +38,8 @@ public:
 	void deletefirst();
 	void deletebyindex(size_t index);
 
-	int remove(type_t data);
-
-	type_t searchByIndex(size_t index) const;
-
-	void update(size_t index, type_t data) const;
-
 	virtual size_t length() const override;
+	type_t searchByIndex(size_t index) const;
 
 	void clear();
 
@@ -124,56 +121,82 @@ List<type_t>::~List()
 template <typename type_t>
 void List<type_t>::addlast(type_t data)
 {
-	listItem* item;
-
-	item = new listItem;
-	if (!item)
-	{
-		throw MemoryError();
-	}
-	item->Prev = NULL;
-	item->Next = NULL;
-	item->data = data;
-
-	if (this->head == NULL)
-	{
-		this->head = item;
-		this->tail = item;
-	}
-	else
-	{
-		item->Prev = this->tail;
-		this->tail->Next = item;
-		this->tail = item;
-	}
-	this->size++;
+	addbyindex(this->length() - 1, data, lRight);
 }
-
 
 template <typename type_t>
 void List<type_t>::addfirst(type_t data)
 {
-	listItem* item;
+	addbyindex(0, data, lLeft);
+}
 
-	item = new listItem;
-	if (!item)
+template <typename type_t>
+void List<type_t>::addbyindex(size_t index, type_t data, int key) // добавить по индексу справа или слева
+{
+
+	listItem* newItem;
+	newItem = new listItem;
+	if (!newItem)
 	{
 		throw MemoryError();
 	}
-	item->Prev = NULL;
-	item->Next = NULL;
-	item->data = data;
 
-	if (this->head == NULL)
+	newItem->data = data;
+	newItem->Prev = NULL;
+	newItem->Next = NULL;
+
+	listItem* item = this->head;
+
+	if (item == NULL)
 	{
-		this->head = item;
-		this->tail = item;
+		this->head = newItem;
+		this->tail = newItem;
 	}
 	else
 	{
-		item->Next = this->head;
-		this->head->Prev = item;
-		this->head = item;
+
+		size_t i = 0;
+		bool first = false;
+
+		if (key)
+		{
+			if (index > 0)
+				index--;
+			else
+				first = true;
+		}
+
+		for (; i < index && item; i++)
+		{
+			item = item->Next;
+		}
+		if (!item || (index >= 0 && i != index))
+		{
+			throw Index();
+		}
+
+		if (!first)
+		{
+			newItem->Prev = item;
+			newItem->Next = NULL;
+			if (item->Next)
+			{
+				newItem->Next = item->Next;
+				item->Next->Prev = newItem;
+			}
+			else
+			{
+				this->tail = newItem;
+			}
+			item->Next = newItem;
+		}
+		else
+		{
+			newItem->Prev = NULL;
+			newItem->Next = item;
+			item->Prev = newItem;
+			this->head = newItem;
+		}
 	}
 	this->size++;
 }
@@ -224,44 +247,6 @@ void List<type_t>::deletebyindex(size_t index)
 	delete item;
 	this->size--;
 }
-
-template <typename type_t>
-int List<type_t>::remove(type_t data)
-{
-	int deleted = 0;
-	listItem* item = this->head;
-	listItem* next;
-
-	while (item)
-	{
-		next = item->Next;
-		if (item->data == data)
-		{
-			if (item->Prev)
-			{
-				item->Prev->Next = item->Next;
-			}
-			else 
-			{
-				this->head = item->Next;
-			}
-			if (item->Next)
-			{
-				item->Next->Prev = item->Prev;
-			}
-			else
-			{
-				this->tail = item->Prev;
-			}
-			delete item;
-			deleted++;
-			this->size--;
-		}
-		item = next;
-	}
-	return deleted;
-}
-
 
 template<typename type_t>
 type_t List<type_t>::searchByIndex(size_t index) const

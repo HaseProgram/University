@@ -15,6 +15,7 @@ public:
 	~iterator();
 
 	void del(bool key);
+	void add(type_t data, bool key);
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
 	iterator<type_t>& operator[](const size_t& n);				// obj[i]
@@ -34,12 +35,13 @@ public:
 	bool operator <=(const iterator<type_t>& right) const;
 	bool operator >=(const iterator<type_t>& right) const;
 
+	void first();
+	void last();
+
 private:
 	List<type_t>* list;
-	void first();
 	void prev();
 	void next();
-	void last();
 
 	bool isstart();
 	bool isend();
@@ -60,6 +62,12 @@ iterator<type_t>::~iterator()
 {
 	this->current = 0;
 	this->list = NULL;
+}
+
+template <typename type_t>
+void iterator<type_t>::add(type_t data, bool key)
+{
+	this->list->addbyindex(this->current, data, key);
 }
 
 template <typename type_t>	

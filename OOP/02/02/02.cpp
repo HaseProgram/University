@@ -31,10 +31,6 @@ int main()
 		myThirdList.addlast(0);
 		std::cout << myThirdList << std::endl;
 
-		std::cout << "Removing all 0 in MyThirdList" << std::endl;
-		myThirdList.remove(0);
-		std::cout << myThirdList << std::endl;
-
 		std::cout << "Delete first item in MyThirdList" << std::endl;
 		myThirdList.deletefirst();
 		std::cout << myThirdList << std::endl;
@@ -49,10 +45,6 @@ int main()
 
 		std::cout << "MyBigList += MyList" << std::endl;
 		myBigList += myList;
-		std::cout << myBigList << std::endl;
-
-		std::cout << "MyBigList (0) update -> 9" << std::endl;
-		myBigList.update(0, 9);
 		std::cout << myBigList << std::endl;
 
 		std::cout << "=========================================================" << std::endl;
@@ -84,11 +76,33 @@ int main()
 		std::cout << std::endl;
 
 		std::cout << "Using [4].del(lLeft) to delete 3 element" << std::endl;
-		std::cout << myBigList << std::endl;
+		std::cout << myBigList;
 		myIterator[4].del(lLeft);
 		std::cout << myBigList << std::endl;
-		std::cout << std::endl;
 
+		std::cout << "Using [0].del(lRight)" << std::endl;
+		std::cout << myBigList;
+		myIterator[0].del(lRight);
+		std::cout << myBigList << std::endl;
+
+		std::cout << "Using last() o.del(lRight)" << std::endl;
+		std::cout << myBigList;
+		myIterator.last();
+		myIterator.del(lLeft);
+		std::cout << myBigList << std::endl;
+
+		std::cout << "Using last() o.add(0, lLeft)" << std::endl;
+		std::cout << myBigList;
+		myIterator.last();
+		myIterator.add(0, lLeft);
+		std::cout << myBigList << std::endl;
+
+		std::cout << "Using last() o.add(0, lRight)" << std::endl;
+		std::cout << myBigList;
+		myIterator.last();
+		myIterator.add(0, lRight);
+		std::cout << myBigList << std::endl;
+		
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;
 		
