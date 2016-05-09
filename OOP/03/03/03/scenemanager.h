@@ -1,0 +1,15 @@
+#pragma once
+
+/*!
+\brief  Provide access to model and camera
+\author Dmitry Zaitsev
+\version 1.0
+\date 09 May 2016
+
+This class contains model and camera objects and provide access to them
+*/
+
+class SceneManager
+{
+
+};
