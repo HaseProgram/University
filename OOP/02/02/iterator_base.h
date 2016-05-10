@@ -1,5 +1,7 @@
 #pragma once
+#include "list_struct.h"
 
+template <typename type_t>
 class iterator_base
 {
 
@@ -10,5 +12,5 @@ public:
 	virtual void last() = 0;
 
 protected:
-	size_t current;
+	listItem<type_t>* currentItem;
 };

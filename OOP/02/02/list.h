@@ -1,4 +1,5 @@
 #pragma once
+#include "list_struct.h"
 #include "list_base.h"
 #include "iterator.h"
 #include "error.h"
@@ -8,20 +9,16 @@ template <typename type_t>
 class List : public list_base
 {
 
-	struct listItem
-	{
-		listItem* Prev;
-		listItem* Next;
-		type_t data;
-	};
-
 private:
-	listItem* head;
-	listItem* tail;
+
+	listItem<type_t>* head;
+	listItem<type_t>* tail;
 	
 	List(const List<type_t>& object);
+
 	List<type_t>& operator=(const List<type_t> &right);
-	void addbyindex(size_t index, type_t data, int key);
+	List<type_t>& operator=(List<type_t> &&right);
+	void addbylink(listItem<type_t>* link, type_t data, int key);
 	void update(size_t index, type_t data) const;
 	
 public:
@@ -36,15 +33,18 @@ public:
 
 	void deletelast();
 	void deletefirst();
-	void deletebyindex(size_t index);
+	void deletebylink(listItem<type_t>*, bool key);
 
 	virtual size_t length() const override;
-	type_t searchByIndex(size_t index) const;
+	listItem<type_t>* getHead() const;
+	listItem<type_t>* getTail() const;
 
 	void clear();
 
 	List<type_t> operator+(const List<type_t> &right) const;
 	List<type_t>& operator+=(const List<type_t> &right);
+	List<type_t> operator--(type_t);
+	List<type_t>& operator--();
 	
 
 	bool operator==(const List<type_t> &right) const;
@@ -68,7 +68,7 @@ List<type_t>::List(const List<type_t>& object)
 	this->tail = NULL;
 	this->size = 0;
 
-	listItem* item = object.head;
+	listItem<type_t>* item = object.head;
 
 	while (item != NULL)
 	{
@@ -84,7 +84,7 @@ List<type_t>::List(List<type_t>&& object)
 	this->tail = NULL;
 	this->size = 0;
 
-	listItem* item = object.head;
+	listItem<type_t>* item = object.head;
 
 	while (item != NULL)
 	{
@@ -121,21 +121,21 @@ List<type_t>::~List()
 template <typename type_t>
 void List<type_t>::addlast(type_t data)
 {
-	addbyindex(this->length() - 1, data, lRight);
+	addbylink(this->getTail(), data, lRight);
 }
 
 template <typename type_t>
 void List<type_t>::addfirst(type_t data)
 {
-	addbyindex(0, data, lLeft);
+	addbylink(this->getHead(), data, lLeft);
 }
 
 template <typename type_t>
-void List<type_t>::addbyindex(size_t index, type_t data, int key)
+void List<type_t>::addbylink(listItem<type_t>* link, type_t data, int key)
 {
 
-	listItem* newItem;
-	newItem = new listItem;
+	listItem<type_t>* newItem;
+	newItem = new listItem<type_t>;
 	if (!newItem)
 	{
 		throw MemoryError();
@@ -145,7 +145,12 @@ void List<type_t>::addbyindex(size_t index, type_t data, int key)
 	newItem->Prev = NULL;
 	newItem->Next = NULL;
 
-	listItem* item = this->head;
+	listItem<type_t>* item = link;
+
+	if (item == NULL && this->length() != 0)
+	{
+		throw WrongLink();
+	}
 
 	if (item == NULL)
 	{
@@ -154,25 +159,18 @@ void List<type_t>::addbyindex(size_t index, type_t data, int key)
 	}
 	else
 	{
-
-		size_t i = 0;
 		bool first = false;
 
 		if (key)
 		{
-			if (index > 0)
-				index--;
+			if (item->Prev != NULL)
+			{
+				item = item->Prev;
+			}
 			else
+			{
 				first = true;
-		}
-
-		for (; i < index && item; i++)
-		{
-			item = item->Next;
-		}
-		if (!item || (index >= 0 && i != index))
-		{
-			throw Index();
+			}
 		}
 
 		if (!first)
@@ -204,28 +202,42 @@ void List<type_t>::addbyindex(size_t index, type_t data, int key)
 template <typename type_t>
 void List<type_t>::deletefirst()
 {
-	deletebyindex(0);
+	deletebylink(this->getHead()->Next, true);
 }
 
 template <typename type_t>
 void List<type_t>::deletelast()
 {
-	deletebyindex(this->length() - 1);
+	deletebylink(this->getTail()->Prev, false);
 }
 
 template <typename type_t>
-void List<type_t>::deletebyindex(size_t index)
+void List<type_t>::deletebylink(listItem<type_t>* link, bool key)
 {
-	listItem* item = this->head;
-	size_t i = 0;
-	for (; i < index && item; i++)
+	listItem<type_t>* item = link;
+
+	if (item == NULL)
 	{
+		throw WrongLink();
+	}
+
+	if (key)
+	{
+		if (item->Prev == NULL)
+		{
+			throw WrongLink();
+		}
+		item = item->Prev;
+	}
+	else
+	{
+		if (item->Next == NULL)
+		{
+			throw WrongLink();
+		}
 		item = item->Next;
 	}
-	if (!item || i != index)
-	{
-		throw Index();
-	}
+
 	if (item->Prev && item->Next)
 	{
 		item->Next->Prev = item->Prev;
@@ -247,24 +259,6 @@ void List<type_t>::deletebyindex(size_t index)
 	delete item;
 	this->size--;
 }
-
-template<typename type_t>
-type_t List<type_t>::searchByIndex(size_t index) const
-{
-	listItem* item = this->head;
-	
-	size_t i = 0;
-	for (; i < index && item; i++)
-	{
-		item = item->Next;
-	}
-	if (!item || i != index)
-	{
-		throw Index();
-	}
-	return item->data;
-}
-
 
 template <typename type_t>
 void List<type_t>::update(size_t index, type_t data) const
@@ -291,6 +285,18 @@ size_t List<type_t>::length() const
 }
 
 template <typename type_t>
+listItem<type_t>* List<type_t>::getHead() const
+{
+	return this->head;
+}
+
+template <typename type_t>
+listItem<type_t>* List<type_t>::getTail() const
+{
+	return this->tail;
+}
+
+template <typename type_t>
 void List<type_t>::clear()
 {
 	while (this->head)
@@ -300,6 +306,24 @@ void List<type_t>::clear()
 		this->head = this->tail;
 	}
 	this->size = 0;
+}
+
+template <typename type_t>
+List<type_t>& List<type_t>::operator=(List<type_t> &&right)
+{
+	if (*this != right)
+	{
+		this->clear();
+
+		listItem* item = right.head;
+
+		while (item != NULL)
+		{
+			this->addlast(item->data);
+			item = item->Next;
+		}
+	}
+	return *this;
 }
 
 template <typename type_t>
@@ -325,7 +349,7 @@ List<type_t> List<type_t>::operator+(const List<type_t> &right) const
 {
 	List<type_t> result = *this;
 
-	listItem* item;
+	listItem<type_t>* item;
 	item = right.head;
 
 	while (item)
@@ -340,7 +364,7 @@ List<type_t> List<type_t>::operator+(const List<type_t> &right) const
 template <typename type_t>
 List<type_t>& List<type_t>::operator+=(const List<type_t> &right)
 {
-	listItem* item;
+	listItem<type_t>* item;
 	item = right.head;
 	while (item)
 	{
@@ -348,6 +372,18 @@ List<type_t>& List<type_t>::operator+=(const List<type_t> &right)
 		item = item->Next;
 	}
 	return *this;
+}
+
+template <typename type_t>
+List<type_t> List<type_t>::operator--(type_t)
+{
+	this->deletelast();
+}
+
+template <typename type_t>
+List<type_t>& List<type_t>::operator--()
+{
+	this->deletefirst();
 }
 
 template <typename type_t>
@@ -397,10 +433,12 @@ std::ostream& operator<<(std::ostream& stream, const List<type_t>& right)
 {
 
 	size_t i = 0;
+	listItem<type_t>* item = right.getHead();
 
-	for (; i < right.length(); i++)
+	while(item)
 	{
-		stream << right.searchByIndex(i) << " ";
+		stream << item->data << " ";
+		item = item->Next;
 	}
 	stream << '\n';
 	return stream;

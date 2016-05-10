@@ -8,24 +8,27 @@
 template <class type_t>class List;
 
 template <typename type_t>
-class iterator : public iterator_base
+class iterator : public iterator_base<type_t>
 {
 public:
 	iterator(List<type_t> &list);
 	~iterator();
 
+	bool isNULL() const;
+	bool operator !() const;
+	bool ready();
+
 	void del(bool key);
 	void add(type_t data, bool key);
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
-	iterator<type_t>& operator[](const size_t& n);				// obj[i]
 	iterator<type_t>& operator++();								// ++obj
 	iterator<type_t> operator++(type_t);						// obj++
 	iterator<type_t>& operator+=(const size_t n);				// obj += n
 	iterator<type_t>& operator--();								// --obj
 	iterator<type_t> operator--(type_t);						// obj--
 	iterator<type_t>& operator-=(const size_t n);				// obj -= n
-	void operator*(type_t& data);								// get value
+	type_t operator*();											// get value
 	void operator<<(type_t data);								// set value
 
 	bool operator !=(const iterator<type_t>& right) const;
@@ -53,85 +56,96 @@ private:
 template <typename type_t>
 iterator<type_t>::iterator(List<type_t> &list)
 {
-	this->current = 0;
 	this->list = &list;
+	this->currentItem = this->list->getHead();
 }
 
 template <typename type_t>
 iterator<type_t>::~iterator()
 {
-	this->current = 0;
 	this->list = NULL;
+	this->currentItem = NULL;
+}
+
+template <typename type_t>
+bool iterator<type_t>::isend()
+{
+	return this->currentItem == this->list->getTail();
+}
+
+template <typename type_t>
+bool iterator<type_t>::isstart()
+{
+	return this->currentItem this->list->getHead();
+}
+
+template <typename type_t>
+bool iterator<type_t>::isNULL() const
+{
+	return this->list->getHead() == NULL;
+}
+
+template <typename type_t>
+bool iterator<type_t>::operator!() const
+{
+	return this->isNULL();
+}
+
+template <typename type_t>
+bool iterator<type_t>::ready()
+{
+	return this->currentItem != NULL;
 }
 
 template <typename type_t>
 void iterator<type_t>::add(type_t data, bool key)
 {
-	this->list->addbyindex(this->current, data, key);
+	this->list->addbylink(this->currentItem, data, key);
 }
 
 template <typename type_t>	
 void iterator<type_t>::del(bool key)
 {
-	if (key)
+	if (this->ready())
 	{
-		if (isstart())
-		{
-			throw Range();
-		}
-		this->list->deletebyindex(this->current - 1);
-		this->current--;
-	}
-	else
-	{
-		if (isend())
-		{
-			throw Range();
-		}
-		this->list->deletebyindex(this->current + 1);
+		this->list->deletebylink(this->currentItem, key);
 	}
 }
 
 template <typename type_t>
 void iterator<type_t>::first()
 {
-	this->current = 0;
+	this->currentItem = this->list->getHead();
 }
 
 template <typename type_t>
 void iterator<type_t>::last()
 {
-	this->current = this->list->length() - 1;
+	this->currentItem = this->list->getTail();
 }
 
 template <typename type_t>
 void iterator<type_t>::next()
 {
-	this->current++;
+	if (this->ready())
+	{
+		this->currentItem = currentItem->Next;
+	}
 }
 
 template <typename type_t>
 void iterator<type_t>::prev()
 {
-	this->current--;
-}
-
-template <typename type_t>
-bool iterator<type_t>::isend()
-{
-	return this->current >= this->list->length() - 1;
-}
-
-template <typename type_t>
-bool iterator<type_t>::isstart()
-{
-	return this->current <= 0;
+	if (this->ready())
+	{
+		this->currentItem = currentItem->Prev;
+	}
 }
 
 template <typename type_t>
 const type_t iterator<type_t>::value() const
 {
-	return this->list->searchByIndex(this->current);
+	return this->currentItem->data;
 }
 
 template <typename type_t>
@@ -143,27 +157,8 @@ iterator<type_t>& iterator<type_t>::operator=(const iterator<type_t>& right)
 }
 
 template <typename type_t>
-iterator<type_t>& iterator<type_t>::operator[](const size_t& n)
-{
-	if (n < 0 || n > this->list->length() - 1)
-	{
-		throw Index();
-	}
-	this->first();
-	for (size_t i = 0; i < n; i++)
-	{
-		this->next();
-	}
-	return *this;
-}
-
-template <typename type_t>
 iterator<type_t>& iterator<type_t>::operator++()
 {
-	if (this->isend())
-	{
-		throw Range();
-	}
 	this->next();
 	return *this;
 }
@@ -218,9 +213,9 @@ iterator<type_t>& iterator<type_t>::operator-=(const size_t n)
 
 
 template <typename type_t>
-void iterator<type_t>::operator*(type_t& data)
+type_t iterator<type_t>::operator*()
 {
-	data = this->value();
+	return this->value();
 }
 
 template <typename type_t>

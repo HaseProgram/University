@@ -49,41 +49,22 @@ int main()
 
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;
-		int value;
 
 		std::cout << "Creating iterator object of myBigList and print value using >>" << std::endl;
 		iterator<int> myIterator(myBigList);
-		myIterator* value;
-		std::cout << value << std::endl;
+		std::cout << *myIterator << std::endl;
 		std::cout << std::endl;
+
+		if (!myIterator)
+		{
+			std::cout << "Checking ! NOT NULL" << std::endl;
+		}
 
 		std::cout << "Use ++o and o++ to get next item and print it (>>)" << std::endl;
 		++myIterator;
 		myIterator++;
-		myIterator* value;
-		std::cout << value << std::endl;
+		std::cout << *myIterator << std::endl;
 		std::cout << std::endl;
-
-		std::cout << "Using [5] to get 5 item and print it (>>)" << std::endl;
-		myIterator[5]* value;
-		std::cout << value << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "Using [2] << 9 to set 9 in 2item and print it (>>)" << std::endl;
-		myIterator[2] << 9;
-		myIterator[2]* value;
-		std::cout << value << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "Using [4].del(lLeft) to delete 3 element" << std::endl;
-		std::cout << myBigList;
-		myIterator[4].del(lLeft);
-		std::cout << myBigList << std::endl;
-
-		std::cout << "Using [0].del(lRight)" << std::endl;
-		std::cout << myBigList;
-		myIterator[0].del(lRight);
-		std::cout << myBigList << std::endl;
 
 		std::cout << "Using last() o.del(lRight)" << std::endl;
 		std::cout << myBigList;
@@ -102,6 +83,13 @@ int main()
 		myIterator.last();
 		myIterator.add(0, lRight);
 		std::cout << myBigList << std::endl;
+
+		myBigList.clear();
+
+		if (!myIterator)
+		{
+			std::cout << "Checking ! is NULL" << std::endl;
+		}
 		
 		std::cout << "=========================================================" << std::endl;
 		std::cout << std::endl;

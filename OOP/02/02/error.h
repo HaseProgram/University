@@ -34,13 +34,13 @@ public:
 
 };
 
-class IndexError : public Error
+class WrongLink : public Error
 {
 
 public:
 	const char* out()
 	{
-		return "Index is out of range";
+		return "Wrong link pointer";
 	}
 
 };

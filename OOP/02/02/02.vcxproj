@@ -147,6 +147,7 @@
     <ClInclude Include="iterror.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="list_base.h" />
+    <ClInclude Include="list_struct.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
