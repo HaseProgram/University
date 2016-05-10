@@ -1,4 +1,5 @@
 #pragma once
+#include "list_struct.h"
 
 class list_base
 {
