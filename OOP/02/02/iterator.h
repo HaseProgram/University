@@ -32,12 +32,12 @@ public:
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
 	iterator<type_t>& operator++();								// ++obj
-	iterator<type_t> operator++(type_t);						// obj++
-	iterator<type_t>& operator+=(const size_t n);				// obj += n
+	iterator<type_t> operator++(type_t);							// obj++
+	iterator<type_t>& operator+=(const size_t n);						// obj += n
 	iterator<type_t>& operator--();								// --obj
-	iterator<type_t> operator--(type_t);						// obj--
-	iterator<type_t>& operator-=(const size_t n);				// obj -= n
-	type_t operator*();											// get value
+	iterator<type_t> operator--(type_t);							// obj--
+	iterator<type_t>& operator-=(const size_t n);						// obj -= n
+	type_t operator*();									// get value
 	void operator<<(type_t data);								// set value
 
 	bool operator !=(const iterator<type_t>& right) const;
