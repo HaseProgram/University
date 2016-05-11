@@ -148,12 +148,20 @@ void List<type_t>::addbylink(listItem<type_t>* link, type_t data, int key)
 template <typename type_t>
 void List<type_t>::deletefirst()
 {
+	if (!this->getHead()->Next)
+	{
+		throw Last();
+	}
 	deletebylink(this->getHead()->Next, true);
 }
 
 template <typename type_t>
 void List<type_t>::deletelast()
 {
+	f(!this->getTail()->Prev)
+	{
+		throw Last();
+
 	deletebylink(this->getTail()->Prev, false);
 }
 
@@ -204,23 +212,6 @@ void List<type_t>::deletebylink(listItem<type_t>* link, bool key)
 	}
 	delete item;
 	this->size--;
-}
-
-template <typename type_t>
-void List<type_t>::update(size_t index, type_t data) const
-{
-	listItem* item = this->head;
-
-	size_t i = 0;
-	for (; i < index && item; i++)
-	{
-		item = item->Next;
-	}
-	if (!item || i != index)
-	{
-		throw Index();
-	}
-	item->data = data;
 }
 
 template <typename type_t>

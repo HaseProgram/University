@@ -44,3 +44,14 @@ public:
 	}
 
 };
+
+class Last : public Error
+{
+
+public:
+	const char* out()
+	{
+		return "Cannon delete last element";
+	}
+
+};

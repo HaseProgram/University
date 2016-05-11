@@ -28,6 +28,7 @@ public:
 	void prev();
 	void next();
 
+	void update(type_t data);
 	const type_t value() const;
 
 	iterator<type_t>& operator=(const iterator<type_t>& right);
@@ -42,10 +43,6 @@ public:
 
 	bool operator !=(const iterator<type_t>& right) const;
 	bool operator ==(const iterator<type_t>& right) const;
-	bool operator <(const iterator<type_t>& right) const;
-	bool operator >(const iterator<type_t>& right) const;
-	bool operator <=(const iterator<type_t>& right) const;
-	bool operator >=(const iterator<type_t>& right) const;
 
 	void first();
 	void last();

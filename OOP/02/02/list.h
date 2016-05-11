@@ -18,7 +18,6 @@ private:
 	List<type_t>& operator=(const List<type_t> &right);
 	List<type_t>& operator=(List<type_t> &&right);
 	void addbylink(listItem<type_t>* link, type_t data, int key);
-	void update(size_t index, type_t data) const;
 	
 public:
 	List();
