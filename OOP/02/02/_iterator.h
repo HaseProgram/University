@@ -27,27 +27,21 @@ bool iterator<type_t>::isstart()
 }
 
 template <typename type_t>
-bool iterator<type_t>::isNULL() const
+bool iterator<type_t>::isNULL()
 {
-	return this->list->getHead() == NULL;
+	return this->list && this->list->isNULL();
 }
 
 template <typename type_t>
-bool iterator<type_t>::operator!() const
+bool iterator<type_t>::operator!()
 {
-	return this->isNULL();
+	return this->ready();
 }
 
 template <typename type_t>
 bool iterator<type_t>::ready()
 {
 	return this->currentItem != NULL;
-}
-
-template <typename type_t>
-void iterator<type_t>::setNULL()
-{
-	this->list = NULL;
 }
 
 template <typename type_t>
@@ -96,7 +90,7 @@ void iterator<type_t>::prev()
 }
 
 template <typename type_t>
-void iterator<type_t>::update(type_t data)
+void iterator<type_t>::update(type_t& data)
 {
 	if (!this->ready())
 	{
@@ -106,7 +100,7 @@ void iterator<type_t>::update(type_t data)
 }
 
 template <typename type_t>
-const type_t iterator<type_t>::value() const
+type_t& iterator<type_t>::value()
 {
 	return this->currentItem->data;
 }
@@ -170,7 +164,7 @@ iterator<type_t>& iterator<type_t>::operator-=(const size_t n)
 }
 
 template <typename type_t>
-type_t iterator<type_t>::operator*()
+type_t& iterator<type_t>::operator*()
 {
 	if (!this->ready())
 	{
@@ -180,7 +174,7 @@ type_t iterator<type_t>::operator*()
 }
 
 template <typename type_t>
-void iterator<type_t>::operator<<(type_t data)
+void iterator<type_t>::operator<<(type_t& data)
 {
 	this->update(data);
 }

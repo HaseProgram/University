@@ -5,6 +5,7 @@
 
 #include "list.h"
 #include "iterator.h"
+#include "citerator.h"
 
 
 int main()
@@ -84,12 +85,6 @@ int main()
 		myIterator.add(0, lRight);
 		std::cout << myBigList << std::endl;
 
-		std::cout << "Update last" << std::endl;
-		std::cout << myBigList;
-		myIterator.last();
-		myIterator << 8;
-		std::cout << myBigList << std::endl;
-
 		myBigList.clear();
 
 		if (!myIterator)
@@ -106,6 +101,7 @@ int main()
 		myIterator.del(lRight);
 		std::cout << myBigList << std::endl;
 
+		citerator<int> myConstIterator(myBigList);
 	}
 	catch (Error &err)
 	{

@@ -158,10 +158,10 @@ void List<type_t>::deletefirst()
 template <typename type_t>
 void List<type_t>::deletelast()
 {
-	f(!this->getTail()->Prev)
+	if (!this->getTail()->Prev)
 	{
 		throw Last();
-
+	}
 	deletebylink(this->getTail()->Prev, false);
 }
 
@@ -221,13 +221,25 @@ size_t List<type_t>::length() const
 }
 
 template <typename type_t>
-listItem<type_t>* List<type_t>::getHead() const
+listItem<type_t>* List<type_t>::getHead()
 {
 	return this->head;
 }
 
 template <typename type_t>
-listItem<type_t>* List<type_t>::getTail() const
+listItem<type_t>* List<type_t>::getTail()
+{
+	return this->tail;
+}
+
+template <typename type_t>
+listItem<type_t>* List<type_t>::getHeadConst() const
+{
+	return this->head;
+}
+
+template <typename type_t>
+listItem<type_t>* List<type_t>::getTailConst() const
 {
 	return this->tail;
 }
@@ -242,6 +254,18 @@ void List<type_t>::clear()
 		this->head = this->tail;
 	}
 	this->size = 0;
+}
+
+template <typename type_t>
+bool List<type_t>::isNULL() const
+{
+	return this->getHead() == NULL;
+}
+
+template <typename type_t>
+bool List<type_t>::operator!() const
+{
+	return this->isNULL();
 }
 
 template <typename type_t>
@@ -310,7 +334,7 @@ List<type_t>& List<type_t>::operator+=(const List<type_t> &right)
 }
 
 template <typename type_t>
-List<type_t> List<type_t>::operator--(type_t)
+List<type_t>& List<type_t>::operator--(type_t)
 {
 	this->deletelast();
 }
@@ -330,16 +354,13 @@ bool List<type_t>::operator==(const List<type_t> &right) const
 	}
 	listItem* item1 = this->head;
 	listItem* item2 = right.head;
-	while (item1)
+	while (item1  && item1->data != item2->data)
 	{
-		if (item1->data != item2->data)
-		{
-			return false;
-		}
 		item1 = item1->Next;
 		item2 = item2->Next;
 	}
-	return true;
+
+	return !item1;
 }
 
 template <typename type_t>
@@ -364,10 +385,8 @@ bool List<type_t>::operator!=(const List<type_t> &right) const
 }
 
 template<typename type_t>
-std::ostream& operator<<(std::ostream& stream, const List<type_t>& right)
+std::ostream& operator<<(std::ostream& stream, List<type_t>& right)
 {
-
-	size_t i = 0;
 	listItem<type_t>* item = right.getHead();
 
 	while (item)
