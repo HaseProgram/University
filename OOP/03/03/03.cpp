@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "03.h"
+#include "application.h"
 
 #define MAX_LOADSTRING 100
 
@@ -30,6 +31,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return FALSE;
     }
+
+	Application* app = new Application();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MY03));
 

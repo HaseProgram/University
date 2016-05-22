@@ -158,7 +158,7 @@ void List<type_t>::deletefirst()
 template <typename type_t>
 void List<type_t>::deletelast()
 {
-	if (!this->getTail()->Prev)
+	if (!this->getTail().Prev)
 	{
 		throw Last();
 	}
@@ -220,29 +220,13 @@ size_t List<type_t>::length() const
 	return this->size;
 }
 
-template <typename type_t>
-listItem<type_t>* List<type_t>::getHead()
-{
-	return this->head;
-}
 
-template <typename type_t>
-listItem<type_t>* List<type_t>::getTail()
-{
-	return this->tail;
-}
 
-template <typename type_t>
-listItem<type_t>* List<type_t>::getHeadConst() const
-{
-	return this->head;
-}
 
-template <typename type_t>
-listItem<type_t>* List<type_t>::getTailConst() const
-{
-	return this->tail;
-}
+
+
+
+
 
 template <typename type_t>
 void List<type_t>::clear()

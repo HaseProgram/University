@@ -2,9 +2,11 @@
 #include "listener.h"
 #include "interface.h"
 #include "ui.h"
+#include "application.h"
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
+extern Application* app;
 
 PAINTSTRUCT ps;
 HDC hdc;

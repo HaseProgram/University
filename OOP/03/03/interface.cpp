@@ -89,7 +89,7 @@ PInterface::PInterface(HDC hdc)
 	this->font.lfClipPrecision = 0;
 	this->font.lfQuality = 0;
 	this->font.lfPitchAndFamily = 0;
-	wcscpy(this->font.lfFaceName, TEXT("Arial"));
+	wcscpy_s(this->font.lfFaceName, TEXT("Arial"));
 }
 
 PInterface::~PInterface()

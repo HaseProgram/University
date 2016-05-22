@@ -142,9 +142,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="03.h" />
-    <ClInclude Include="action.h" />
+    <ClInclude Include="array.h" />
+    <ClInclude Include="command.h" />
+    <ClInclude Include="application.h" />
+    <ClInclude Include="edge.h" />
+    <ClInclude Include="exception.h" />
+    <ClInclude Include="iarray.h" />
+    <ClInclude Include="iarray.tpl.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="listener.h" />
+    <ClInclude Include="model.h" />
+    <ClInclude Include="point.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="scenemanager.h" />
     <ClInclude Include="stdafx.h" />
@@ -153,9 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="03.cpp" />
-    <ClCompile Include="action.cpp" />
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -170,6 +179,9 @@
   <ItemGroup>
     <Image Include="03.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="array.tpl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
