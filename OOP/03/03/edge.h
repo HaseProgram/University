@@ -3,61 +3,43 @@
 /*!
 \brief  Edge object
 \author Dmitry Zaitsev
-\version 1.0
+\version 3.0
 \date 21 May 2016
 
 Set edge using this class
 */
 
-#include "point.h"
+#include "baseobject.h"
 
-class EdgeBase
+class BaseEdge : public BaseObject
 {
 public:
-	EdgeBase() {};
-	~EdgeBase() {};
 
-	virtual void setFirstPoint(Point*) = 0;
-	virtual void setSecondPoint(Point*) = 0;
+	virtual void setFirstPoint(unsigned int) = 0;
+	virtual void setSecondPoint(unsigned int) = 0;
 
-	virtual Point* getFirstPoint() = 0;
-	virtual Point* getSecondPoint() = 0;
+	virtual int getFirstPoint() = 0;
+	virtual int getSecondPoint() = 0;
+	virtual void modificate() = 0;
 };
 
-class Edge : public EdgeBase
+class Edge : public BaseEdge
 {
 public:
-	Edge(Point* firstPoint, Point* secondPoint)
-	{
-		this->firstPoint = firstPoint;
-		this->secondPoint = secondPoint;
-	}
+	Edge();
+	Edge(unsigned int firstPoint, unsigned int secondPoint);
 
-	~Edge()
-	{
-	}
+	~Edge();
 
-	virtual void setFirstPoint(Point* newFirstPoint)
-	{
-		this->firstPoint = newFirstPoint;
-	}
+	virtual void setFirstPoint(unsigned int newFirstPoint) override;
+	virtual void setSecondPoint(unsigned int newSecondPoint) override;
 
-	virtual void setSecondPoint(Point* newSecondPoint)
-	{
-		this->secondPoint = newSecondPoint;
-	}
+	virtual int getFirstPoint() override;
+	virtual int getSecondPoint() override;
 
-	virtual Point* getFirstPoint()
-	{
-		return this->firstPoint;
-	}
-
-	virtual Point* getSecondPoint()
-	{
-		return this->secondPoint;
-	}
+	virtual void modificate() override;
 
 private:
-	Point* firstPoint;
-	Point* secondPoint;
+	int firstPoint;
+	int secondPoint;
 };

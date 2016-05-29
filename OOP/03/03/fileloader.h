@@ -24,8 +24,15 @@ public:
 
 	bool readAmount(unsigned int& amount);
 
+	virtual Point& readPoint() override;
+	virtual Edge& readEdge() override;
 
+	void readPoints(Model*);
+	void readEdges(Model*);
 
+	virtual Model* readModel() override;
+
+	virtual BaseObject* loadModel();	
 
 private:
 	const char* filename;
