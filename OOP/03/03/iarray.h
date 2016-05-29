@@ -3,7 +3,7 @@
 /*!
 \brief  Iterator for array
 \author Dmitry Zaitsev
-\version 1.0
+\version 2.1
 \date 22 May 2016
 
 Navigation through array<type_t>
@@ -33,8 +33,11 @@ public:
 
 	void clear();
 
+	void first();
+	void last();
 	void prev();
 	void next();
+	bool getByCount(int);
 
 	void update(type_t&);
 	void operator=(type_t&);

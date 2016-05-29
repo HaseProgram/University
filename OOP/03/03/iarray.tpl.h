@@ -46,15 +46,14 @@ type_t& IArray<type_t>::add(type_t& data)
 		throw IteratorAddError();
 	}
 
-	item<type_t>* newItem;
-	newItem = new item<type_t>;
+	item<type_t>* newItem = new item<type_t>;
 
 	if (!newItem)
 	{
 		throw MemoryError();
 	}
 
-	newItem->data = &data;
+	newItem->data = data;
 	newItem->next = this->currentItem->next;
 	this->currentItem->next = newItem;
 
@@ -65,7 +64,7 @@ type_t& IArray<type_t>::add(type_t& data)
 
 	this->arr->size++;
 
-	return *currentItem->next->data;
+	return currentItem->next->data;
 }
 
 template <typename type_t>
@@ -76,7 +75,7 @@ type_t& IArray<type_t>::remove(bool key)
 		throw IteratorDeleteError();
 	}
 
-	type_t* data;
+	type_t data;
 
 	if (this->arr->head != this->arr->tail)
 	{
@@ -118,13 +117,25 @@ type_t& IArray<type_t>::remove(bool key)
 		data = this->arr->delItem();
 	}
 
-	return *data;
+	return data;
 }
 
 template<typename type_t>
 void IArray<type_t>::clear()
 {
 	this->arr->clear();
+}
+
+template<typename type_t>
+void IArray<type_t>::first()
+{
+	this->currentItem = this->arr->head;
+}
+
+template<typename type_t>
+void IArray<type_t>::last()
+{
+	this->currentItem = this->arr->tail;
 }
 
 template<typename type_t>
@@ -147,6 +158,23 @@ template<typename type_t>
 void IArray<type_t>::next()
 {
 	this->currentItem = this->currentItem->next;
+}
+
+template<typename type_t>
+bool IArray<type_t>::getByCount(int index)
+{
+	this->first();
+	int i = 0;
+	for (i; i < index && this->check(); i++)
+	{
+		this->next();
+	}
+	if (i < index && !this->check())
+	{
+		throw IteratorAccessElementError();
+		return false;
+	}
+	return true;
 }
 
 template<typename type_t>

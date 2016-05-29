@@ -3,22 +3,24 @@
 /*!
 \brief  Array of some type of objects
 \author Dmitry Zaitsev
-\version 1.0
+\version 1.1
 \date 22 May 2016
 
 Let to collect some objects to one
 */
 
+#include "exceptionarray.h"
+
 template<typename type_t>
 struct item
 {
 	item* next;
-	type_t* data;
+	type_t data;
 };
 
 #include "iarray.h"
 
-class ArrayBase
+class BaseArray
 {
 public:
 	virtual size_t count() const = 0;
@@ -28,7 +30,7 @@ protected:
 };
 
 template <typename type_t>
-class Array : public ArrayBase
+class Array : public BaseArray
 {
 public:
 	Array();

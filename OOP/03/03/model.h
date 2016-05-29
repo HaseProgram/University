@@ -3,7 +3,7 @@
 /*!
 \brief  Model structure
 \author Dmitry Zaitsev
-\version 1.0
+\version 2.0
 \date 22 May 2016
 
 Contain points and edges structures. File loads in here.
@@ -13,38 +13,25 @@ Contain points and edges structures. File loads in here.
 #include "edge.h"
 #include "array.h"
 
-class ModelBase
+class BaseModel : public BaseObject
 {
 public:
-	ModelBase() {};
-	~ModelBase() {};
-
 	virtual void addPoint(Point&) = 0;
 	virtual void addEdge(Edge&) = 0;
 
 	virtual size_t pointsCount() const = 0;
 	virtual size_t edgesCount() const = 0;
 
+	virtual void modificate() = 0;
 };
 
-class Model : public ModelBase
+class Model : public BaseModel
 {
 public:
 	Model();
-	Model(const Model& model) 
-	{
-		this->points = model.points;
-		this->edges = model.edges;
-	};
+	Model(const Model& model);
 
-	Model& operator=(const Model& model)
-	{
-		this->points = model.points;
-		this->edges = model.edges;
-
-		return *this;
-
-	}
+	Model& operator=(const Model& model);
 	~Model();
 
 	IArray<Point>& getPoints();
@@ -56,6 +43,7 @@ public:
 	virtual size_t pointsCount() const override;
 	virtual  size_t edgesCount() const override;
 
+	virtual void modificate() override;
 
 private:
 	IArray<Point> points;

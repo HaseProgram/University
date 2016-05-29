@@ -21,8 +21,6 @@
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
 
-#include "exception.h"
-
 #define ID_BUTTON_CAMERA_APPLY 10000
 #define ID_EDIT_CAMERA_X 10001
 #define ID_EDIT_CAMERA_Y 10002

@@ -23,7 +23,7 @@ type_t& Array<type_t>::addItem(type_t& data)
 		throw MemoryError();
 	}
 
-	newItem->data = &data;
+	newItem->data = data;
 	newItem->next = NULL;
 
 	if (this->head == NULL)
@@ -39,7 +39,7 @@ type_t& Array<type_t>::addItem(type_t& data)
 
 	this->size++;
 
-	return *this->tail->data;
+	return this->tail->data;
 }
 
 template <typename type_t>
@@ -50,7 +50,7 @@ type_t& Array<type_t>::delItem()
 		throw DeleteItemError();
 	}
 
-	type_t* data = &this->tail->data;
+	type_t* data = this->tail->data;
 
 	delete this->tail;
 	this->tail = nullptr;
@@ -63,7 +63,7 @@ type_t& Array<type_t>::delItem()
 	}
 	this->tail = temp;
 
-	return *data;
+	return data;
 }
 
 
@@ -73,7 +73,6 @@ void Array<type_t>::clear()
 	while (this->head)
 	{
 		this->tail = this->head->next;
-		delete this->head->data;
 		delete this->head;
 		this->head = this->tail;
 	}

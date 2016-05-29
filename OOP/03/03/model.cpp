@@ -6,6 +6,20 @@ Model::Model()
 
 }
 
+Model::Model(const Model& model)
+{
+	this->points = model.points;
+	this->edges = model.edges;
+};
+
+Model& Model::operator=(const Model& model)
+{
+	this->points = model.points;
+	this->edges = model.edges;
+
+	return *this;
+}
+
 Model::~Model()
 {
 	if (this->pointsCount() != 0)
@@ -46,4 +60,9 @@ size_t Model::pointsCount() const
 size_t Model::edgesCount() const
 {
 	return this->edges.count();
+}
+
+void Model::modificate()
+{
+
 }
