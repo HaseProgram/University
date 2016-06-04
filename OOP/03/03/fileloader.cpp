@@ -27,10 +27,10 @@ bool FLoader::readAmount(unsigned int& amount)
 	return (fscanf(this->file, "%u", &amount) == 1);
 }
 
-Point& FLoader::readPoint()
+Point FLoader::readPoint()
 {
 	double x, y, z;
-	if (fscanf(this->file, "%lf %lf %lf", x, y, z) != 3)
+	if (fscanf(this->file, "%lf %lf %lf", &x, &y, &z) != 3)
 	{
 		throw FileLoaderParametersError();
 	}
@@ -41,16 +41,25 @@ Point& FLoader::readPoint()
 	return point;
 }
 
-Edge& FLoader::readEdge()
+Edge FLoader::readEdge(Model* model) const
 {
 	unsigned int p1, p2;
-	if (fscanf(this->file, "%lf %lf", p1, p2) != 2)
+	if (fscanf(this->file, "%u %u", &p1, &p2) != 2)
 	{
 		throw FileLoaderParametersError();
 	}
 	Edge edge;
-	edge.setFirstPoint(p1);
-	edge.setSecondPoint(p2);
+	IArray<Point> pointArrayIterator(model->getPoints());
+	if (!pointArrayIterator.getByCount(p1))
+	{
+		throw IteratorAccessElementError();
+	}
+	edge.setFirstPoint(&pointArrayIterator.value());
+	if(!pointArrayIterator.getByCount(p2))
+	{
+		throw IteratorAccessElementError();
+	}
+	edge.setSecondPoint(&pointArrayIterator.value());
 	return edge;
 }
 
@@ -63,7 +72,8 @@ void FLoader::readPoints(Model* model)
 	}
 	for (unsigned int i = 0; i < count; i++)
 	{
-		model->addPoint(this->readPoint());
+		Point point = this->readPoint();
+		model->addPoint(point);
 	}
 }
 
@@ -76,7 +86,7 @@ void FLoader::readEdges(Model* model)
 	}
 	for (unsigned int i = 0; i < count; i++)
 	{
-		model->addEdge(this->readEdge());
+		model->addEdge(this->readEdge(model));
 	}
 }
 
@@ -107,7 +117,7 @@ BaseObject* FLoader::loadModel()
 	this->openFile();
 
 	unsigned int count;
-	if (!this->readAmount(count));
+	if (!this->readAmount(count))
 	{
 		this->closeFile();
 		throw FileLoaderParametersError();
@@ -121,7 +131,7 @@ BaseObject* FLoader::loadModel()
 	}
 	try
 	{
-		for (unsigned int i = 0; i <= count; i++)
+		for (unsigned int i = 0; i < count; i++)
 		{
 			cobject->add(this->readModel());
 		}

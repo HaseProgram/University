@@ -15,8 +15,8 @@ class BaseLoader
 {
 public:
 
-	virtual Point& readPoint() = 0;
-	virtual Edge& readEdge() = 0;
+	virtual Point readPoint() = 0;
+	virtual Edge readEdge(Model*) const = 0;
 
 	virtual Model* readModel() = 0;
 

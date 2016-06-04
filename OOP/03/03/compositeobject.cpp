@@ -16,18 +16,19 @@ void CompositeObject::add(BaseObject* object)
 	{
 		throw CompositeObjectAddNULLError();
 	}
-	this->objects.add(object);
+	this->objects.addItem(object);
 }
 
-void CompositeObject::modificate()
+void CompositeObject::modificate(BaseModification* modification)
 {
-	for (int i = 0; i < this->objects.count(); i++)
+	IArray<BaseObject*> coaIterrator(objects);
+	for (unsigned int i = 0; i < this->objects.count(); i++)
 	{
-		if (!this->objects.getByCount(i))
+		if (!coaIterrator.getByCount(i))
 		{
 			throw CompositeObjectModificateNULLError();
 		}
-		this->objects.value()->modificate();
+		coaIterrator.value()->modificate(modification);
 	}
 }
 

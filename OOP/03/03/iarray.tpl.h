@@ -192,7 +192,7 @@ void IArray<type_t>::operator=(type_t& data)
 template<typename type_t>
 type_t& IArray<type_t>::value()
 {
-	return &this->currentItem->data;
+	return this->currentItem->data;
 }
 
 template<typename type_t>

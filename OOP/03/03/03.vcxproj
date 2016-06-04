@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="03.h" />
     <ClInclude Include="array.h" />
+    <ClInclude Include="basemodification.h" />
     <ClInclude Include="baseobject.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="application.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="fileloader.h" />
     <ClInclude Include="baseloader.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="modificaterotation.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="scenemanager.h" />
@@ -168,11 +170,13 @@
   <ItemGroup>
     <ClCompile Include="03.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="compositeobject.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="fileloader.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="modificaterotation.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

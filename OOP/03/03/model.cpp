@@ -32,24 +32,24 @@ Model::~Model()
 	}
 }
 
-IArray<Point>& Model::getPoints()
+Array<Point>& Model::getPoints()
 {
 	return this->points;
 }
 
-IArray<Edge>& Model::getEdges()
+Array<Edge>& Model::getEdges()
 {
 	return this->edges;
 }
 
 void Model::addPoint(Point& point)
 {
-	this->points.add(point);
+	this->points.addItem(point);
 }
 
 void Model::addEdge(Edge& edge)
 {
-	this->edges.add(edge);
+	this->edges.addItem(edge);
 }
 
 size_t Model::pointsCount() const
@@ -62,7 +62,10 @@ size_t Model::edgesCount() const
 	return this->edges.count();
 }
 
-void Model::modificate()
+void Model::modificate(BaseModification* modification)
 {
+	for (unsigned int i = 0; i < edges.count(); i++)
+	{
 
+	}
 }

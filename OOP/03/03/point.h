@@ -23,7 +23,7 @@ public:
 	virtual double getY() = 0;
 	virtual double getZ() = 0;
 
-	virtual void modificate() = 0;
+	virtual void modificate(BaseModification*) = 0;
 };
 
 class Point : public BasePoint
@@ -42,7 +42,7 @@ public:
 	virtual double getY() override;
 	virtual double getZ() override;
 
-	virtual void modificate() override;
+	virtual void modificate(BaseModification*) override;
 
 private:
 	double X;

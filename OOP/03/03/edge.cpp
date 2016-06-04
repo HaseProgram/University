@@ -5,7 +5,7 @@ Edge::Edge()
 {
 }
 
-Edge::Edge(unsigned int firstPoint, unsigned int secondPoint)
+Edge::Edge(Point* firstPoint, Point* secondPoint)
 {
 	this->firstPoint = firstPoint;
 	this->secondPoint = secondPoint;
@@ -15,27 +15,27 @@ Edge::~Edge()
 {
 }
 
-void Edge::setFirstPoint(unsigned int newFirstPoint)
+void Edge::setFirstPoint(Point* newFirstPoint)
 {
 	this->firstPoint = newFirstPoint;
 }
 
-void Edge::setSecondPoint(unsigned int newSecondPoint)
+void Edge::setSecondPoint(Point* newSecondPoint)
 {
 	this->secondPoint = newSecondPoint;
 }
 
-int Edge::getFirstPoint()
+Point* Edge::getFirstPoint()
 {
 	return this->firstPoint;
 }
 
-int Edge::getSecondPoint()
+Point* Edge::getSecondPoint()
 {
 	return this->secondPoint;
 }
 
-void Edge::modificate()
+void Edge::modificate(BaseModification* modification)
 {
 
 }

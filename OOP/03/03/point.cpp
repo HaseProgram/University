@@ -17,9 +17,6 @@ Point::Point(double X, double Y, double Z)
 
 Point::~Point()
 {
-	this->X = 0;
-	this->Y = 0;
-	this->Z = 0;
 }
 
 void Point::setX(double newX)
@@ -52,7 +49,7 @@ double Point::getZ()
 	return this->Z;
 }
 
-void Point::modificate()
+void Point::modificate(BaseModification* modification)
 {
-
+	modification->run(this);
 }

@@ -3,7 +3,7 @@
 /*!
 \brief  Loader from file
 \author Dmitry Zaitsev
-\version 1.0
+\version 2.0
 \date 29 May 2016
 
 Provide loading model from file
@@ -24,8 +24,8 @@ public:
 
 	bool readAmount(unsigned int& amount);
 
-	virtual Point& readPoint() override;
-	virtual Edge& readEdge() override;
+	virtual Point readPoint() override;
+	virtual Edge readEdge(Model* model) const override;
 
 	void readPoints(Model*);
 	void readEdges(Model*);

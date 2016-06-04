@@ -3,6 +3,7 @@
 #include "interface.h"
 #include "ui.h"
 #include "application.h"
+#include "fileloader.h"
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
@@ -25,7 +26,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case ID_BUTTON_CAMERA_APPLY:
+		{
+			FLoader* load = new FLoader("F:\\University\\Git\\University\\OOP\\03\\Debug\\cube.txt");
+			load->loadModel();
 			// scenemanager->camera->set
+		}
 			break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);

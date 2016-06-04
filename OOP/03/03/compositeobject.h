@@ -20,10 +20,9 @@ public:
 	~CompositeObject();
 
 	virtual void add(BaseObject*) override;
-	virtual void modificate() override;
+	virtual void modificate(BaseModification*) override;
 
 	void clear();
 
-
-	IArray<BaseObject*> objects;
+	Array<BaseObject*> objects;
 };
