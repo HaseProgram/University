@@ -15,18 +15,62 @@ Factory pattern
 class FactoryModificationRotateX : public FactoryModification
 {
 public:
-	FactoryModificationRotateX(double angle, Point center) 
+	FactoryModificationRotateX(double angle, Point center)
 	{
 		this->angle = angle;
 		this->center = center;
 	}
-	~FactoryModificationRotateX() 
+	~FactoryModificationRotateX()
 	{
 	}
 
-	virtual BaseModification* getModification() 
-	{ 
-		return (BaseModification*) new RotateX(this->angle,this->center); 
+	virtual BaseModification* getModification()
+	{
+		return (BaseModification*) new RotateX(this->angle, this->center);
+	}
+
+private:
+	double angle;
+	Point center;
+};
+
+class FactoryModificationRotateY : public FactoryModification
+{
+public:
+	FactoryModificationRotateY(double angle, Point center)
+	{
+		this->angle = angle;
+		this->center = center;
+	}
+	~FactoryModificationRotateY()
+	{
+	}
+
+	virtual BaseModification* getModification()
+	{
+		return (BaseModification*) new RotateY(this->angle, this->center);
+	}
+
+private:
+	double angle;
+	Point center;
+};
+
+class FactoryModificationRotateZ : public FactoryModification
+{
+public:
+	FactoryModificationRotateZ(double angle, Point center)
+	{
+		this->angle = angle;
+		this->center = center;
+	}
+	~FactoryModificationRotateZ()
+	{
+	}
+
+	virtual BaseModification* getModification()
+	{
+		return (BaseModification*) new RotateZ(this->angle, this->center);
 	}
 
 private:

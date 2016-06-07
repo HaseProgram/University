@@ -16,23 +16,9 @@ class BaseScale : public BaseModification
 {
 public:
 
-	void modificateX(Point* point) override
-	{
-		double tx = (point->getX() - center->getX()) * this->k + center->getX();
-		point->setX(tx);
-	}
-
-	void modificateY(Point* point) override
-	{
-		double ty = (point->getY() - center->getY()) * this->k + center->getY();
-		point->setY(ty);
-	}
-
-	void modificateZ(Point* point) override
-	{
-		double tz = (point->getZ() - center->getZ()) * this->k + center->getZ();
-		point->setZ(tz);
-	}
+	void modificateX(Point*) override;
+	void modificateY(Point*) override;
+	void modificateZ(Point*) override;
 
 	virtual void run(Point*) = 0;
 

@@ -1,6 +1,32 @@
 #include "stdafx.h"
 #include "modificatescale.h"
 
+/*
+	BASE_SCALE
+*/
+
+void BaseScale::modificateX(Point* point)
+{
+	double tx = (point->getX() - center->getX()) * this->k + center->getX();
+	point->setX(tx);
+}
+
+void BaseScale::modificateY(Point* point)
+{
+	double ty = (point->getY() - center->getY()) * this->k + center->getY();
+	point->setY(ty);
+}
+
+void BaseScale::modificateZ(Point* point)
+{
+	double tz = (point->getZ() - center->getZ()) * this->k + center->getZ();
+	point->setZ(tz);
+}
+
+/*
+	SCALE
+*/
+
 Scale::Scale()
 {
 }

@@ -12,24 +12,13 @@ Provide object movement
 #include "basemodification.h"
 #include "point.h"
 
-class BaseMovement : public BaseModification
+class BaseMove : public BaseModification
 {
 public:
 
-	void modificateX(Point* point) override
-	{
-		point->setX(point->getX() + this->shift);
-	}
-
-	void modificateY(Point* point) override
-	{
-		point->setY(point->getY() + this->shift);
-	}
-
-	void modificateZ(Point* point) override
-	{
-		point->setZ(point->getZ() + this->shift);
-	}
+	void modificateX(Point*) override;
+	void modificateY(Point*) override;
+	void modificateZ(Point*) override;
 
 	virtual void run(Point*) = 0;
 
@@ -37,12 +26,32 @@ protected:
 	double shift;
 };
 
-class Scale : public BaseMovement
+class MoveX : public BaseMove
 {
 public:
-	Scale();
-	Scale(double, Point);
-	~Scale();
+	MoveX();
+	MoveX(double);
+	~MoveX();
+
+	virtual void run(Point*) override;
+};
+
+class MoveY : public BaseMove
+{
+public:
+	MoveY();
+	MoveY(double);
+	~MoveY();
+
+	virtual void run(Point*) override;
+};
+
+class MoveZ : public BaseMove
+{
+public:
+	MoveZ();
+	MoveZ(double);
+	~MoveZ();
 
 	virtual void run(Point*) override;
 };

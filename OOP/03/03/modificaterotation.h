@@ -16,44 +16,9 @@ class BaseRotate : public BaseModification
 {
 public:
 
-	virtual void modificateX(Point* point) override
-	{
-		this->angle = this->angle * M_PI / 180.0;
-		double ty = 
-			(point->getY() - center->getY()) * cos(this->angle) - 
-			(point->getZ() - center->getZ()) * sin(this->angle);
-		double tz = 
-			(point->getY() - center->getY()) * sin(this->angle) + 
-			(point->getZ() - center->getZ()) * cos(this->angle);
-		point->setY(ty);
-		point->setZ(tz);
-	}
-
-	virtual void modificateY(Point* point) override
-	{
-		this->angle = this->angle * M_PI / 180.0;
-		double tx =
-			(point->getX() - center->getX()) * cos(this->angle) -
-			(point->getZ() - center->getZ()) * sin(this->angle);
-		double tz =
-			(point->getX() - center->getX()) * sin(this->angle) +
-			(point->getZ() - center->getZ()) * cos(this->angle);
-		point->setY(tx);
-		point->setZ(tz);
-	}
-
-	virtual void modificateZ(Point* point) override
-	{
-		this->angle = this->angle * M_PI / 180.0;
-		double tx =
-			(point->getX() - center->getX()) * cos(this->angle) -
-			(point->getY() - center->getY()) * sin(this->angle);
-		double ty =
-			(point->getX() - center->getX()) * sin(this->angle) +
-			(point->getY() - center->getY()) * cos(this->angle);
-		point->setY(tx);
-		point->setZ(ty);
-	}
+	virtual void modificateX(Point*) override;
+	virtual void modificateY(Point*) override;
+	virtual void modificateZ(Point*) override;
 
 	virtual void run(Point*) = 0;
 
