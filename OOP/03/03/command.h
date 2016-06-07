@@ -9,12 +9,13 @@
 	Process command in form of object
 */
 
-#include "scenemanager.h"
+#include "fileloader.h"
+#include "factorymodificaterotation.h"
 
 class Command
 {
 public:
-	virtual void Execute(SceneManager* sm) = 0;
+	virtual void Execute(BaseObject*) = 0;
 };
 
 class Load : public Command
@@ -29,11 +30,36 @@ public:
 	{
 	}
 
-	virtual void Execute(SceneManager* sm)
+	virtual void Execute(BaseObject* object)
 	{
-
+		FLoader* loader = new FLoader(this->filename);
+		loader->loadModel(object);
 	}
 
 private:
 	const char* filename;
+};
+
+class ModificateRotateX : public Command
+{
+public:
+	ModificateRotateX(double angle, Point center)
+	{
+		this->angle = angle;
+		this->center = center;
+	}
+
+	~ModificateRotateX()
+	{
+	}
+
+	virtual void Execute(BaseObject* object)
+	{
+		FactoryModification* factory = new FactoryModificationRotateX(this->angle,this->center);
+		object->modificate(factory->getModification());
+	}
+
+private:
+	double angle;
+	Point center;
 };

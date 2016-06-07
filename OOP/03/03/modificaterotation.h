@@ -12,11 +12,11 @@ Provide rotation
 #include "basemodification.h"
 #include "point.h"
 
-class Rotate : public BaseModification
+class BaseRotate : public BaseModification
 {
 public:
 
-	void modificateX(Point* point)
+	virtual void modificateX(Point* point) override
 	{
 		this->angle = this->angle * M_PI / 180.0;
 		double ty = 
@@ -29,30 +29,30 @@ public:
 		point->setZ(tz);
 	}
 
-	void modificateY(Point* point)
+	virtual void modificateY(Point* point) override
 	{
 		this->angle = this->angle * M_PI / 180.0;
-		double ty =
+		double tx =
 			(point->getX() - center->getX()) * cos(this->angle) -
 			(point->getZ() - center->getZ()) * sin(this->angle);
 		double tz =
 			(point->getX() - center->getX()) * sin(this->angle) +
 			(point->getZ() - center->getZ()) * cos(this->angle);
-		point->setY(ty);
+		point->setY(tx);
 		point->setZ(tz);
 	}
 
-	void modificateZ(Point* point)
+	virtual void modificateZ(Point* point) override
 	{
 		this->angle = this->angle * M_PI / 180.0;
-		double ty =
+		double tx =
 			(point->getX() - center->getX()) * cos(this->angle) -
 			(point->getY() - center->getY()) * sin(this->angle);
-		double tz =
+		double ty =
 			(point->getX() - center->getX()) * sin(this->angle) +
 			(point->getY() - center->getY()) * cos(this->angle);
-		point->setY(ty);
-		point->setZ(tz);
+		point->setY(tx);
+		point->setZ(ty);
 	}
 
 	virtual void run(Point*) = 0;
@@ -62,7 +62,7 @@ protected:
 	Point* center;
 };
 
-class RotateX : public Rotate
+class RotateX : public BaseRotate
 {
 public:
 	RotateX();
@@ -72,7 +72,7 @@ public:
 	virtual void run(Point*) override;
 };
 
-class RotateY : public Rotate
+class RotateY : public BaseRotate
 {
 public:
 	RotateY();
@@ -82,7 +82,7 @@ public:
 	virtual void run(Point*) override;
 };
 
-class RotateZ : public Rotate
+class RotateZ : public BaseRotate
 {
 public:
 	RotateZ();
@@ -91,3 +91,4 @@ public:
 
 	virtual void run(Point*) override;
 };
+

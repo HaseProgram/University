@@ -20,5 +20,5 @@ public:
 
 	virtual Model* readModel() = 0;
 
-	virtual BaseObject* loadModel() = 0;
+	virtual BaseObject* loadModel(BaseObject*) = 0;
 };

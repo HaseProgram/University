@@ -19,5 +19,10 @@ class BaseModification
 public:
 	BaseModification() {};
 	~BaseModification() {};
+
+	virtual void modificateX(Point* point) = 0;
+	virtual void modificateY(Point* point) = 0;
+	virtual void modificateZ(Point* point) = 0;
+
 	virtual void run(Point* point) = 0;
 };

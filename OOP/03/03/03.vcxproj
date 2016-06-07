@@ -152,6 +152,8 @@
     <ClInclude Include="exception.h" />
     <ClInclude Include="exceptionarray.h" />
     <ClInclude Include="exceptionfileloader.h" />
+    <ClInclude Include="factorymodificaterotation.h" />
+    <ClInclude Include="factorymodification.h" />
     <ClInclude Include="iarray.h" />
     <ClInclude Include="iarray.tpl.h" />
     <ClInclude Include="interface.h" />
@@ -159,10 +161,11 @@
     <ClInclude Include="fileloader.h" />
     <ClInclude Include="baseloader.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="modificatemovement.h" />
     <ClInclude Include="modificaterotation.h" />
+    <ClInclude Include="modificatescale.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="scenemanager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ui.h" />
@@ -177,6 +180,7 @@
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modificaterotation.cpp" />
+    <ClCompile Include="modificatescale.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

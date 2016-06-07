@@ -7,13 +7,15 @@
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
-extern Application* app;
 
 PAINTSTRUCT ps;
 HDC hdc;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+
+	static Application* app = new Application();
+
 	switch (message)
 	{
 	case WM_COMMAND:
@@ -27,8 +29,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BUTTON_CAMERA_APPLY:
 		{
-			FLoader* load = new FLoader("F:\\University\\Git\\University\\OOP\\03\\Debug\\cube.txt");
-			load->loadModel();
+
+			Load* command = new Load("F:\\University\\Git\\University\\OOP\\03\\Debug\\cube.txt");
+			app->Call(*command);
 			// scenemanager->camera->set
 		}
 			break;

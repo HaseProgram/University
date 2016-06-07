@@ -111,9 +111,8 @@ Model* FLoader::readModel()
 	return model;
 }
 
-BaseObject* FLoader::loadModel()
+BaseObject* FLoader::loadModel(BaseObject* cobject)
 {
-
 	this->openFile();
 
 	unsigned int count;
@@ -123,12 +122,6 @@ BaseObject* FLoader::loadModel()
 		throw FileLoaderParametersError();
 	}
 
-	CompositeObject* cobject = new CompositeObject;
-	if (!cobject)
-	{
-		this->closeFile();
-		throw AllocationMemoryError();
-	}
 	try
 	{
 		for (unsigned int i = 0; i < count; i++)
@@ -141,9 +134,8 @@ BaseObject* FLoader::loadModel()
 	catch(BaseException& err)
 	{
 		this->closeFile();
-		delete cobject;
-		cobject = nullptr;
 		throw;
 	}
+
 	return cobject;
 }

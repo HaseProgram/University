@@ -21,7 +21,7 @@ void CompositeObject::add(BaseObject* object)
 
 void CompositeObject::modificate(BaseModification* modification)
 {
-	IArray<BaseObject*> coaIterrator(objects);
+	IArray<BaseObject*> coaIterrator(this->objects);
 	for (unsigned int i = 0; i < this->objects.count(); i++)
 	{
 		if (!coaIterrator.getByCount(i))
