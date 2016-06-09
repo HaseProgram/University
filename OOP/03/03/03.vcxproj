@@ -145,6 +145,7 @@
     <ClInclude Include="array.h" />
     <ClInclude Include="basemodification.h" />
     <ClInclude Include="baseobject.h" />
+    <ClInclude Include="camera.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="compositeobject.h" />
@@ -152,7 +153,10 @@
     <ClInclude Include="exception.h" />
     <ClInclude Include="exceptionarray.h" />
     <ClInclude Include="exceptionfileloader.h" />
+    <ClInclude Include="exceptionvector.h" />
+    <ClInclude Include="factorymodificatemovement.h" />
     <ClInclude Include="factorymodificaterotation.h" />
+    <ClInclude Include="factorymodificatescale.h" />
     <ClInclude Include="factorymodification.h" />
     <ClInclude Include="iarray.h" />
     <ClInclude Include="iarray.tpl.h" />
@@ -169,16 +173,19 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ui.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="03.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="camera.cpp" />
     <ClCompile Include="compositeobject.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="fileloader.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="modificatemovement.cpp" />
     <ClCompile Include="modificaterotation.cpp" />
     <ClCompile Include="modificatescale.cpp" />
     <ClCompile Include="point.cpp" />
@@ -189,6 +196,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ui.cpp" />
+    <ClCompile Include="vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="03.rc" />

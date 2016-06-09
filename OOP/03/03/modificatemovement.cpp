@@ -81,7 +81,7 @@ MoveZ::~MoveZ()
 {
 }
 
-void MoveY::run(Point* point)
+void MoveZ::run(Point* point)
 {
 	this->modificateZ(point);
 }

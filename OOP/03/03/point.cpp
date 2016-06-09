@@ -49,6 +49,17 @@ double Point::getZ()
 	return this->Z;
 }
 
+Array<double> Point::vector()
+{
+	Array<double> tmp;
+	tmp.addItem(this->X);
+	tmp.addItem(this->Y);
+	tmp.addItem(this->Z);
+	double s = 1;
+	tmp.addItem(s);
+	return tmp;
+}
+
 void Point::modificate(BaseModification* modification)
 {
 	modification->run(this);

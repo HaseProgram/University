@@ -37,5 +37,6 @@ Point* Edge::getSecondPoint()
 
 void Edge::modificate(BaseModification* modification)
 {
-
+	this->getFirstPoint()->modificate(modification);
+	this->getSecondPoint()->modificate(modification);
 }

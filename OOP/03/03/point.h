@@ -10,6 +10,7 @@ Set point using this class
 */
 
 #include "baseobject.h"
+#include "array.h"
 
 class BasePoint : public BaseObject
 {
@@ -41,6 +42,8 @@ public:
 	virtual double getX() override;
 	virtual double getY() override;
 	virtual double getZ() override;
+
+	Array<double> vector();
 
 	virtual void modificate(BaseModification*) override;
 
