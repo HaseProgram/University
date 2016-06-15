@@ -23,9 +23,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new MoveX(this->shift);
+		return (BaseModificationObject*) new MoveX(this->shift);
 	}
 
 private:
@@ -43,9 +43,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new MoveY(this->shift);
+		return (BaseModificationObject*) new MoveY(this->shift);
 	}
 
 private:
@@ -63,9 +63,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new MoveZ(this->shift);
+		return (BaseModificationObject*) new MoveZ(this->shift);
 	}
 
 private:

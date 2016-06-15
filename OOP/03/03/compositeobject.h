@@ -20,7 +20,7 @@ public:
 	~CompositeObject();
 
 	virtual void add(BaseObject*) override;
-	virtual void modificate(BaseModification*) override;
+	virtual void modificate(BaseModificationObject*) override;
 
 	void clear();
 

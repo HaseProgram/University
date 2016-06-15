@@ -60,7 +60,7 @@ Array<double> Point::vector()
 	return tmp;
 }
 
-void Point::modificate(BaseModification* modification)
+void Point::modificate(BaseModificationObject* modification)
 {
 	modification->run(this);
 }

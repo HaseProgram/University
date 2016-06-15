@@ -11,17 +11,7 @@ Viewer. Drawing model will depends on camera state.
 
 #include "point.h"
 #include "vector.h"
-#include "basemodificationcamera.h"
-
-class BaseCamera : public BaseObject
-{
-public:
-	virtual void modificate(BaseModificationCamera*) = 0;
-
-protected:
-
-};
-
+#include "basecamera.h"
 class Camera : public BaseCamera
 {
 public:
@@ -35,7 +25,7 @@ public:
 	void setPosition(Array<double>);
 	void setTarget(Array<double>);
 
-	virtual void modificate(BaseModificationCamera* override);
+	virtual void modificate(BaseModificationCamera*) override;
 	/*
 	virtual void pitch(double) override;
 	virtual void yaw(double) override;

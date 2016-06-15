@@ -35,3 +35,27 @@ void Camera::setRight(Array<double> right)
 	this->right = right;
 }
 
+void Camera::setUp(Array<double> up)
+{
+	this->up = up;
+}
+
+void Camera::setDirection(Array<double> direction)
+{
+	this->direction = direction;
+}
+
+void Camera::setPosition(Array<double> position)
+{
+	this->position = position;
+}
+
+void Camera::setTarget(Array<double> target)
+{
+	this->target = target;
+}
+
+void Camera::modificate(BaseModificationCamera* modification)
+{
+	modification->run(this);
+}

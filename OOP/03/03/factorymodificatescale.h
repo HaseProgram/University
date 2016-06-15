@@ -24,9 +24,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new Scale(this->k, this->center);
+		return (BaseModificationObject*) new Scale(this->k, this->center);
 	}
 
 private:

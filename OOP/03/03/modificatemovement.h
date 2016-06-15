@@ -9,16 +9,16 @@
 Provide object movement
 */
 
-#include "basemodification.h"
+#include "basemodificationobject.h"
 #include "point.h"
 
-class BaseMove : public BaseModification
+class BaseMove : public BaseModificationObject
 {
 public:
 
-	void modificateX(Point*) override;
-	void modificateY(Point*) override;
-	void modificateZ(Point*) override;
+	void modificateX(Point*);
+	void modificateY(Point*);
+	void modificateZ(Point*);
 
 	virtual void run(Point*) = 0;
 

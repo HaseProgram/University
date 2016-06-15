@@ -9,23 +9,21 @@
 Set base interface for camera modification
 */
 
-#define _USE_MATH_DEFINES
-#include <cmath>
+#include "basemodification.h"
 
-class Point;
-
-class BaseModificationCamera
+class Camera;
+class BaseModificationCamera : public BaseModification
 {
 public:
 	BaseModificationCamera() {};
 	~BaseModificationCamera() {};
 
-	virtual void pitch(double) = 0;
+	/*virtual void pitch(double) = 0;
 	virtual void yaw(double) = 0;
 	virtual void roll(double) = 0;
 
 	virtual void rotateVerticalSphere(double) = 0;
 	virtual void rotateHorizontalSphere(double) = 0;
-
-	virtual void run(Point* point) = 0;
+	*/
+	virtual void run(BaseSceneElement*) = 0;
 };

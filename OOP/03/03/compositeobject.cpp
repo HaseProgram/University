@@ -19,7 +19,7 @@ void CompositeObject::add(BaseObject* object)
 	this->objects.addItem(object);
 }
 
-void CompositeObject::modificate(BaseModification* modification)
+void CompositeObject::modificate(BaseModificationObject* modification)
 {
 	IArray<BaseObject*> coaIterrator(this->objects);
 	for (unsigned int i = 0; i < this->objects.count(); i++)

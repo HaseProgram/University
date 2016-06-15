@@ -62,9 +62,9 @@ size_t Model::edgesCount() const
 	return this->edges.count();
 }
 
-void Model::modificate(BaseModification* modification)
+void Model::modificate(BaseModificationObject* modification)
 {
-	IArray<Edge> EdgesIterator(this->getEdges());
+	IArray<Point> EdgesIterator(this->getPoints());
 	while (EdgesIterator.check())
 	{
 		EdgesIterator.value().modificate(modification);

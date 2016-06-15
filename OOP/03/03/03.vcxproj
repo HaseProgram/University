@@ -143,8 +143,12 @@
   <ItemGroup>
     <ClInclude Include="03.h" />
     <ClInclude Include="array.h" />
+    <ClInclude Include="basecamera.h" />
     <ClInclude Include="basemodification.h" />
+    <ClInclude Include="basemodificationobject.h" />
+    <ClInclude Include="basemodificationcamera.h" />
     <ClInclude Include="baseobject.h" />
+    <ClInclude Include="basesceneelement.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="application.h" />
@@ -154,6 +158,7 @@
     <ClInclude Include="exceptionarray.h" />
     <ClInclude Include="exceptionfileloader.h" />
     <ClInclude Include="exceptionvector.h" />
+    <ClInclude Include="factorymodificatecamera.h" />
     <ClInclude Include="factorymodificatemovement.h" />
     <ClInclude Include="factorymodificaterotation.h" />
     <ClInclude Include="factorymodificatescale.h" />
@@ -165,6 +170,7 @@
     <ClInclude Include="fileloader.h" />
     <ClInclude Include="baseloader.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="modificatecamera.h" />
     <ClInclude Include="modificatemovement.h" />
     <ClInclude Include="modificaterotation.h" />
     <ClInclude Include="modificatescale.h" />
@@ -188,6 +194,7 @@
     <ClCompile Include="modificatemovement.cpp" />
     <ClCompile Include="modificaterotation.cpp" />
     <ClCompile Include="modificatescale.cpp" />
+    <ClCompile Include="modificatecamera.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

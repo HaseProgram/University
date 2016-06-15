@@ -9,16 +9,16 @@
 Provide rotation
 */
 
-#include "basemodification.h"
+#include "basemodificationobject.h"
 #include "point.h"
 
-class BaseRotate : public BaseModification
+class BaseRotate : public BaseModificationObject
 {
 public:
 
-	virtual void modificateX(Point*) override;
-	virtual void modificateY(Point*) override;
-	virtual void modificateZ(Point*) override;
+	void modificateX(Point*);
+	void modificateY(Point*);
+	void modificateZ(Point*);
 
 	virtual void run(Point*) = 0;
 

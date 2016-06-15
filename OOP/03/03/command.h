@@ -13,11 +13,12 @@
 #include "factorymodificaterotation.h"
 #include "factorymodificatemovement.h"
 #include "factorymodificatescale.h"
+#include "factorymodificatecamera.h"
 
 class Command
 {
 public:
-	virtual void Execute(BaseObject*) = 0;
+	virtual void Execute(BaseSceneElement*) = 0;
 };
 
 class Load : public Command
@@ -32,10 +33,10 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object) override
 	{
 		FLoader* loader = new FLoader(this->filename);
-		loader->loadModel(object);
+		loader->loadModel((BaseObject*)object);
 	}
 
 private:
@@ -55,10 +56,11 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object) override
 	{
 		FactoryModification* factory = new FactoryModificationRotateX(this->angle,this->center);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -82,7 +84,8 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationRotateY(this->angle, this->center);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -106,7 +109,8 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationRotateZ(this->angle, this->center);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -129,7 +133,8 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationMoveX(this->shift);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -151,7 +156,8 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationMoveY(this->shift);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -173,7 +179,8 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationMoveZ(this->shift);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
@@ -196,10 +203,79 @@ public:
 	virtual void Execute(BaseObject* object)
 	{
 		FactoryModification* factory = new FactoryModificationScale(this->k, this->center);
-		object->modificate(factory->getModification());
+		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		object->modificate(o);
 	}
 
 private:
 	double k;
 	Point center;
+};
+
+class ModificateCameraPitch : public Command
+{
+public:
+	ModificateCameraPitch(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ModificateCameraPitch()
+	{
+	}
+
+	virtual void Execute(BaseCamera* object) override
+	{
+		FactoryModification* factory = new FactoryModificationCameraPitch(this->angle);
+		BaseModificationCamera* o = (BaseModificationCamera*)factory->getModification();
+		object->modificate(o);
+	}
+
+private:
+	double angle;
+};
+
+class ModificateCameraYaw : public Command
+{
+public:
+	ModificateCameraYaw(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ModificateCameraYaw()
+	{
+	}
+
+	virtual void Execute(BaseCamera* object)
+	{
+		FactoryModification* factory = new FactoryModificationCameraYaw(this->angle);
+		BaseModificationCamera* o = (BaseModificationCamera*)factory->getModification();
+		object->modificate(o);
+	}
+
+private:
+	double angle;
+};
+
+class ModificateCameraRoll : public Command
+{
+public:
+	ModificateCameraRoll(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ModificateCameraRoll()
+	{
+	}
+
+	virtual void Execute(BaseObject* object)
+	{
+		FactoryModification* factory = new FactoryModificationCameraRoll(this->angle);
+		object->modificate(factory->getModification());
+	}
+
+private:
+	double angle;
 };

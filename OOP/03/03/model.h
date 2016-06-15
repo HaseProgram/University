@@ -22,7 +22,7 @@ public:
 	virtual size_t pointsCount() const = 0;
 	virtual size_t edgesCount() const = 0;
 
-	virtual void modificate(BaseModification*) = 0;
+	virtual void modificate(BaseModificationObject*) = 0;
 };
 
 class Model : public BaseModel
@@ -43,7 +43,7 @@ public:
 	virtual size_t pointsCount() const override;
 	virtual  size_t edgesCount() const override;
 
-	virtual void modificate(BaseModification*) override;
+	virtual void modificate(BaseModificationObject*) override;
 
 private:
 	Array<Point> points;

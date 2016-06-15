@@ -24,9 +24,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new RotateX(this->angle, this->center);
+		return (BaseModificationObject*) new RotateX(this->angle, this->center);
 	}
 
 private:
@@ -46,9 +46,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new RotateY(this->angle, this->center);
+		return (BaseModificationObject*) new RotateY(this->angle, this->center);
 	}
 
 private:
@@ -68,9 +68,9 @@ public:
 	{
 	}
 
-	virtual BaseModification* getModification()
+	virtual BaseModificationObject* getModification()
 	{
-		return (BaseModification*) new RotateZ(this->angle, this->center);
+		return (BaseModificationObject*) new RotateZ(this->angle, this->center);
 	}
 
 private:

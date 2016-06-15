@@ -12,22 +12,7 @@ Set point using this class
 #include "baseobject.h"
 #include "array.h"
 
-class BasePoint : public BaseObject
-{
-public:
-
-	virtual void setX(double) = 0;
-	virtual void setY(double) = 0;
-	virtual void setZ(double) = 0;
-
-	virtual double getX() = 0;
-	virtual double getY() = 0;
-	virtual double getZ() = 0;
-
-	virtual void modificate(BaseModification*) = 0;
-};
-
-class Point : public BasePoint
+class Point : public BaseObject
 {
 public:
 	Point();
@@ -35,17 +20,17 @@ public:
 
 	~Point();
 
-	virtual void setX(double newX) override;
-	virtual void setY(double newY) override;
-	virtual void setZ(double newZ) override;
+	void setX(double newX);
+	void setY(double newY);
+	void setZ(double newZ);
 
-	virtual double getX() override;
-	virtual double getY() override;
-	virtual double getZ() override;
+	double getX();
+	double getY();
+	double getZ();
 
 	Array<double> vector();
 
-	virtual void modificate(BaseModification*) override;
+	virtual void modificate(BaseModificationObject*) override;
 
 private:
 	double X;

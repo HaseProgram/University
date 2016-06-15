@@ -9,19 +9,17 @@
 Set base interface for any object
 */
 
-#include "basemodification.h"
+#include "basesceneelement.h"
+#include "basemodificationobject.h"
 
-class BaseObject
+class BaseObject : public BaseSceneElement
 {
 public:
 	/*!
 		Need for composite
 		\param[in] BaseObject Object we add in composite array
 	*/
-	virtual void add(BaseObject*)
-	{
-		return;
-	}
+	virtual void add(BaseObject*) {}
 
-	virtual void modificate(BaseModification*) = 0;
+	virtual void modificate(BaseModificationObject*) = 0;
 };

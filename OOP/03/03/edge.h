@@ -12,19 +12,7 @@ Set edge using this class
 #include "baseobject.h"
 #include "point.h"
 
-class BaseEdge : public BaseObject
-{
-public:
-
-	virtual void setFirstPoint(Point*) = 0;
-	virtual void setSecondPoint(Point*) = 0;
-
-	virtual Point* getFirstPoint() = 0;
-	virtual Point* getSecondPoint() = 0;
-	virtual void modificate(BaseModification*) = 0;
-};
-
-class Edge : public BaseEdge
+class Edge : public BaseObject
 {
 public:
 	Edge();
@@ -32,13 +20,13 @@ public:
 
 	~Edge();
 
-	virtual void setFirstPoint(Point* newFirstPoint) override;
-	virtual void setSecondPoint(Point* newSecondPoint) override;
+	void setFirstPoint(Point* newFirstPoint);
+	void setSecondPoint(Point* newSecondPoint);
 
-	virtual Point* getFirstPoint() override;
-	virtual Point* getSecondPoint() override;
+	Point* getFirstPoint();
+	Point* getSecondPoint();
 
-	virtual void modificate(BaseModification*) override;
+	virtual void modificate(BaseModificationObject*) override;
 
 private:
 	Point* firstPoint;

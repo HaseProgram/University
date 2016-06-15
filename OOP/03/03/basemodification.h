@@ -1,28 +1,23 @@
 #pragma once
 
 /*!
-\brief  Base modification for any object
+\brief  Base modification for anything (model and camera)
 \author Dmitry Zaitsev
 \version 1.0
-\date 04 June 2016
+\date 09 June 2016
 
-Set base interface for object modification
+Set base interface for  modification
 */
 
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-class Point;
-
+class BaseSceneElement;
 class BaseModification
 {
 public:
 	BaseModification() {};
 	~BaseModification() {};
 
-	virtual void modificateX(Point* point) = 0;
-	virtual void modificateY(Point* point) = 0;
-	virtual void modificateZ(Point* point) = 0;
-
-	virtual void run(Point* point) = 0;
+	virtual void run(BaseSceneElement*) = 0;
 };
