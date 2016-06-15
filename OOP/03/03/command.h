@@ -10,6 +10,7 @@
 */
 
 #include "fileloader.h"
+#include "drawer.h"
 #include "factorymodificaterotation.h"
 #include "factorymodificatemovement.h"
 #include "factorymodificatescale.h"
@@ -18,7 +19,7 @@
 class Command
 {
 public:
-	virtual void Execute(BaseSceneElement*) = 0;
+	virtual void Execute(BaseSceneElement*, BaseSceneElement*, int) = 0;
 };
 
 class Load : public Command
@@ -33,7 +34,7 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseSceneElement* object) override
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FLoader* loader = new FLoader(this->filename);
 		loader->loadModel((BaseObject*)object);
@@ -41,6 +42,28 @@ public:
 
 private:
 	const char* filename;
+};
+
+class Draw : public Command
+{
+public:
+	Draw(BaseSystemDrawer* systemDrawer)
+	{
+		this->BSD = systemDrawer;
+	}
+
+	~Draw()
+	{
+	}
+
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
+	{
+		this->BSD->clearscene();
+		
+	}
+
+private:
+	BaseSystemDrawer* BSD;
 };
 
 class ModificateRotateX : public Command
@@ -56,11 +79,18 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseSceneElement* object) override
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationRotateX(this->angle,this->center);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
-		object->modificate(o);
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
+		object->modificate(factory->getModification());
 	}
 
 private:
@@ -81,10 +111,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationRotateY(this->angle, this->center);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -106,10 +143,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationRotateZ(this->angle, this->center);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -130,10 +174,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationMoveX(this->shift);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -153,10 +204,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationMoveY(this->shift);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -176,10 +234,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationMoveZ(this->shift);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -200,10 +265,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationScale(this->k, this->center);
 		BaseModificationObject* o = (BaseModificationObject*)factory->getModification();
+		if (index > 0 && object->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)object;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			object = individualObject.value();
+		}
 		object->modificate(o);
 	}
 
@@ -224,11 +296,11 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseCamera* object) override
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationCameraPitch(this->angle);
 		BaseModificationCamera* o = (BaseModificationCamera*)factory->getModification();
-		object->modificate(o);
+		camera->modificate(o);
 	}
 
 private:
@@ -247,11 +319,18 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseCamera* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationCameraYaw(this->angle);
 		BaseModificationCamera* o = (BaseModificationCamera*)factory->getModification();
-		object->modificate(o);
+		if (index > 0 && camera->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)camera;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			camera = individualObject.value();
+		}
+		camera->modificate(o);
 	}
 
 private:
@@ -270,10 +349,17 @@ public:
 	{
 	}
 
-	virtual void Execute(BaseObject* object)
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationCameraRoll(this->angle);
-		object->modificate(factory->getModification());
+		if (index > 0 && camera->composite())
+		{
+			CompositeObject* obj = (CompositeObject*)camera;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			camera = individualObject.value();
+		}
+		camera->modificate(factory->getModification());
 	}
 
 private:

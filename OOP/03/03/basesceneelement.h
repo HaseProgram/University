@@ -14,7 +14,18 @@ Parent of base camera and base object
 class BaseSceneElement
 {
 public:
-	//virtual void modificate(BaseModification*) = 0;
+	/*!
+	Need for composite
+	\param[in] BaseObject Object we add in composite array
+	*/
+	virtual void add(BaseSceneElement*) {}
+
+	virtual void modificate(BaseModification*) {};
+
+	virtual bool composite()
+	{
+		return false;
+	}
 
 protected:
 

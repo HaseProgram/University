@@ -15,6 +15,12 @@ Set base interface for camera
 class BaseCamera : public BaseSceneElement
 {
 public:
+	/*!
+	Need for composite
+	\param[in] BaseObject Object we add in composite array
+	*/
+	virtual void add(BaseCamera*) {}
+
 	virtual void modificate(BaseModificationCamera*) = 0;
 
 protected:

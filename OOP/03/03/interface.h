@@ -9,6 +9,8 @@
 Creating edit fields, buttons, get/set values, text etc
 */
 
+#include <commdlg.h>
+
 class WInterface
 {
 public:
@@ -73,4 +75,10 @@ public:
 	Text();
 	Text(WCHAR* TEXT, int X, int Y);
 	~Text();
+};
+
+class OpenDialog
+{
+public:
+	char* getfilename();
 };

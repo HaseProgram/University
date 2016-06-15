@@ -4,6 +4,29 @@
 HWND WInterface::hWnd;
 HINSTANCE WInterface::hInst;
 
+int nlen(const char* str)
+{
+	int len = 0;
+
+	while (str[len * 2])
+		len++;
+
+	return len;
+}
+
+//
+// FUNCTION delete_zero_symbols (char* str)
+//
+// PURPOSE: each second symbol of source string is '\0' symbol. We delete it
+//
+void delete_zero_symbols(char* str)
+{
+	int len = nlen(str);
+
+	for (int i = 1; i < len + 1; i++)
+		str[i] = str[i * 2];
+}
+
 WInterface::WInterface()
 {
 }
@@ -110,4 +133,34 @@ Text::Text(WCHAR* TEXT, int X, int Y)
 
 Text::~Text()
 {
+}
+
+char* OpenDialog::getfilename()
+{
+	char *modelFileName;
+	char bufFileName[MAX_PATH * 2] = "";
+	OPENFILENAME ofn;
+
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFilter = (LPCWSTR)TEXT("3D model (*.model)\0*.model\0 All files (*.*)\0*.*\0");
+	ofn.lpstrFile = (LPWSTR)bufFileName;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrTitle = (LPCWSTR)TEXT("Choose 3D model file");
+	ofn.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+	ofn.lpstrDefExt = (LPCWSTR)TEXT("*.model");
+
+	if (GetOpenFileName(&ofn))
+	{
+		delete_zero_symbols(bufFileName);
+		modelFileName = (char*)calloc(strlen(bufFileName) + 1, sizeof(char));
+		strcpy(modelFileName, bufFileName);
+		return modelFileName;
+	}
+	else
+	{
+		return NULL;
+	}
 }

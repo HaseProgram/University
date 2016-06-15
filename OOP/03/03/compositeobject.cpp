@@ -10,7 +10,7 @@ CompositeObject::~CompositeObject()
 	this->clear();
 }
 
-void CompositeObject::add(BaseObject* object)
+void CompositeObject::add(BaseSceneElement* object)
 {
 	if (!object)
 	{
@@ -19,9 +19,9 @@ void CompositeObject::add(BaseObject* object)
 	this->objects.addItem(object);
 }
 
-void CompositeObject::modificate(BaseModificationObject* modification)
+void CompositeObject::modificate(BaseModification* modification)
 {
-	IArray<BaseObject*> coaIterrator(this->objects);
+	IArray<BaseSceneElement*> coaIterrator(this->objects);
 	for (unsigned int i = 0; i < this->objects.count(); i++)
 	{
 		if (!coaIterrator.getByCount(i))

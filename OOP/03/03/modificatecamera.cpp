@@ -6,7 +6,27 @@ Pitch::Pitch(double angle)
 	this->angle = angle;
 }
 
-void Pitch::run(Camera* camera)
+void Pitch::run(BaseCamera* camera)
+{
+	//this->pitch()
+}
+
+Yaw::Yaw(double angle)
+{
+	this->angle = angle;
+}
+
+void Yaw::run(BaseCamera* camera)
+{
+	//this->pitch()
+}
+
+Roll::Roll(double angle)
+{
+	this->angle = angle;
+}
+
+void Roll::run(BaseCamera* camera)
 {
 	//this->pitch()
 }

@@ -12,12 +12,11 @@ Set base interface for  modification
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-class BaseSceneElement;
 class BaseModification
 {
 public:
 	BaseModification() {};
 	~BaseModification() {};
 
-	virtual void run(BaseSceneElement*) = 0;
+	//virtual void run(BaseSceneElement*) {};
 };

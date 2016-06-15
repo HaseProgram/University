@@ -4,6 +4,7 @@
 #include "ui.h"
 #include "application.h"
 #include "fileloader.h"
+#include "drawer.h"
 
 extern HINSTANCE hInst;
 extern HWND hWnd;
@@ -27,11 +28,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
+		case IDM_OPEN:
+		{
+			OpenDialog dialog;
+			Load* command = new Load(dialog.getfilename());
+			app->Call(*command,0);
+
+
+		}
+			break;
 		case ID_BUTTON_CAMERA_APPLY:
 		{
-
-			Load* command = new Load("F:\\University\\Git\\University\\OOP\\03\\Debug\\cube.txt");
-			app->Call(*command);
 			// scenemanager->camera->set
 		}
 			break;

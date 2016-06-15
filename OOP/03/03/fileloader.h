@@ -32,7 +32,7 @@ public:
 
 	virtual Model* readModel() override;
 
-	virtual BaseObject* loadModel(BaseObject*);	
+	virtual BaseSceneElement* loadModel(BaseSceneElement*);
 
 private:
 	const char* filename;

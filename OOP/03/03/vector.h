@@ -30,7 +30,7 @@ public:
 	double angle(Vector, Vector);
 
 	Vector normalize();
-	Vector cross(Vector, Vector);
+	//Vector cross(Vector, Vector); 
 
 	Vector& operator=(Array<double>&);
 	Vector& operator=(Array<double>&&);

@@ -17,9 +17,30 @@ class Pitch : public BaseModificationCamera
 public:
 	Pitch(double);
 
-	virtual void run(Camera*);
+	virtual void run(BaseCamera*) override;
 
 protected:
 	double angle;
 };
 
+class Yaw : public BaseModificationCamera
+{
+public:
+	Yaw(double);
+
+	virtual void run(BaseCamera*) override;
+
+protected:
+	double angle;
+};
+
+class Roll : public BaseModificationCamera
+{
+public:
+	Roll(double);
+
+	virtual void run(BaseCamera*) override;
+
+protected:
+	double angle;
+};

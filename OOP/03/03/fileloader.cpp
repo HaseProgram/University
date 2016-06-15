@@ -111,7 +111,7 @@ Model* FLoader::readModel()
 	return model;
 }
 
-BaseObject* FLoader::loadModel(BaseObject* cobject)
+BaseSceneElement* FLoader::loadModel(BaseSceneElement* cobject)
 {
 	this->openFile();
 

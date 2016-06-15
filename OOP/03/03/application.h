@@ -16,7 +16,8 @@ class Application
 public:
 	Application();
 	~Application();
-	void Call(Command &c);
+	void Call(Command &c, int index);
 private:
-	BaseObject* object;
+	BaseSceneElement* object;
+	BaseSceneElement* camera;
 };

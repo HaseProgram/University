@@ -8,6 +8,11 @@ Application::Application()
 	{
 		throw AllocationMemoryError();
 	}
+	this->camera = new CompositeObject;
+	if (!this->camera)
+	{
+		throw AllocationMemoryError();
+	}
 }
 
 Application::~Application()
@@ -16,7 +21,7 @@ Application::~Application()
 	this->object = nullptr;
 }
 
-void Application::Call(Command &c)
+void Application::Call(Command &c, int index)
 {
-	c.Execute(this->object);
+	c.Execute(this->object,this->camera,index);
 }

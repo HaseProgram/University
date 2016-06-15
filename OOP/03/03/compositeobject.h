@@ -10,19 +10,24 @@ Let acting with array of objects like with single one as well
 */
 
 #include "exceptioncomposit.h"
-#include "baseobject.h"
+#include "basesceneelement.h"
 #include "array.h"
 
-class CompositeObject : public BaseObject
+class CompositeObject : public BaseSceneElement
 {
 public:
 	CompositeObject();
 	~CompositeObject();
 
-	virtual void add(BaseObject*) override;
-	virtual void modificate(BaseModificationObject*) override;
+	virtual void add(BaseSceneElement*) override;
+	virtual void modificate(BaseModification*) override;
 
 	void clear();
 
-	Array<BaseObject*> objects;
+	virtual bool composite() override
+	{
+		return true;
+	}
+
+	Array<BaseSceneElement*> objects;
 };

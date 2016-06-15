@@ -11,7 +11,7 @@ Set base interface for camera modification
 
 #include "basemodification.h"
 
-class Camera;
+class BaseCamera;
 class BaseModificationCamera : public BaseModification
 {
 public:
@@ -25,5 +25,5 @@ public:
 	virtual void rotateVerticalSphere(double) = 0;
 	virtual void rotateHorizontalSphere(double) = 0;
 	*/
-	virtual void run(BaseSceneElement*) = 0;
+	virtual void run(BaseCamera*) = 0;
 };
