@@ -2,7 +2,7 @@
 #include "drawer.h"
 #include "array.h"
 
-Drawer::Drawer(SystemDrawer* systemDrawer)
+Drawer::Drawer(BaseSystemDrawer* systemDrawer)
 {
 	this->systemDrawer = systemDrawer;
 }
@@ -12,9 +12,9 @@ Drawer::~Drawer()
 
 }
 
-void Drawer::drawmodel(Model& model, Camera& camera)
+void Drawer::drawmodel(Model* model, Camera* camera)
 {
-	Array<Edge> edges = model.getEdges();
+	Array<Edge> edges = model->getEdges();
 	if (edges.count() == 0)
 	{
 		throw DrawerEmptyModelError();

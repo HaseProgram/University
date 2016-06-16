@@ -169,6 +169,8 @@
     <ClInclude Include="factorymodification.h" />
     <ClInclude Include="iarray.h" />
     <ClInclude Include="iarray.tpl.h" />
+    <ClInclude Include="iarrayconst.h" />
+    <ClInclude Include="iarrayconst.tpl.h" />
     <ClInclude Include="interface.h" />
     <ClInclude Include="listener.h" />
     <ClInclude Include="fileloader.h" />

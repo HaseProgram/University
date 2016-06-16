@@ -17,6 +17,7 @@ class Vector
 {
 public:
 	Vector();
+	Vector::Vector(const Vector& cvector);
 	Vector(double, double, double);
 	~Vector();
 
@@ -24,6 +25,11 @@ public:
 	void setY(double);
 	void setZ(double);
 	void setL(double);
+
+	double getX() const;
+	double getY() const;
+	double getZ() const;
+	double getL() const;
 	
 	double length();
 	double scalar(Vector, Vector);

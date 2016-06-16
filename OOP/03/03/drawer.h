@@ -15,7 +15,7 @@ Drawing model
 class Drawer : public BaseDrawer
 {
 public:
-	Drawer(SystemDrawer*);
+	Drawer(BaseSystemDrawer*);
 	~Drawer();
-	virtual void drawmodel(Model&, Camera&) override;
+	virtual void drawmodel(Model*, Camera*) override;
 };

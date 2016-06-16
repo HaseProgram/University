@@ -16,8 +16,8 @@ Interface for drawing
 class BaseDrawer
 {
 public:
-	virtual void drawmodel(Model&, Camera&) = 0;
+	virtual void drawmodel(Model*, Camera*) = 0;
 
 protected:
-	SystemDrawer* systemDrawer;
+	BaseSystemDrawer* systemDrawer;
 };

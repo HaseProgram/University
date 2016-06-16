@@ -14,7 +14,7 @@ Draw line, choose brush, operate with scene (creating, clearing)
 class SystemDrawer : public BaseSystemDrawer
 {
 public:
-	SystemDrawer(tscene*);
+	SystemDrawer(tscene);
 	~SystemDrawer();
 
 	virtual void drawline(Point*, Point*) override;
@@ -23,6 +23,6 @@ public:
 	virtual void setpenwidth(int width) override;
 
 private:
-	struct tscene* scene;
-	struct tpen* pen;
+	struct tscene scene;
+	struct tpen pen;
 };

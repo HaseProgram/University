@@ -10,6 +10,19 @@ Vector::Vector()
 	this->v.addItem(t);
 }
 
+Vector::Vector(const Vector& cvector)
+{
+	double t = 0;
+	double x = cvector.getX();
+	double y = cvector.getY();
+	double z = cvector.getZ();
+	double l = cvector.getL();
+	this->v.addItem(x);
+	this->v.addItem(y);
+	this->v.addItem(z);
+	this->v.addItem(l);
+}
+
 Vector::Vector(double x, double y, double z)
 {
 	this->v.addItem(x);
@@ -50,6 +63,34 @@ void Vector::setL(double L)
 	IArray<double> viterator(this->v);
 	viterator.getByCount(3);
 	viterator.update(L);
+}
+
+double Vector::getX() const
+{
+	IArrayConst<double> viterator(this->v);
+	viterator.getByCount(0);
+	return viterator.value();
+}
+
+double Vector::getY() const
+{
+	IArrayConst<double> viterator(this->v);
+	viterator.getByCount(1);
+	return viterator.value();
+}
+
+double Vector::getZ() const
+{
+	IArrayConst<double> viterator(this->v);
+	viterator.getByCount(2);
+	return viterator.value();
+}
+
+double Vector::getL() const 
+{
+	IArrayConst<double> viterator(this->v);
+	viterator.getByCount(3);
+	return viterator.value();
 }
 
 double Vector::length()

@@ -14,8 +14,13 @@ HDC hdc;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	struct tscene sc
+	{
+		50, 50, 600, 1200, RGB(0, 255, 255), GetDC(hWnd)
+	};
 
 	static Application* app = new Application();
+	static BaseSystemDrawer* SD = new SystemDrawer(sc);
 
 	switch (message)
 	{
@@ -31,10 +36,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_OPEN:
 		{
 			OpenDialog dialog;
-			Load* command = new Load(dialog.getfilename());
-			app->Call(*command,0);
+			Load* loadcommand = new Load(dialog.getfilename());
+			app->Call(*loadcommand,0);
 
 
+
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand,0);
 		}
 			break;
 		case ID_BUTTON_CAMERA_APPLY:
@@ -61,6 +69,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PInterface pInterface(hdc);
 		textUi();
 		pInterface.~PInterface();
+
+		Draw* drawcommand = new Draw(SD);
+		app->Call(*drawcommand, 0);
+
 		EndPaint(hWnd, &ps);
 	}
 	break;

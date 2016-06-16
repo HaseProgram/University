@@ -9,9 +9,57 @@ Array<type_t>::Array()
 }
 
 template <typename type_t>
+Array<type_t>::Array(const Array<type_t>& cvarray)
+{
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
+
+	item<type_t>* tempItem = cvarray.head;
+
+	while (tempItem != NULL)
+	{
+		this->addItem(tempItem->data);
+		tempItem = tempItem->next;
+	}
+}
+
+template <typename type_t>
+Array<type_t>::Array(Array<type_t>&& rvarray)
+{
+	this->head = NULL;
+	this->tail = NULL;
+	this->size = 0;
+
+	item<type_t>* tempItem = rvarray.head;
+
+	while (tempItem != NULL)
+	{
+		this->addItem(tempItem->data);
+		tempItem = tempItem->next;
+	}
+}
+
+template <typename type_t>
 Array<type_t>::~Array()
 {
 	this->clear();
+}
+
+template <typename type_t>
+Array<type_t>& Array<type_t>::operator=(const Array<type_t>& cvarray)
+{
+	this->clear();
+
+	item<type_t>* tempItem = cvarray.head;
+
+	while (tempItem != NULL)
+	{
+		this->addItem(tempItem->data);
+		tempItem = tempItem->next;
+	}
+
+	return *this;
 }
 
 template <typename type_t>

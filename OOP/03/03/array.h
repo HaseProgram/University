@@ -19,6 +19,7 @@ struct item
 };
 
 #include "iarray.h"
+#include "iarrayconst.h"
 
 class BaseArray
 {
@@ -34,7 +35,11 @@ class Array : public BaseArray
 {
 public:
 	Array();
+	Array(const Array<type_t>&);
+	Array(Array<type_t>&&);
 	~Array();
+
+	Array<type_t>& operator=(const Array<type_t>&);
 
 	type_t& addItem(type_t&);
 	type_t& delItem();
@@ -44,6 +49,7 @@ public:
 	virtual size_t count() const override;
 
 	friend class IArray<typename type_t>;
+	friend class IArrayConst<typename type_t>;
 
 private:
 	item<type_t> *head;

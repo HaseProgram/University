@@ -10,7 +10,7 @@ IArray<type_t>::IArray(Array<type_t>& arr)
 template <typename type_t>
 IArray<type_t>::~IArray()
 {
-	this->arr = NULL;
+	this->arr = NULL;//
 	this->currentItem = NULL;
 }
 
