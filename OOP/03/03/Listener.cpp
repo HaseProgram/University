@@ -13,6 +13,9 @@ PAINTSTRUCT ps;
 HDC hdc;
 
 double angle = 5;
+double deltac = 1.2;
+double deltaf = 0.8;
+double shift = 5;
 Point center(0,0,0);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -54,7 +57,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// scenemanager->camera->set
 		}
 		break;
-		// Next are object modifications
+		// Next are object rotations
 		case 65: // A
 		{
 			ModificateRotateY* rotycommand = new ModificateRotateY(angle,center);
@@ -83,6 +86,88 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateX* rotxcommand = new ModificateRotateX(-angle, center);
 			app->Call(*rotxcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 81: // Q
+		{
+			ModificateRotateZ* rotzcommand = new ModificateRotateZ(-angle, center);
+			app->Call(*rotzcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 69: // E
+		{
+			ModificateRotateZ* rotzcommand = new ModificateRotateZ(angle, center);
+			app->Call(*rotzcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		// Next are object scale
+		case 67: // C
+		{
+			ModificateScale* scalecommand = new ModificateScale(deltac,center);
+			app->Call(*scalecommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 70: // F
+		{
+			ModificateScale* scalecommand = new ModificateScale(deltaf,center);
+			app->Call(*scalecommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		// Next are object move
+		case VK_LEFT: // <-
+		{
+			ModificateMoveX* movxcommand = new ModificateMoveX(-shift);
+			app->Call(*movxcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case VK_RIGHT: // ->
+		{
+			ModificateMoveX* movxcommand = new ModificateMoveX(shift);
+			app->Call(*movxcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case VK_UP:
+		{
+			ModificateMoveY* movycommand = new ModificateMoveY(-shift);
+			app->Call(*movycommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case VK_DOWN: 
+		{
+			ModificateMoveY* movycommand = new ModificateMoveY(shift);
+			app->Call(*movycommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 96: // 0 NUMPAD
+		{
+			ModificateMoveZ* movzcommand = new ModificateMoveZ(-shift);
+			app->Call(*movzcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 109: // . NUMPAD
+		{
+			ModificateMoveZ* movzcommand = new ModificateMoveZ(shift);
+			app->Call(*movzcommand, 0);
 			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}

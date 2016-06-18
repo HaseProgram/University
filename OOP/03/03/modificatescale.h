@@ -31,7 +31,7 @@ class Scale : public BaseScale
 {
 public:
 	Scale();
-	Scale(double, Point);
+	Scale(double, Point&);
 	~Scale();
 
 	virtual void run(Point*) override;

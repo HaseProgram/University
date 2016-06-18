@@ -27,14 +27,6 @@ void CompositeObject::modificate(BaseModification* modification)
 		coaIterrator.value()->modificate(modification);
 		coaIterrator.next();
 	}
-	/*for (unsigned int i = 0; i < this->objects.count(); i++)
-	{
-		if (!coaIterrator.getByCount(i))
-		{
-			throw CompositeObjectModificateNULLError();
-		}
-		coaIterrator.value()->modificate(modification);
-	}*/
 }
 
 void CompositeObject::clear()

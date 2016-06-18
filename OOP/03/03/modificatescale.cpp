@@ -31,7 +31,7 @@ Scale::Scale()
 {
 }
 
-Scale::Scale(double k, Point center)
+Scale::Scale(double k, Point& center)
 {
 	this->k = k;
 	this->center = &center;
