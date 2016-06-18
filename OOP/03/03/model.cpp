@@ -64,10 +64,10 @@ size_t Model::edgesCount() const
 
 void Model::modificate(BaseModificationObject* modification)
 {
-	IArray<Point> EdgesIterator(this->getPoints());
-	while (EdgesIterator.check())
+	IArray<Point> PointsIterator(this->getPoints());
+	while (PointsIterator.check())
 	{
-		EdgesIterator.value().modificate(modification);
-		EdgesIterator.next();
+		PointsIterator.value().modificate(modification);
+		PointsIterator.next();
 	}
 }

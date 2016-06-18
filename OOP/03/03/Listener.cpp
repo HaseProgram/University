@@ -12,11 +12,16 @@ extern HWND hWnd;
 PAINTSTRUCT ps;
 HDC hdc;
 
+double angle = 5;
+Point center(0,0,0);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	WORD KEY_CODE;
+
 	struct tscene sc
 	{
-		50, 50, 600, 1200, RGB(0, 255, 255), GetDC(hWnd)
+		50, 50, 600, 1200, RGB(240, 240, 240), GetDC(hWnd)
 	};
 
 	static Application* app = new Application();
@@ -25,6 +30,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_COMMAND:
+	case WM_KEYDOWN:
 	{
 		int wmId = LOWORD(wParam);
 
@@ -39,17 +45,48 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			Load* loadcommand = new Load(dialog.getfilename());
 			app->Call(*loadcommand,0);
 
-
-
 			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand,0);
 		}
-			break;
+		break;
 		case ID_BUTTON_CAMERA_APPLY:
 		{
 			// scenemanager->camera->set
 		}
-			break;
+		break;
+		// Next are object modifications
+		case 65: // A
+		{
+			ModificateRotateY* rotycommand = new ModificateRotateY(angle,center);
+			app->Call(*rotycommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 68: // D
+		{
+			ModificateRotateY* rotycommand = new ModificateRotateY(-angle, center);
+			app->Call(*rotycommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 87: // W
+		{
+			ModificateRotateX* rotxcommand = new ModificateRotateX(angle, center);
+			app->Call(*rotxcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 83: // S
+		{
+			ModificateRotateX* rotxcommand = new ModificateRotateX(-angle, center);
+			app->Call(*rotxcommand, 0);
+			Draw* drawcommand = new Draw(SD);
+			app->Call(*drawcommand, 0);
+		}
+		break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;

@@ -21,6 +21,11 @@ public:
 	*/
 	virtual void add(BaseCamera*) {}
 
+	virtual void modificate(BaseModification* mod)
+	{
+		this->modificate((BaseModificationCamera*)mod);
+	}
+
 	virtual void modificate(BaseModificationCamera*) = 0;
 
 protected:

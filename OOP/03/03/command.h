@@ -108,7 +108,7 @@ public:
 			individualObject.getByCount(index);
 			object = individualObject.value();
 		}
-		object->modificate(factory->getModification());
+		object->modificate(o);
 	}
 
 private:

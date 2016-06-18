@@ -7,7 +7,6 @@
 
 void BaseRotate::modificateX(Point* point)
 {
-	this->angle = this->angle * M_PI / 180.0;
 	double ty =
 		(point->getY() - center->getY()) * cos(this->angle) -
 		(point->getZ() - center->getZ()) * sin(this->angle);
@@ -20,28 +19,26 @@ void BaseRotate::modificateX(Point* point)
 
 void BaseRotate::modificateY(Point* point)
 {
-	this->angle = this->angle * M_PI / 180.0;
 	double tx =
 		(point->getX() - center->getX()) * cos(this->angle) -
 		(point->getZ() - center->getZ()) * sin(this->angle);
 	double tz =
 		(point->getX() - center->getX()) * sin(this->angle) +
 		(point->getZ() - center->getZ()) * cos(this->angle);
-	point->setY(tx);
+	point->setX(tx);
 	point->setZ(tz);
 }
 
 void BaseRotate::modificateZ(Point* point)
 {
-	this->angle = this->angle * M_PI / 180.0;
 	double tx =
 		(point->getX() - center->getX()) * cos(this->angle) -
 		(point->getY() - center->getY()) * sin(this->angle);
 	double ty =
 		(point->getX() - center->getX()) * sin(this->angle) +
 		(point->getY() - center->getY()) * cos(this->angle);
-	point->setY(tx);
-	point->setZ(ty);
+	point->setX(tx);
+	point->setY(ty);
 }
 
 /*
@@ -52,9 +49,9 @@ RotateX::RotateX()
 {
 }
 
-RotateX::RotateX(double angle, Point center)
+RotateX::RotateX(double angle, Point& center)
 {
-	this->angle = angle;
+	this->angle = angle * M_PI / 180.0;
 	this->center = &center;
 }
 
@@ -75,9 +72,9 @@ RotateY::RotateY()
 {
 }
 
-RotateY::RotateY(double angle, Point center)
+RotateY::RotateY(double angle, Point& center)
 {
-	this->angle = angle;
+	this->angle = angle * M_PI / 180.0;
 	this->center = &center;
 }
 
@@ -98,9 +95,9 @@ RotateZ::RotateZ()
 {
 }
 
-RotateZ::RotateZ(double angle, Point center)
+RotateZ::RotateZ(double angle, Point& center)
 {
-	this->angle = angle;
+	this->angle = angle * M_PI / 180.0;
 	this->center = &center;
 }
 

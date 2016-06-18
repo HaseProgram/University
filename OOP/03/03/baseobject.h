@@ -21,5 +21,10 @@ public:
 	*/
 	virtual void add(BaseObject*) {}
 
+	virtual void modificate(BaseModification* mod)
+	{
+		this->modificate((BaseModificationObject*)mod);
+	}
+
 	virtual void modificate(BaseModificationObject*) = 0;
 };

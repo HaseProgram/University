@@ -31,7 +31,7 @@ class RotateX : public BaseRotate
 {
 public:
 	RotateX();
-	RotateX(double, Point);
+	RotateX(double, Point&);
 	~RotateX();
 
 	virtual void run(Point*) override;
@@ -41,7 +41,7 @@ class RotateY : public BaseRotate
 {
 public:
 	RotateY();
-	RotateY(double, Point);
+	RotateY(double, Point&);
 	~RotateY();
 
 	virtual void run(Point*) override;
@@ -51,7 +51,7 @@ class RotateZ : public BaseRotate
 {
 public:
 	RotateZ();
-	RotateZ(double, Point);
+	RotateZ(double, Point&);
 	~RotateZ();
 
 	virtual void run(Point*) override;

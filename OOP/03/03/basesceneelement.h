@@ -20,7 +20,7 @@ public:
 	*/
 	virtual void add(BaseSceneElement*) {}
 
-	virtual void modificate(BaseModification*) {};
+	virtual void modificate(BaseModification*) = 0;
 
 	virtual bool composite()
 	{

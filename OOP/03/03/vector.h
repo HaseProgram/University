@@ -17,7 +17,7 @@ class Vector
 {
 public:
 	Vector();
-	Vector::Vector(const Vector& cvector);
+	Vector(const Vector& cvector);
 	Vector(double, double, double);
 	~Vector();
 
