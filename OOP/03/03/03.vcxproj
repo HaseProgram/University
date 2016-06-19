@@ -152,6 +152,7 @@
     <ClInclude Include="basesceneelement.h" />
     <ClInclude Include="basesystemdrawer.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="cameramatrixmodification.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="compositeobject.h" />
@@ -175,6 +176,8 @@
     <ClInclude Include="listener.h" />
     <ClInclude Include="fileloader.h" />
     <ClInclude Include="baseloader.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="matrix.tpl.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="modificatecamera.h" />
     <ClInclude Include="modificatemovement.h" />
@@ -192,6 +195,7 @@
     <ClCompile Include="03.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="cameramatrixmodification.cpp" />
     <ClCompile Include="compositeobject.cpp" />
     <ClCompile Include="drawer.cpp" />
     <ClCompile Include="edge.cpp" />

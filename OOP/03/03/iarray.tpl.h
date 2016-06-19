@@ -178,7 +178,20 @@ bool IArray<type_t>::getByCount(int index)
 }
 
 template<typename type_t>
+IArray<type_t>& IArray<type_t>::operator[](int index)
+{
+	this->getByCount(index);
+	return *this;
+}
+
+template<typename type_t>
 void IArray<type_t>::update(type_t& data)
+{
+	this->currentItem->data = data;
+}
+
+template<typename type_t>
+void IArray<type_t>::updatedir(type_t data)
 {
 	this->currentItem->data = data;
 }

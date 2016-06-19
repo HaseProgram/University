@@ -21,6 +21,13 @@ public:
 	*/
 	virtual void add(BaseCamera*) {}
 
+	virtual void pitch(double) = 0;
+	virtual void yaw(double) = 0;
+	virtual void roll(double) = 0;
+
+	virtual void rotateVerticalSphere(double) = 0;
+	virtual void rotateHorizontalSphere(double) = 0;
+
 	virtual void modificate(BaseModification* mod)
 	{
 		this->modificate((BaseModificationCamera*)mod);

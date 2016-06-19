@@ -24,6 +24,7 @@ struct item
 class BaseArray
 {
 public:
+	virtual ~BaseArray() {}
 	virtual size_t count() const = 0;
 
 protected:

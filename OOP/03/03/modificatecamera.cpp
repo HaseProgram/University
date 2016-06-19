@@ -8,7 +8,7 @@ Pitch::Pitch(double angle)
 
 void Pitch::run(BaseCamera* camera)
 {
-	//this->pitch()
+	camera->pitch(this->angle);
 }
 
 Yaw::Yaw(double angle)

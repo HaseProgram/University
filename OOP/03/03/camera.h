@@ -25,14 +25,21 @@ public:
 	void setPosition(Array<double>);
 	void setTarget(Array<double>);
 
+	Vector getRight();
+	Vector getUp();
+	Vector getDirection();
+
+	Vector getPosition();
+	Vector getTarget();
+
 	virtual void modificate(BaseModificationCamera*) override;
-	/*
+
 	virtual void pitch(double) override;
 	virtual void yaw(double) override;
 	virtual void roll(double) override;
 
 	virtual void rotateVerticalSphere(double) override;
-	virtual void rotateHorizontalSphere(double) override;*/
+	virtual void rotateHorizontalSphere(double) override;
 private:
 	Vector right;
 	Vector up;

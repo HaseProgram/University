@@ -29,6 +29,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	static Application* app = new Application();
 	static BaseSystemDrawer* SD = new SystemDrawer(sc);
+	static Draw* drawcommand = new Draw(SD);
 
 	switch (message)
 	{
@@ -47,8 +48,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			OpenDialog dialog;
 			Load* loadcommand = new Load(dialog.getfilename());
 			app->Call(*loadcommand,0);
-
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand,0);
 		}
 		break;
@@ -62,7 +61,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateY* rotycommand = new ModificateRotateY(angle,center);
 			app->Call(*rotycommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -70,7 +68,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateY* rotycommand = new ModificateRotateY(-angle, center);
 			app->Call(*rotycommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -78,7 +75,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateX* rotxcommand = new ModificateRotateX(angle, center);
 			app->Call(*rotxcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -86,7 +82,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateX* rotxcommand = new ModificateRotateX(-angle, center);
 			app->Call(*rotxcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -94,7 +89,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateZ* rotzcommand = new ModificateRotateZ(-angle, center);
 			app->Call(*rotzcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -102,7 +96,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateRotateZ* rotzcommand = new ModificateRotateZ(angle, center);
 			app->Call(*rotzcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -111,7 +104,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateScale* scalecommand = new ModificateScale(deltac,center);
 			app->Call(*scalecommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -119,7 +111,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateScale* scalecommand = new ModificateScale(deltaf,center);
 			app->Call(*scalecommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -128,7 +119,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveX* movxcommand = new ModificateMoveX(-shift);
 			app->Call(*movxcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -136,7 +126,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveX* movxcommand = new ModificateMoveX(shift);
 			app->Call(*movxcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -144,7 +133,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveY* movycommand = new ModificateMoveY(-shift);
 			app->Call(*movycommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -152,7 +140,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveY* movycommand = new ModificateMoveY(shift);
 			app->Call(*movycommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -160,7 +147,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveZ* movzcommand = new ModificateMoveZ(-shift);
 			app->Call(*movzcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;
@@ -168,7 +154,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveZ* movzcommand = new ModificateMoveZ(shift);
 			app->Call(*movzcommand, 0);
-			Draw* drawcommand = new Draw(SD);
 			app->Call(*drawcommand, 0);
 		}
 		break;

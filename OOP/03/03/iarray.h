@@ -38,8 +38,10 @@ public:
 	void prev();
 	void next();
 	bool getByCount(int);
+	IArray<type_t>& operator[](int);
 
 	void update(type_t&);
+	void updatedir(type_t);
 	void operator=(type_t&);
 
 	type_t& value();
