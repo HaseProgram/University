@@ -23,6 +23,19 @@ Vector::Vector(const Vector& cvector)
 	this->v.addItem(l);
 }
 
+Vector::Vector(Array<double> arr)
+{
+	if (arr.count() != 4)
+	{
+		//throw VectorSourceSizeError(); // Need add exception file with thouse errors
+	}
+	IArray<double> iarr(arr);
+	while (iarr.check())
+	{
+		this->v.addItem(iarr.value());
+	}
+}
+
 Vector::Vector(double x, double y, double z)
 {
 	this->v.addItem(x);
@@ -35,6 +48,20 @@ Vector::Vector(double x, double y, double z)
 Vector::~Vector()
 {
 	this->v.clear();
+}
+
+Array<double>& Vector::getArray()
+{
+	Array<double> tmp;
+	double x = this->getX();
+	double y = this->getY();
+	double z = this->getZ();
+	double l = this->getL();
+	tmp.addItem(x);
+	tmp.addItem(y);
+	tmp.addItem(z);
+	tmp.addItem(l);
+	return tmp;
 }
 
 void Vector::setX(double X)
@@ -150,6 +177,15 @@ Vector Vector::normalize()
 	}
 
 	return (*this);
+}
+
+Vector Vector::cross(Vector vec1, Vector vec2)
+{
+	Vector tmp;
+	tmp.setX(vec1.getZ() * vec2.getY() - vec1.getY() * vec2.getZ());
+	tmp.setY(vec1.getX() * vec2.getZ() - vec1.getZ() * vec2.getX());
+	tmp.setZ(vec1.getY() * vec2.getX() - vec1.getX() * vec2.getY());
+	return tmp;
 }
 
 Vector& Vector::operator=(Array<double>& other)

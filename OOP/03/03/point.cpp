@@ -8,6 +8,13 @@ Point::Point()
 	this->Z = 0;
 }
 
+Point::Point(Vector vec)
+{
+	this->X = vec.getX();
+	this->Y = vec.getY();
+	this->Z = vec.getZ();
+}
+
 Point::Point(double X, double Y, double Z)
 {
 	this->X = X;

@@ -26,9 +26,14 @@ void Drawer::drawmodel(Model* model, Camera* camera)
 	{
 		Edge e = edgesiterator.value();
 
-		// NEED CAMERA
+		Matrix<double> view = camera->getView();
+		Vector start(e.getFirstPoint()->vector());
+		Vector end(e.getSecondPoint()->vector());
 
-		this->systemDrawer->drawline(e.getFirstPoint(), e.getSecondPoint());
+		start = start * view;
+		end = end * view;
+
+		this->systemDrawer->drawline(Point(start), Point(end));
 		edgesiterator.next();
 	}
 }

@@ -17,7 +17,7 @@ public:
 	SystemDrawer(tscene);
 	~SystemDrawer();
 
-	virtual void drawline(Point*, Point*) override;
+	virtual void drawline(Point, Point) override;
 	virtual void clearscene() override;
 	virtual void setpencolor(int R, int G, int B) override;
 	virtual void setpenwidth(int width) override;

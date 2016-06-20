@@ -40,6 +40,8 @@ public:
 
 	virtual void rotateVerticalSphere(double) override;
 	virtual void rotateHorizontalSphere(double) override;
+
+	Matrix<double> getView();
 private:
 	Vector right;
 	Vector up;

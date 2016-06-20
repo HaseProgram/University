@@ -11,11 +11,13 @@ Set point using this class
 
 #include "baseobject.h"
 #include "array.h"
+#include "vector.h"
 
 class Point : public BaseObject
 {
 public:
 	Point();
+	Point(Vector vec);
 	Point(double X, double Y, double Z);
 
 	~Point();

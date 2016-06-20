@@ -12,19 +12,19 @@ SystemDrawer::~SystemDrawer()
 
 }
 
-void SystemDrawer::drawline(Point* start, Point* end)
+void SystemDrawer::drawline(Point start, Point end)
 {
 	SelectObject(this->scene.hdc, CreatePen(this->pen.style, this->pen.width, this->pen.color));
 	MoveToEx(
 		this->scene.hdc, 
-		start->getX() + (this->scene.x + this->scene.width) / 2,
-		start->getY() + (this->scene.y + this->scene.height) / 2,
+		start.getX() + (this->scene.x + this->scene.width) / 2,
+		start.getY() + (this->scene.y + this->scene.height) / 2,
 		NULL
 		);
 	LineTo(
 		this->scene.hdc,
-		end->getX() + (this->scene.x + this->scene.width) / 2,
-		end->getY() + (this->scene.y + this->scene.height) / 2
+		end.getX() + (this->scene.x + this->scene.width) / 2,
+		end.getY() + (this->scene.y + this->scene.height) / 2
 		);
 }
 

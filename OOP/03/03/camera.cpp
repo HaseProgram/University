@@ -123,3 +123,30 @@ void Camera::rotateHorizontalSphere(double angle)
 	//this->setUp(this->getUp() * transform);
 	//this->setDirection(this->getDirection() * transform);
 }
+
+Matrix<double> Camera::getView()
+{
+	this->direction.normalize();
+	
+	this->up = Vector::cross(this->direction, this->right);
+	this->up.normalize();
+
+	this->right = Vector::cross(this->up, this->direction);
+	this->right.normalize();
+
+	double x = -Vector::scalar(this->right, this->position);
+	double y = -Vector::scalar(this->up, this->position);
+	double z = -Vector::scalar(this->direction, this->position);
+
+	Matrix<double> tmp(4, 4);
+	tmp.setColumn(0, this->right.getArray());
+	tmp.setColumn(1, this->up.getArray());
+	tmp.setColumn(2, this->direction.getArray());
+
+	IArray<double> itmp(tmp[3]);
+	itmp[0].updatedir(x);
+	itmp[1].updatedir(y);
+	itmp[2].updatedir(z);
+	itmp[3].updatedir(1);
+	return tmp;
+}

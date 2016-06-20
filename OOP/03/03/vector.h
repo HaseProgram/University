@@ -18,8 +18,11 @@ class Vector
 public:
 	Vector();
 	Vector(const Vector& cvector);
+	Vector(Array<double> arr);
 	Vector(double, double, double);
 	~Vector();
+
+	Array<double>& getArray();
 
 	void setX(double);
 	void setY(double);
@@ -34,11 +37,11 @@ public:
 	double operator[](int);
 	
 	double length();
-	double scalar(Vector, Vector);
+	static double scalar(Vector, Vector);
 	double angle(Vector, Vector);
 
 	Vector normalize();
-	//Vector cross(Vector, Vector); 
+	static Vector cross(Vector, Vector); 
 
 	Vector& operator=(Array<double>&);
 	Vector& operator=(Array<double>&&);

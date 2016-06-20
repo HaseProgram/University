@@ -31,7 +31,7 @@ struct tpen
 class BaseSystemDrawer
 {
 public:
-	virtual void drawline(Point*, Point*) = 0;
+	virtual void drawline(Point, Point) = 0;
 	virtual void clearscene() = 0;
 	virtual void setpencolor(int, int, int) = 0;
 	virtual void setpenwidth(int) = 0;

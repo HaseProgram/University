@@ -72,8 +72,8 @@ void Matrix<type_t>::setColumn(size_t index, Array<type_t> arr)
 	IArray<Array<type_t>> iM(this->M);
 	for (unsigned int i = 0; i < this->rowcount(); i++)
 	{
-		IArray<type_t> irow(iM[i]);
-		irow[index].update(iarr[i]);
+		IArray<type_t> irow(iM[i].value());
+		irow[index].update(iarr[i].value());
 	}
 }
 
