@@ -61,7 +61,7 @@ public:
 		this->BSD->clearscene();
 		BaseDrawer* draw = new Drawer(this->BSD);
 		Camera* cam = new Camera;
-		if (index > 0)
+		if (index >= 0)
 		{
 			CompositeObject* obj = (CompositeObject*)camera;
 			IArray<BaseSceneElement*> individualObject(obj->objects);

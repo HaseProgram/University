@@ -22,7 +22,7 @@ public:
 	Vector(double, double, double);
 	~Vector();
 
-	Array<double>& getArray();
+	Array<double> getArray();
 
 	void setX(double);
 	void setY(double);

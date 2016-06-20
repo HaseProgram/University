@@ -33,6 +33,7 @@ Vector::Vector(Array<double> arr)
 	while (iarr.check())
 	{
 		this->v.addItem(iarr.value());
+		iarr.next();
 	}
 }
 
@@ -50,7 +51,7 @@ Vector::~Vector()
 	this->v.clear();
 }
 
-Array<double>& Vector::getArray()
+Array<double> Vector::getArray()
 {
 	Array<double> tmp;
 	double x = this->getX();
@@ -169,12 +170,19 @@ Vector Vector::normalize()
 	double norm = 1 / (*this).length();
 
 	IArray<double> viterator(this->v);
-	while (viterator.check())
+	for (int i = 0; i < 3; i++)
 	{
 		double nv = viterator.value() * norm;
 		viterator.update(nv);
 		viterator.next();
+
 	}
+	/*while (viterator.check())
+	{
+		double nv = viterator.value() * norm;
+		viterator.update(nv);
+		viterator.next();
+	}*/
 
 	return (*this);
 }
@@ -185,6 +193,8 @@ Vector Vector::cross(Vector vec1, Vector vec2)
 	tmp.setX(vec1.getZ() * vec2.getY() - vec1.getY() * vec2.getZ());
 	tmp.setY(vec1.getX() * vec2.getZ() - vec1.getZ() * vec2.getX());
 	tmp.setZ(vec1.getY() * vec2.getX() - vec1.getX() * vec2.getY());
+	double l = 1;
+	tmp.setL(l);
 	return tmp;
 }
 

@@ -13,8 +13,8 @@ Application::Application()
 	{
 		throw AllocationMemoryError();
 	}
-	Point* point1 = new Point(100, 100, 100);
-	Point* point2 = new Point(0, 0, 0);
+	Point* point1 = new Point(10, 10, 50);
+	Point* point2 = new Point(10, 10, 10);
 	Camera* cam = new Camera(point1, point2, 0, 0, 0);
 	this->camera->add(cam);
 }

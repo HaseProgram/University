@@ -6,6 +6,11 @@ Camera::Camera()
 
 }
 
+Camera::Camera(Camera* camera)
+{
+
+}
+
 Camera::Camera(Point* position, Point* target, double pitch, double yaw, double roll)
 {
 	this->position = position->vector();
