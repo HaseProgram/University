@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "application.h"
-
+#include "camera.h"
 Application::Application()
 {
 	this->object = new CompositeObject;
@@ -13,8 +13,10 @@ Application::Application()
 	{
 		throw AllocationMemoryError();
 	}
-	Point point(100, 100, 100);
-	this->camera->add(&point);
+	Point* point1 = new Point(100, 100, 100);
+	Point* point2 = new Point(0, 0, 0);
+	Camera* cam = new Camera(point1, point2, 0, 0, 0);
+	this->camera->add(cam);
 }
 
 Application::~Application()

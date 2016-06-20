@@ -40,9 +40,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		switch (wmId)
 		{
-		case IDM_ABOUT:
-			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
 		case IDM_OPEN:
 		{
 			OpenDialog dialog;
@@ -154,6 +151,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ModificateMoveZ* movzcommand = new ModificateMoveZ(shift);
 			app->Call(*movzcommand, 0);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		// Next are camera modifications
+		case 104: // 8 NUMPAD
+		{
+			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(angle);
+			app->Call(*pitchcommand, 0);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 98: // 2 NUMPAD
+		{
+			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(-angle);
+			app->Call(*pitchcommand, 0);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 100: // 4 NUMPAD
+		{
+			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(angle);
+			app->Call(*yawcommand, 0);
+			app->Call(*drawcommand, 0);
+		}
+		break;
+		case 102: // 6 NUMPAD
+		{
+			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(-angle);
+			app->Call(*yawcommand, 0);
 			app->Call(*drawcommand, 0);
 		}
 		break;

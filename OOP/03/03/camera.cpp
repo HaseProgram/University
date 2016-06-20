@@ -6,10 +6,10 @@ Camera::Camera()
 
 }
 
-Camera::Camera(Point& position, Point& target, double pitch, double yaw, double roll)
+Camera::Camera(Point* position, Point* target, double pitch, double yaw, double roll)
 {
-	this->position = position.vector();
-	this->target = target.vector();
+	this->position = position->vector();
+	this->target = target->vector();
 
 	/*	
 		we have not set_ function with const param 
@@ -28,6 +28,10 @@ Camera::Camera(Point& position, Point& target, double pitch, double yaw, double 
 
 	this->position.setL(one);
 	this->target.setL(one);
+
+	this->pitch(pitch);
+	this->yaw(yaw);
+	this->roll(roll);
 }
 
 void Camera::setRight(Array<double> right)
@@ -87,35 +91,35 @@ void Camera::modificate(BaseModificationCamera* modification)
 
 void Camera::pitch(double angle)
 {
-	Matrix<double> transform = transform_matrix::matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
+	Matrix<double> transform = matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
 	this->setUp(this->getUp() * transform);
-	//this->setDirection(this->getDirection() * transform);
+	this->setDirection(this->getDirection() * transform);
 }
 
 void Camera::yaw(double angle)
 {
-	Matrix<double> transform = transform_matrix::matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
-	//this->setUp(this->getUp() * transform);
-	//this->setDirection(this->getDirection() * transform);
+	Matrix<double> transform = matrixrotation(this->getUp().getX(), this->getUp().getY(), this->getUp().getZ(), angle);
+	this->setRight(this->getRight() * transform);
+	this->setDirection(this->getDirection() * transform);
 }
 
 void Camera::roll(double angle)
 {
-	Matrix<double> transform = transform_matrix::matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
-	//this->setUp(this->getUp() * transform);
-	//this->setDirection(this->getDirection() * transform);
+	Matrix<double> transform = matrixrotation(this->getDirection().getX(), this->getDirection().getY(), this->getDirection().getZ(), angle);
+	this->setRight(this->getRight() * transform);
+	this->setUp(this->getUp() * transform);
 }
 
 void Camera::rotateVerticalSphere(double angle)
 {
-	Matrix<double> transform = transform_matrix::matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
+	Matrix<double> transform = matrixrotation(this->getDirection().getX(), this->getDirection().getY(), this->getDirection().getZ(), angle);
 	//this->setUp(this->getUp() * transform);
 	//this->setDirection(this->getDirection() * transform);
 }
 
 void Camera::rotateHorizontalSphere(double angle)
 {
-	Matrix<double> transform = transform_matrix::matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
+	Matrix<double> transform = matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
 	//this->setUp(this->getUp() * transform);
 	//this->setDirection(this->getDirection() * transform);
 }

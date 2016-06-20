@@ -25,8 +25,7 @@ public:
 
 	virtual BaseModification* getModification() override
 	{
-		BaseModificationCamera* obj = new Pitch(this->angle);
-		return new Pitch(this->angle);
+		return (BaseModificationCamera*) new Pitch(this->angle);
 	}
 
 private:
@@ -46,7 +45,7 @@ public:
 
 	virtual BaseModification* getModification() override
 	{
-		return new Yaw(this->angle);
+		return  (BaseModificationCamera*) new Yaw(this->angle);
 	}
 
 private:
@@ -66,7 +65,7 @@ public:
 
 	virtual BaseModification* getModification() override
 	{
-		return new Roll(this->angle);
+		return  (BaseModificationCamera*) new Roll(this->angle);
 	}
 
 private:

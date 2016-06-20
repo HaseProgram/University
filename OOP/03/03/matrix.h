@@ -2,7 +2,7 @@
 /*!
 \brief  Matrix class
 \author Danila Balyakin https://github.com/Pacman29/OOP_3/tree/master/matrix
-\author modified by Dmitry Zaytsev
+\author modified (cut) by Dmitry Zaytsev
 \version 2.0
 \date 19 June 2016
 
@@ -26,15 +26,15 @@ protected:
 };
 
 template <typename type_t>
-class Matrix : private BaseMatrix
+class Matrix : public BaseMatrix
 {
 public:
 	Matrix();
 	Matrix(Matrix<type_t>&);
 	Matrix(Matrix<type_t>&&);
 	Matrix(size_t, size_t);
-	const size_t& rowcount() override { return _rowcount; }
-	const size_t& columncount() override { return _columncount; }
+	virtual const size_t& rowcount() override { return _rowcount; }
+	virtual const size_t& columncount() override { return _columncount; }
 
 	void addColumn(Array<type_t>&);
 	void addRow(Array<type_t>&);
@@ -42,8 +42,8 @@ public:
 	void setRow(size_t, Array<type_t>);
 	void setColumn(size_t, Array<type_t>);
 
-	const size_t& rowcount() const override { return _rowcount; }
-	const size_t& columncount() const override { return _columncount; }
+	virtual const size_t& rowcount() const override { return _rowcount; }
+	virtual const size_t& columncount() const override { return _columncount; }
 
 	Matrix<type_t>& operator=  (Matrix<type_t>&);
 	Matrix<type_t>& operator=  (Matrix<type_t>&&);
@@ -53,11 +53,11 @@ public:
 	~Matrix();
 
 	//Matrix<type_t> transposition();
-	Array<type_t> getRow(size_t index);
-	Array<type_t> getColumn(size_t index);
+	Array<type_t>& getRow(size_t index);
+	Array<type_t>& getColumn(size_t index);
 
-	const Array<type_t> getRow(size_t index) const;
-	const Array<type_t> getColumn(size_t index) const;
+	const Array<type_t>& getRow(size_t index) const;
+	const Array<type_t>& getColumn(size_t index) const;
 
 
 	/*Matrix<type_t>  operator+  ();
@@ -87,6 +87,7 @@ private:
 	//bool check_size(const Matrix<type_t>& other);
 };
 
+/*
 template <typename type_tn>
 Matrix<type_tn> operator*(const type_tn &value, const Matrix<type_tn> &other)
 {
@@ -96,17 +97,23 @@ Matrix<type_tn> operator*(const type_tn &value, const Matrix<type_tn> &other)
 			res[i][j] *= value;
 	return res;
 }
+*/
 
 template <typename type_tn>
 Array<type_tn> operator*(Vector vec, Matrix<type_tn> other)
 {
-	if (arr.length() != other.row_count())
-		throw Matrix_error::incorrect_multiplication();
-
-	array<t1> res(other.column_count());
-	for (size_t i = 0; i<res.length(); ++i)
-		for (size_t j = 0; j<other.row_count(); ++j)
-			res[i] += other[j][i] * arr[j];
+	Array<type_tn> res;
+	IArray<type_tn> ires(res);
+	double t = 0;
+	for (size_t i = 0; i < other.columncount(); ++i)
+	{
+		res.addItem(t);
+		for (size_t j = 0; j < other.rowcount(); ++j)
+		{
+			IArray<double> irow(other[j]);
+			ires[i].updatedir(ires[i].value() + irow[i].value() * vec[j]);
+		}
+	}
 	return res;
 }
 

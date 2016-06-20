@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new Scale(this->k, this->center);
 	}

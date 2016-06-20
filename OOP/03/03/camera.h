@@ -16,7 +16,7 @@ class Camera : public BaseCamera
 {
 public:
 	Camera();
-	Camera(Point&, Point&, double, double, double);
+	Camera(Point*, Point*, double, double, double);
 
 	void setRight(Array<double>);
 	void setUp(Array<double>);

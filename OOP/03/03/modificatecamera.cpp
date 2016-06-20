@@ -18,7 +18,7 @@ Yaw::Yaw(double angle)
 
 void Yaw::run(BaseCamera* camera)
 {
-	//this->pitch()
+	camera->yaw(this->angle);
 }
 
 Roll::Roll(double angle)
@@ -28,5 +28,5 @@ Roll::Roll(double angle)
 
 void Roll::run(BaseCamera* camera)
 {
-	//this->pitch()
+	camera->roll(this->angle);
 }

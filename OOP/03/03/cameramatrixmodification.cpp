@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "cameramatrixmodification.h"
 
-transform_matrix::matrixrotationOX::matrixrotationOX(double angle) :
+matrixrotationOX::matrixrotationOX(double angle) :
 	Matrix<double>(4, 4)
 {
 	double cos_alpha = cos(angle);
@@ -40,7 +40,7 @@ transform_matrix::matrixrotationOX::matrixrotationOX(double angle) :
 	}
 }
 
-transform_matrix::matrixrotationOY::matrixrotationOY(double angle) :
+matrixrotationOY::matrixrotationOY(double angle) :
 	Matrix<double>(4, 4)
 {
 	double cos_alpha = cos(angle);
@@ -79,7 +79,7 @@ transform_matrix::matrixrotationOY::matrixrotationOY(double angle) :
 	}
 }
 
-transform_matrix::matrixrotationOZ::matrixrotationOZ(double angle) :
+matrixrotationOZ::matrixrotationOZ(double angle) :
 	Matrix<double>(4, 4)
 {
 	double cos_alpha = cos(angle);
@@ -118,7 +118,7 @@ transform_matrix::matrixrotationOZ::matrixrotationOZ(double angle) :
 	}
 }
 
-transform_matrix::matrixrotation::matrixrotation(double x, double y, double z, double angle) :
+matrixrotation::matrixrotation(double x, double y, double z, double angle) :
 	Matrix<double>(4, 4)
 {
 	double cos_alpha = cos(angle);
@@ -157,7 +157,7 @@ transform_matrix::matrixrotation::matrixrotation(double x, double y, double z, d
 	}
 }
 
-transform_matrix::matrixmove::matrixmove(double x, double y, double z) :
+matrixmove::matrixmove(double x, double y, double z) :
 	Matrix<double>(4, 4)
 {
 	{
@@ -194,7 +194,7 @@ transform_matrix::matrixmove::matrixmove(double x, double y, double z) :
 }
 
 
-transform_matrix::matrixscale::matrixscale(double s) :
+matrixscale::matrixscale(double s) :
 	Matrix<double>(4, 4)
 {
 	{

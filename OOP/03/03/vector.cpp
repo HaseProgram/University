@@ -93,6 +93,13 @@ double Vector::getL() const
 	return viterator.value();
 }
 
+double Vector::operator[](int index)
+{
+	IArrayConst<double> viterator(this->v);
+	viterator.getByCount(index);
+	return viterator.value();
+}
+
 double Vector::length()
 {
 	if (this->v.count() != 4)

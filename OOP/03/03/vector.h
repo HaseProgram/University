@@ -30,6 +30,8 @@ public:
 	double getY() const;
 	double getZ() const;
 	double getL() const;
+
+	double operator[](int);
 	
 	double length();
 	double scalar(Vector, Vector);

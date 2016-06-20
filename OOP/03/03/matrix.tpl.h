@@ -123,15 +123,14 @@ Matrix<type_t>::~Matrix()
 }
 
 template <typename type_t>
-Array<type_t> Matrix<type_t>::getRow(size_t index)
+Array<type_t>& Matrix<type_t>::getRow(size_t index)
 {
 	IArray<Array<type_t>> iM(this->M);
-	Array<type_t> row = iM[index].value();
-	return row;
+	return iM[index].value();
 }
 
 template <typename type_t>
-Array<type_t> Matrix<type_t>::getColumn(size_t index)
+Array<type_t>& Matrix<type_t>::getColumn(size_t index)
 {
 	IArray<Array<type_t>> iM(this->M);
 	Array<type_t> column;
@@ -144,7 +143,7 @@ Array<type_t> Matrix<type_t>::getColumn(size_t index)
 }
 
 template <typename type_t>
-const Array<type_t> Matrix<type_t>::getRow(size_t index) const
+const Array<type_t>& Matrix<type_t>::getRow(size_t index) const
 {
 	IArray<Array<type_t>> iM(this->M);
 	Array<type_t> row = iM[index];
@@ -152,7 +151,7 @@ const Array<type_t> Matrix<type_t>::getRow(size_t index) const
 }
 
 template <typename type_t>
-const Array<type_t> Matrix<type_t>::getColumn(size_t index) const
+const Array<type_t>& Matrix<type_t>::getColumn(size_t index) const
 {
 	IArray<Array<type_t>> iM(this->M);
 	Array<type_t> column;
