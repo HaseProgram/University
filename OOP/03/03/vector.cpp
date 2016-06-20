@@ -135,9 +135,9 @@ double Vector::length()
 		throw VectorSizeError();
 	}
 	IArray<double> viterator(this->v);
-	double x = viterator.getByCount(0);
-	double y = viterator.getByCount(1);
-	double z = viterator.getByCount(2);
+	double x = viterator[0].value();
+	double y = viterator[1].value();
+	double z = viterator[2].value();
 
 	return sqrt(x*x + y*y + z*z);
 }
@@ -149,9 +149,9 @@ double Vector::scalar(Vector vec1, Vector vec2)
 
 	IArray<double> viterator1(vec1.v);
 	IArray<double> viterator2(vec2.v);
-	return	viterator1.getByCount(0) * viterator2.getByCount(0)  + 
-			viterator1.getByCount(1) * viterator2.getByCount(1) +
-			viterator1.getByCount(2) * viterator2.getByCount(2);
+	return	viterator1[0].value() * viterator2[0].value()  +
+			viterator1[1].value() * viterator2[1].value() +
+			viterator1[2].value() * viterator2[2].value();
 }
 
 

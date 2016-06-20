@@ -13,6 +13,7 @@ PAINTSTRUCT ps;
 HDC hdc;
 
 double angle = 5;
+double cangle = 0.1;
 double deltac = 1.2;
 double deltaf = 0.8;
 double shift = 5;
@@ -157,28 +158,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Next are camera modifications
 		case 104: // 8 NUMPAD
 		{
-			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(angle);
+			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(cangle);
 			app->Call(*pitchcommand, 0);
 			app->Call(*drawcommand, 0);
 		}
 		break;
 		case 98: // 2 NUMPAD
 		{
-			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(-angle);
+			ModificateCameraPitch* pitchcommand = new ModificateCameraPitch(-cangle);
 			app->Call(*pitchcommand, 0);
 			app->Call(*drawcommand, 0);
 		}
 		break;
 		case 100: // 4 NUMPAD
 		{
-			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(angle);
+			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(cangle);
 			app->Call(*yawcommand, 0);
 			app->Call(*drawcommand, 0);
 		}
 		break;
 		case 102: // 6 NUMPAD
 		{
-			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(-angle);
+			ModificateCameraYaw* yawcommand = new ModificateCameraYaw(-cangle);
 			app->Call(*yawcommand, 0);
 			app->Call(*drawcommand, 0);
 		}

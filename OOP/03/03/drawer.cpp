@@ -14,7 +14,6 @@ Drawer::~Drawer()
 
 void Drawer::drawmodel(Model* model, Camera* camera)
 {
-	Camera* cam = camera;
 	Array<Edge> edges = model->getEdges();
 	if (edges.count() == 0)
 	{
