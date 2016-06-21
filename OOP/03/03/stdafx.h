@@ -18,7 +18,7 @@
 #include <memory.h>
 #include <tchar.h>
 
-
+#include "exception.h"
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы
 
 #define ID_BUTTON_CAMERA_APPLY 10000

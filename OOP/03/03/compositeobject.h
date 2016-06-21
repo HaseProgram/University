@@ -22,6 +22,7 @@ public:
 	virtual void add(BaseSceneElement*) override;
 	virtual void modificate(BaseModification*) override;
 
+	bool check();
 	void clear();
 
 	virtual bool composite() override

@@ -29,6 +29,11 @@ void CompositeObject::modificate(BaseModification* modification)
 	}
 }
 
+bool CompositeObject::check()
+{
+	return this->objects.count() != 0;
+}
+
 void CompositeObject::clear()
 {
 	this->objects.clear();

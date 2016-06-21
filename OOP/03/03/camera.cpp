@@ -36,26 +36,46 @@ Camera::Camera(Point* position, Point* target, double pitch, double yaw, double 
 
 void Camera::setRight(Array<double> right)
 {
+	if (right.count() != 4)
+	{
+		CameraWrongVectorSettingsError();
+	}
 	this->right = right;
 }
 
 void Camera::setUp(Array<double> up)
 {
+	if (up.count() != 4)
+	{
+		CameraWrongVectorSettingsError();
+	}
 	this->up = up;
 }
 
 void Camera::setDirection(Array<double> direction)
 {
+	if (direction.count() != 4)
+	{
+		CameraWrongVectorSettingsError();
+	}
 	this->direction = direction;
 }
 
 void Camera::setPosition(Array<double> position)
 {
+	if (position.count() != 4)
+	{
+		CameraWrongVectorSettingsError();
+	}
 	this->position = position;
 }
 
 void Camera::setTarget(Array<double> target)
 {
+	if (target.count() != 4)
+	{
+		CameraWrongVectorSettingsError();
+	}
 	this->target = target;
 }
 
@@ -112,16 +132,20 @@ void Camera::roll(double angle)
 
 void Camera::rotateVerticalSphere(double angle)
 {
-	Matrix<double> transform = matrixrotation(this->getDirection().getX(), this->getDirection().getY(), this->getDirection().getZ(), angle);
-	//this->setUp(this->getUp() * transform);
-	//this->setDirection(this->getDirection() * transform);
+	Matrix<double> transform = matrixrotation(this->getUp().getX(), this->getUp().getY(), this->getUp().getZ(), angle);
+	this->setUp(this->getUp() * transform);
+	this->setDirection(this->getDirection() * transform);
+	Matrix<double> move = matrixmove(this->getTarget().getX(), this->getTarget().getY(), this->getTarget().getZ());
+	this->setPosition(this->getPosition() * (-move) * transform * move);
 }
 
 void Camera::rotateHorizontalSphere(double angle)
 {
 	Matrix<double> transform = matrixrotation(this->getRight().getX(), this->getRight().getY(), this->getRight().getZ(), angle);
-	//this->setUp(this->getUp() * transform);
-	//this->setDirection(this->getDirection() * transform);
+	this->setRight(this->getRight() * transform);
+	this->setDirection(this->getDirection() * transform);
+	Matrix<double> move = matrixmove(this->getTarget().getX(), this->getTarget().getY(), this->getTarget().getZ());
+	this->setPosition(this->getPosition() * (-move) * transform * move);
 }
 
 Matrix<double> Camera::getView()

@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new RotateX(this->angle, this->center);
 	}
@@ -46,7 +46,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new RotateY(this->angle, this->center);
 	}
@@ -68,7 +68,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new RotateZ(this->angle, this->center);
 	}

@@ -36,3 +36,12 @@ public:
 		return "Can not access item of NULL!";
 	}
 };
+
+class IteratorAccessArrayError : public BaseException
+{
+public:
+	virtual const char* what() const
+	{
+		return "Can not operate with NULL array!";
+	}
+};

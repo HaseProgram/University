@@ -10,7 +10,7 @@ IArray<type_t>::IArray(Array<type_t>& arr)
 template <typename type_t>
 IArray<type_t>::~IArray()
 {
-	this->arr = NULL;//
+	this->arr = NULL;
 	this->currentItem = NULL;
 }
 
@@ -35,6 +35,10 @@ bool IArray<type_t>::check()
 template <typename type_t>
 size_t IArray<type_t>::count() const
 {
+	if (!this)
+	{
+		throw IteratorAccessArrayError();
+	}
 	return this->arr->count();
 }
 
@@ -123,24 +127,40 @@ type_t& IArray<type_t>::remove(bool key)
 template<typename type_t>
 void IArray<type_t>::clear()
 {
+	if (!this)
+	{
+		throw IteratorAccessArrayError();
+	}
 	this->arr->clear();
 }
 
 template<typename type_t>
 void IArray<type_t>::first()
 {
+	if (!this)
+	{
+		throw IteratorAccessArrayError();
+	}
 	this->currentItem = this->arr->head;
 }
 
 template<typename type_t>
 void IArray<type_t>::last()
 {
+	if (!this)
+	{
+		throw IteratorAccessArrayError();
+	}
 	this->currentItem = this->arr->tail;
 }
 
 template<typename type_t>
 void IArray<type_t>::prev()
 {
+	if (!this->check())
+	{
+		throw IteratorAccessElementError();
+	}
 	item<type_t>* temp = this->arr->head;
 	if (temp == this->currentItem)
 	{
@@ -157,6 +177,10 @@ void IArray<type_t>::prev()
 template<typename type_t>
 void IArray<type_t>::next()
 {
+	if (!this->check())
+	{
+		throw IteratorAccessElementError();
+	}
 	this->currentItem = this->currentItem->next;
 }
 
@@ -187,12 +211,20 @@ IArray<type_t>& IArray<type_t>::operator[](int index)
 template<typename type_t>
 void IArray<type_t>::update(type_t& data)
 {
+	if (!this->check())
+	{
+		throw IteratorAccessElementError();
+	}
 	this->currentItem->data = data;
 }
 
 template<typename type_t>
 void IArray<type_t>::updatedir(type_t data)
 {
+	if (!this->check())
+	{
+		throw IteratorAccessElementError();
+	}
 	this->currentItem->data = data;
 }
 
@@ -205,6 +237,10 @@ void IArray<type_t>::operator=(type_t& data)
 template<typename type_t>
 type_t& IArray<type_t>::value()
 {
+	if (!this->check())
+	{
+		throw IteratorAccessElementError();
+	}
 	return this->currentItem->data;
 }
 

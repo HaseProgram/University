@@ -165,6 +165,9 @@
     <ClInclude Include="cameramatrixmodification.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="exceptioncamera.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -245,5 +248,6 @@
     <None Include="array.tpl.h">
       <Filter>Файлы исходного кода</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

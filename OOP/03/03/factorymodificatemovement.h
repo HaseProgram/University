@@ -23,7 +23,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new MoveX(this->shift);
 	}
@@ -43,7 +43,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new MoveY(this->shift);
 	}
@@ -63,7 +63,7 @@ public:
 	{
 	}
 
-	virtual BaseModificationObject* getModification()
+	virtual BaseModification* getModification() override
 	{
 		return (BaseModificationObject*) new MoveZ(this->shift);
 	}

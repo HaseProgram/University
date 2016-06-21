@@ -44,3 +44,25 @@ public:
 protected:
 	double angle;
 };
+
+class RotateVerticalSphere : public BaseModificationCamera
+{
+public:
+	RotateVerticalSphere(double);
+
+	virtual void run(BaseCamera*) override;
+
+protected:
+	double angle;
+};
+
+class RotateHorizontalSphere : public BaseModificationCamera
+{
+public:
+	RotateHorizontalSphere(double);
+
+	virtual void run(BaseCamera*) override;
+
+protected:
+	double angle;
+};

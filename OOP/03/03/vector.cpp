@@ -27,7 +27,7 @@ Vector::Vector(Array<double> arr)
 {
 	if (arr.count() != 4)
 	{
-		//throw VectorSourceSizeError(); // Need add exception file with thouse errors
+		throw VectorSourceSizeError();
 	}
 	IArray<double> iarr(arr);
 	while (iarr.check())
@@ -175,15 +175,7 @@ Vector Vector::normalize()
 		double nv = viterator.value() * norm;
 		viterator.update(nv);
 		viterator.next();
-
 	}
-	/*while (viterator.check())
-	{
-		double nv = viterator.value() * norm;
-		viterator.update(nv);
-		viterator.next();
-	}*/
-
 	return (*this);
 }
 

@@ -12,6 +12,8 @@ Viewer. Drawing model will depends on camera state.
 #include "point.h"
 #include "vector.h"
 #include "basecamera.h"
+#include "exceptioncamera.h"
+
 class Camera : public BaseCamera
 {
 public:

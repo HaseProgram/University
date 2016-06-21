@@ -111,6 +111,27 @@ Matrix<type_t>& Matrix<type_t>::operator=(Matrix<type_t>&& other)
 }
 
 template <typename type_t>
+Matrix<type_t> Matrix<type_t>::operator*(const type_t& value)
+{
+	Matrix<type_t> res(*this);
+	for (size_t i = 0; i < this->rowcount(); i++)
+	{
+		IArray<type_t> irow(res[i]);
+		for (size_t j = 0; j < this->columncount(); j++)
+		{
+			irow[j].updatedir(irow[j].value() * value);
+		}
+	}
+	return res;
+}
+
+template <typename type_t>
+Matrix<type_t> Matrix<type_t>::operator-()
+{
+	return (*this) * (-1);
+}
+
+template <typename type_t>
 Array<type_t>& Matrix<type_t>::operator[](const size_t index)
 {
 	return this->getRow(index);

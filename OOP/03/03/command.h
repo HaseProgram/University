@@ -37,11 +37,62 @@ public:
 	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FLoader* loader = new FLoader(this->filename);
+		if (!loader)
+		{
+			throw AllocationMemoryError();
+		}
 		loader->loadModel((BaseObject*)object);
 	}
 
 private:
 	const char* filename;
+};
+
+class LoadCamera : public Command
+{
+public:
+	LoadCamera(Point* point1, Point* point2)
+	{
+		this->point1 = point1;
+		this->point2 = point2;
+	}
+
+	~LoadCamera()
+	{
+	}
+
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
+	{
+		
+		Point* point1 = new Point(10, 10, 50);
+		if (!point1)
+		{
+			throw AllocationMemoryError();
+		}
+
+		Point* point2 = new Point(10, 10, 10);
+		if (!point2)
+		{
+			delete point1;
+			point1 = nullptr;
+			throw AllocationMemoryError();
+		}
+
+		Camera* cam = new Camera(this->point1, this->point2, 0, 0, 0);
+		if (!cam)
+		{
+			delete point1;
+			point1 = nullptr;
+			delete point2;
+			point1 = nullptr;
+			throw AllocationMemoryError();
+		}
+		((CompositeObject*)camera)->add(cam);
+	}
+
+private:
+	Point* point1;
+	Point* point2;
 };
 
 class Draw : public Command
@@ -59,24 +110,40 @@ public:
 	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		this->BSD->clearscene();
-		BaseDrawer* draw = new Drawer(this->BSD);
-		Camera* cam = new Camera;
-		if (index >= 0)
-		{
-			CompositeObject* obj = (CompositeObject*)camera;
-			IArray<BaseSceneElement*> individualObject(obj->objects);
-			individualObject.getByCount(index);
-			cam = (Camera*)individualObject.value();
-		}
 
-		Model* model = new Model;
 		CompositeObject* obj = (CompositeObject*)object;
-		IArray<BaseSceneElement*> individualObject(obj->objects);
-		while (individualObject.check())
+		CompositeObject* camobj = (CompositeObject*)camera;
+		if (obj->check() && camobj->check())
 		{
-			model = (Model*)individualObject.value();
-			draw->drawmodel(model,cam);
-			individualObject.next();
+			BaseDrawer* draw = new Drawer(this->BSD);
+			if (!draw)
+			{
+				throw AllocationMemoryError();
+			}
+
+			Camera* cam = new Camera;
+			if (!cam)
+			{
+				delete draw;
+				draw = nullptr;
+				throw AllocationMemoryError();
+			}
+
+			if (index >= 0)
+			{
+				IArray<BaseSceneElement*> individualObject(camobj->objects);
+				individualObject.getByCount(index);
+				cam = (Camera*)individualObject.value();
+			}
+
+			Model* model = new Model;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			while (individualObject.check())
+			{
+				model = (Model*)individualObject.value();
+				draw->drawmodel(model, cam);
+				individualObject.next();
+			}
 		}
 	}
 
@@ -377,6 +444,64 @@ public:
 	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
 	{
 		FactoryModification* factory = new FactoryModificationCameraRoll(this->angle);
+		if (index >= 0)
+		{
+			CompositeObject* obj = (CompositeObject*)camera;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			camera = individualObject.value();
+		}
+		camera->modificate(factory->getModification());
+	}
+
+private:
+	double angle;
+};
+
+class ModificateCameraRotateVerticalSphere : public Command
+{
+public:
+	ModificateCameraRotateVerticalSphere(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ModificateCameraRotateVerticalSphere()
+	{
+	}
+
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
+	{
+		FactoryModification* factory = new FactoryModificateCameraRotateVerticalSphere(this->angle);
+		if (index >= 0)
+		{
+			CompositeObject* obj = (CompositeObject*)camera;
+			IArray<BaseSceneElement*> individualObject(obj->objects);
+			individualObject.getByCount(index);
+			camera = individualObject.value();
+		}
+		camera->modificate(factory->getModification());
+	}
+
+private:
+	double angle;
+};
+
+class ModificateCameraRotateHorizontalSphere : public Command
+{
+public:
+	ModificateCameraRotateHorizontalSphere(double angle)
+	{
+		this->angle = angle;
+	}
+
+	~ModificateCameraRotateHorizontalSphere()
+	{
+	}
+
+	virtual void Execute(BaseSceneElement* object, BaseSceneElement* camera, int index) override
+	{
+		FactoryModification* factory = new FactoryModificateCameraRotateHorizontalSphere(this->angle);
 		if (index >= 0)
 		{
 			CompositeObject* obj = (CompositeObject*)camera;

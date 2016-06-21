@@ -48,56 +48,37 @@ public:
 	Matrix<type_t>& operator=  (Matrix<type_t>&);
 	Matrix<type_t>& operator=  (Matrix<type_t>&&);
 
+	Matrix<type_t> operator*(const type_t& value);
+	Matrix<type_t> operator-();
+
 	Array<type_t>& operator[] (const size_t index);
 
 	~Matrix();
 
-	//Matrix<type_t> transposition();
 	Array<type_t>& getRow(size_t index);
 	Array<type_t>& getColumn(size_t index);
 
 	const Array<type_t>& getRow(size_t index) const;
 	const Array<type_t>& getColumn(size_t index) const;
 
-
-	/*Matrix<type_t>  operator+  ();
-	Matrix<type_t>  operator+  (const Matrix<type_t>& other);
-	Matrix<type_t>  operator+  (const type_t& value);
-	Matrix<type_t>& operator+= (const type_t& value);
-	Matrix<type_t>& operator+= (const Matrix<type_t>& other);
-	Matrix<type_t>  operator-  ();
-	Matrix<type_t>  operator-  (const Matrix<type_t>& other);
-	Matrix<type_t>  operator-  (const type_t& value);
-	Matrix<type_t>& operator-= (const type_t& value);
-	Matrix<type_t>& operator-= (const Matrix<type_t>& other);
-
-	Matrix<type_t>  operator*  (const Matrix<type_t>& other);
-	Matrix<type_t>  operator*  (const type_t& value);
-
-	Matrix<type_t>& operator*= (const type_t& value);
-	Matrix<type_t>& operator*= (const Matrix<type_t>& other);
-	Matrix<type_t>  operator/  (const type_t& value);
-	Matrix<type_t>& operator/= (const type_t& value);
-
-	bool            operator== (const Matrix<type_t>& other);
-	bool            operator!= (const Matrix<type_t>& other);
-	*/
 private:
 	Array<Array<type_t>> M;
-	//bool check_size(const Matrix<type_t>& other);
 };
 
-/*
 template <typename type_tn>
-Matrix<type_tn> operator*(const type_tn &value, const Matrix<type_tn> &other)
+Matrix<type_tn> operator*(const type_tn value, Matrix<type_tn> other)
 {
 	Matrix<type_tn> res(other);
-	for (size_t i = 0; i<res.row_count(); ++i)
-		for (size_t j = 0; j<res.column_count(); ++j)
-			res[i][j] *= value;
+	for (size_t i = 0; i < this->rowcount(); i++)
+	{
+		IArray<type_tn> irow(res[i]);
+		for (size_t j = 0; j < this->columncount(); j++)
+		{
+			irow[j].update(irow[j].value() * value);
+		}
+	}
 	return res;
 }
-*/
 
 template <typename type_tn>
 Array<type_tn> operator*(Vector vec, Matrix<type_tn> other)

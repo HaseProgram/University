@@ -71,3 +71,43 @@ public:
 private:
 	double angle;
 };
+
+class FactoryModificateCameraRotateVerticalSphere : public FactoryModification
+{
+public:
+	FactoryModificateCameraRotateVerticalSphere(double angle)
+	{
+		this->angle = angle;
+	}
+	~FactoryModificateCameraRotateVerticalSphere()
+	{
+	}
+
+	virtual BaseModification* getModification() override
+	{
+		return  (BaseModificationCamera*) new RotateVerticalSphere(this->angle);
+	}
+
+private:
+	double angle;
+};
+
+class FactoryModificateCameraRotateHorizontalSphere : public FactoryModification
+{
+public:
+	FactoryModificateCameraRotateHorizontalSphere(double angle)
+	{
+		this->angle = angle;
+	}
+	~FactoryModificateCameraRotateHorizontalSphere()
+	{
+	}
+
+	virtual BaseModification* getModification() override
+	{
+		return  (BaseModificationCamera*) new RotateHorizontalSphere(this->angle);
+	}
+
+private:
+	double angle;
+};
