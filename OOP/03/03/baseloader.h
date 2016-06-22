@@ -7,6 +7,7 @@
 \date 29 May 2016
 
 Set virtual methods to loader classes. Used Briedge pattern (impl)
+Sure it's easier create only BaseLoader->FLoader, without any implimentation, but Tassov requires it.
 */
 
 #include "model.h"
