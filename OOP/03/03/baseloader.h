@@ -6,19 +6,34 @@
 \version 1.0
 \date 29 May 2016
 
-Set virtual methods to loader classes
+Set virtual methods to loader classes. Used Briedge pattern (impl)
 */
 
 #include "model.h"
 
+class BaseLoaderImpl;
 class BaseLoader
 {
 public:
+	virtual BaseSceneElement* loadModel(BaseSceneElement*) = 0;
+	
+	BaseLoader(BaseLoaderImpl* impl)
+	{
+		this->blimpl = impl;
+	}
 
-	virtual Point readPoint() = 0;
-	virtual Edge readEdge(Model*) const = 0;
+	~BaseLoader()
+	{
+		delete this->blimpl;
+		blimpl = nullptr;
+	}
+protected:
+	BaseLoaderImpl* blimpl;
+};
 
-	virtual Model* readModel() = 0;
-
+class BaseLoaderImpl
+{
+public:
+	virtual ~BaseLoaderImpl() {};
 	virtual BaseSceneElement* loadModel(BaseSceneElement*) = 0;
 };

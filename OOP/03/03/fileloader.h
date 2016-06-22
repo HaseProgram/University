@@ -14,29 +14,34 @@ Provide loading model from file
 #include "compositeobject.h"
 #include "exceptionfileloader.h"
 
-class FLoader : public BaseLoader
+class FLoaderImpl : public BaseLoaderImpl
 {
 public:
-	FLoader(const char* filename);
-
+	FLoaderImpl(const char* filename);
+	virtual BaseSceneElement* loadModel(BaseSceneElement*) override;
+private:
 	void openFile();
 	void closeFile();
 
 	bool readAmount(unsigned int& amount);
 
-	virtual Point readPoint() override;
-	virtual Edge readEdge(Model* model) const override;
+	Point readPoint();
+	Edge readEdge(Model* model) const;
 
 	void readPoints(Model*);
 	void readEdges(Model*);
 
-	virtual Model* readModel() override;
+	Model* readModel();
 
-	virtual BaseSceneElement* loadModel(BaseSceneElement*);
-
-private:
 	const char* filename;
 	FILE* file;
 	int amountPoints;
 	int amountEdges;
+};
+
+class FLoader : public BaseLoader
+{
+public:
+	FLoader(const char* filename) : BaseLoader(new FLoaderImpl(filename)) {}
+	virtual BaseSceneElement* loadModel(BaseSceneElement*) override;
 };

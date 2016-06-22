@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "fileloader.h"
 
-FLoader::FLoader(const char* filename)
+FLoaderImpl::FLoaderImpl(const char* filename)
 {
 	this->filename = filename;
 	this->file = NULL;
@@ -9,7 +9,7 @@ FLoader::FLoader(const char* filename)
 	this->amountEdges = 0;
 }
 
-void FLoader::openFile()
+void FLoaderImpl::openFile()
 {
 	if ((this->file = fopen(this->filename, "r")) == NULL)
 	{
@@ -17,17 +17,17 @@ void FLoader::openFile()
 	}
 }
 
-void FLoader::closeFile()
+void FLoaderImpl::closeFile()
 {
 	fclose(this->file);
 }
 
-bool FLoader::readAmount(unsigned int& amount)
+bool FLoaderImpl::readAmount(unsigned int& amount)
 {
 	return (fscanf(this->file, "%u", &amount) == 1);
 }
 
-Point FLoader::readPoint()
+Point FLoaderImpl::readPoint()
 {
 	double x, y, z;
 	if (fscanf(this->file, "%lf %lf %lf", &x, &y, &z) != 3)
@@ -41,7 +41,7 @@ Point FLoader::readPoint()
 	return point;
 }
 
-Edge FLoader::readEdge(Model* model) const
+Edge FLoaderImpl::readEdge(Model* model) const
 {
 	unsigned int p1, p2;
 	if (fscanf(this->file, "%u %u", &p1, &p2) != 2)
@@ -63,7 +63,7 @@ Edge FLoader::readEdge(Model* model) const
 	return edge;
 }
 
-void FLoader::readPoints(Model* model)
+void FLoaderImpl::readPoints(Model* model)
 {
 	unsigned int count;
 	if (!this->readAmount(count))
@@ -77,7 +77,7 @@ void FLoader::readPoints(Model* model)
 	}
 }
 
-void FLoader::readEdges(Model* model)
+void FLoaderImpl::readEdges(Model* model)
 {
 	unsigned int count;
 	if (!this->readAmount(count))
@@ -90,7 +90,7 @@ void FLoader::readEdges(Model* model)
 	}
 }
 
-Model* FLoader::readModel()
+Model* FLoaderImpl::readModel()
 {
 	Model* model = new Model;
 	if (!model)
@@ -111,7 +111,7 @@ Model* FLoader::readModel()
 	return model;
 }
 
-BaseSceneElement* FLoader::loadModel(BaseSceneElement* cobject)
+BaseSceneElement* FLoaderImpl::loadModel(BaseSceneElement* cobject)
 {
 	this->openFile();
 
@@ -138,4 +138,9 @@ BaseSceneElement* FLoader::loadModel(BaseSceneElement* cobject)
 	}
 
 	return cobject;
+}
+
+BaseSceneElement* FLoader::loadModel(BaseSceneElement* cobject)
+{
+	return this->blimpl->loadModel(cobject);
 }

@@ -21,7 +21,7 @@ public:
 	*/
 	virtual void add(BaseObject*) {}
 
-	virtual void modificate(BaseModification* mod)
+	virtual void modificate(BaseModification* mod) override
 	{
 		this->modificate((BaseModificationObject*)mod);
 	}
