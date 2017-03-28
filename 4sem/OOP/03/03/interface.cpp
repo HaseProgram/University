@@ -53,7 +53,7 @@ Button::Button()
 
 Button::Button(WCHAR* TEXT, int ID, int X, int Y, int HEIGHT, int WIDTH)
 {
-	CreateWindowW(TEXT("BUTTON"), TEXT,
+	HWND btn = CreateWindowW(TEXT("BUTTON"), TEXT,
 		WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON,
 		X, Y, WIDTH, HEIGHT,
 		this->hWnd, (HMENU)ID, this->hInst, NULL);
