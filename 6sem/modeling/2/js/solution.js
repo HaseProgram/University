@@ -203,7 +203,7 @@ function runge() {
 	var m = [];
 	
 	for(var count = 0; count < stepn; count++) {
-		t += step;
+		t += Number(step);
 		Resistance = getResistance(I);
 		k[0] = fi(I, Uc, Resistance);
 		
@@ -248,6 +248,11 @@ function trapeze() {
 
 var options = {
 	showPoint: false,
+	axisX: {
+		labelInterpolationFnc: function(value) {
+		  return Math.floor(value*100)/100;
+		}
+	}
 }
 
 function go() {
@@ -260,10 +265,17 @@ function go() {
 		
 		var data = {
 			labels: solT,
-			series: solI
+			series: [solI, solUc, solU]
 		};
-		console.log(solI);
-		 new Chartist.Line('.ct-chart', data, options);
+		new Chartist.Line('#chart1', data, options);
+		var data2 = {
+			labels: solT,
+			series: [solR]
+		};
+		new Chartist.Line('#chart2', data2, options);
+		console.log(data, solT, solI);
+		 
+		// new Chartist.Line('.ct-chart-2', data2, options);
 }
 
 $(document).ready(function() {
@@ -283,6 +295,23 @@ $(document).ready(function() {
 	}
 	go();
 	$('input').on('change', function() {
+		solI = [];
+solUc = [];
+solR = [];
+solU = [];
+solT = [];
+ Tw = $('#tw').val();
+ R = $('#r').val();
+ I0 = $('#i0').val();
+ Uc0 = $('#uc0').val();
+ le = $('#le').val();
+ lk = $('#lk').val();
+ ck = $('#ck').val();
+ rk = $('#rk').val();
+ p0 = $('#p0').val();
+ tstart = $('#ts').val();
+ step = $('#step').val();
+ stepn = $('#stepn').val();
 		go();
 	});
 });
