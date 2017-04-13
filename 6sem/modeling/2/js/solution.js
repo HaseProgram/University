@@ -9,6 +9,7 @@ var Uc0 = $('#uc0').val();
 var le = $('#le').val();
 var lk = $('#lk').val();
 var ck = $('#ck').val();
+var rk = $('#rk').val();
 var p0 = $('#p0').val();
 var tstart = $('#ts').val();
 var step = $('#step').val();
@@ -30,7 +31,6 @@ function getTM(I) {
 	var m = TMI[lastIndex - 1][2] + (TMI[lastIndex][2] - TMI[lastIndex - 1][2]) / (TMI[lastIndex][0] - TMI[lastIndex - 1][0]) * (I - TMI[lastIndex - 1][0]);
 	tm.push(t);
 	tm.push(m);
-	console.log(TMI);
 	return tm;
 }
 
@@ -57,7 +57,7 @@ function getSigma(Tri, p) {
 	var sigma2 = logsigma[lastIndexT-1][lastIndexP] + (logsigma[lastIndexT][lastIndexP] - logsigma[lastIndexT-1][lastIndexP]) * (Tri - sigma[lastIndexT-1][0]) / (sigma[lastIndexT][0] - sigma[lastIndexT-1][0]);
 	sigma1 = Math.exp(sigma1);
 	sigma2 = Math.exp(sigma2);
-	return sigma1 + (sigma2 - sigma1) * (p - pl - 10) / (5); //  / p1-p0
+	return sigma1 + (sigma2 - sigma1) * (p - pl + 10) / (10); //  / p1-p0
 }
 
 function getN(Tri, p) {
@@ -85,7 +85,7 @@ function getN(Tri, p) {
 	n1 = Math.exp(n1);
 	n2 = Math.exp(n2);
 	//console.log("N1:" + n1 + "; N2: " + n2);
-	return n1 + (n2 - n1) * (p - pl - 10) / (5); //  / p1-p0
+	return n1 + (n2 - n1) * (p - pl + 10) / (10); //  / p1-p0
 }
 
 function getPressureIntegral(Tr, p) {
@@ -142,11 +142,9 @@ function getResistance(I) {
 	TMIres = getTM(I);
 	var t = TMIres[0];
 	var m = TMIres[1];
-	
-	console.log(t, m);
 
 	var Tr = [];
-	var step = R / 41;
+	var step = R / 40;
 	var rad = 0;
 	
 	for (var k = 0; k < 41; k++) {
@@ -156,7 +154,7 @@ function getResistance(I) {
 	}
 	
 	var p = getPressure(Tr);
-	
+	//console.log("P:"+p);
 	// Calculate integral with simpson method
 	var integral = 0;
 	rad = 0; 
@@ -181,7 +179,8 @@ function getResistance(I) {
 }
 
 function fi(I, Uc, Rf) {
-	return (Uc - (R + Rf) * I) / lk;
+	var rr = Number(rk) + Number(Rf);
+	return (Uc - rr * I) / lk;
 }
 
 function fu(I) {
@@ -189,9 +188,12 @@ function fu(I) {
 }
 
 function runge() {
-	var Resistance = getResistance(1000);
-	console.log(Resistance); return;
-	
+	//console.log(getSigma(6500, 10)); return;
+	//console.log(getN(3750, 10));
+	//return;
+	var Resistance = getResistance(I0);
+	//console.log(Resistance); 
+	//return;
 	var I = I0;
 	var Uc = Uc0;
 	var U = I * Resistance;
@@ -204,29 +206,30 @@ function runge() {
 		t += step;
 		Resistance = getResistance(I);
 		k[0] = fi(I, Uc, Resistance);
+		
 		m[0] = fu(I);
 		//console.log(k); return;
 		
-		var I1 = I + step * k[0] / 2;
-		var U1 = Uc + step * m[0] / 2;
+		var I1 = Number(I) + Number(step) * k[0] / 2;
+		var U1 = Number(Uc) + Number(step) * m[0] / 2;
 		Resistance = getResistance(I1);
 		k[1] = fi(I1, U1, Resistance);
 		m[1] = fu(I1);
 		
-		I1 = I + step * k[1] / 2;
-		U1 = Uc + step * m[1] / 2;
+		I1 = Number(I) + Number(step) * k[1] / 2;
+		U1 = Number(Uc) + Number(step) * m[1] / 2;
 		Resistance = getResistance(I1);
 		k[2] = fi(I1, U1, Resistance);
 		m[2] = fu(I1);
 		
-		I1 = I + step * k[2] / 2;
-		U1 = Uc + step * m[2] / 2;
+		I1 = Number(I) + Number(step) * k[2] / 2;
+		U1 = Number(Uc) + Number(step) * m[2] / 2;
 		Resistance = getResistance(I1);
 		k[3] = fi(I1, U1, Resistance);
 		m[3] = fu(I1);
 		
-		I = I + step / 6 * (k[0] + 2*k[1] + 2*k[2] + k[3]);
-		Uc = Uc + step / 6 * (m[0] + 2*m[1] + 2*m[2] + m[3]);
+		I = Number(I) + Number(step) / 6 * (k[0] + 2*k[1] + 2*k[2] + k[3]);
+		Uc = Number(Uc) + Number(step) / 6 * (m[0] + 2*m[1] + 2*m[2] + m[3]);
 		Resistance = getResistance(I);
 		U = I * Resistance;
 		//console.log(I);
@@ -259,7 +262,7 @@ function go() {
 			labels: solT,
 			series: solI
 		};
-		//console.log(solI);
+		console.log(solI);
 		 new Chartist.Line('.ct-chart', data, options);
 }
 
