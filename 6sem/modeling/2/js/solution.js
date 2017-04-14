@@ -84,7 +84,6 @@ function getN(Tri, p) {
 	var n2 = logn[lastIndexN-1][lastIndexP] + (logn[lastIndexN][lastIndexP] - logn[lastIndexN-1][lastIndexP]) * (Tri - n[lastIndexN-1][0]) / (n[lastIndexN][0] - n[lastIndexN-1][0]);
 	n1 = Math.exp(n1);
 	n2 = Math.exp(n2);
-	//console.log("N1:" + n1 + "; N2: " + n2);
 	return n1 + (n2 - n1) * (p - pl + 10) / (10); //  / p1-p0
 }
 
@@ -154,7 +153,6 @@ function getResistance(I) {
 	}
 	
 	var p = getPressure(Tr);
-	//console.log("P:"+p);
 	// Calculate integral with simpson method
 	var integral = 0;
 	rad = 0; 
@@ -164,7 +162,6 @@ function getResistance(I) {
 	for(var k = 1; k < 40; k++) {
 		rad = rad + h;
 		sgm = getSigma(Tr[k], p);
-		//console.log(p);
 		if(k % 2) {
 			integral = integral + 4 * sgm * rad;
 		} else {
@@ -188,12 +185,7 @@ function fu(I) {
 }
 
 function runge() {
-	//console.log(getSigma(6500, 10)); return;
-	//console.log(getN(3750, 10));
-	//return;
 	var Resistance = getResistance(I0);
-	//console.log(Resistance); 
-	//return;
 	var I = I0;
 	var Uc = Uc0;
 	var U = I * Resistance;
@@ -206,9 +198,7 @@ function runge() {
 		t += Number(step);
 		Resistance = getResistance(I);
 		k[0] = fi(I, Uc, Resistance);
-		
 		m[0] = fu(I);
-		//console.log(k); return;
 		
 		var I1 = Number(I) + Number(step) * k[0] / 2;
 		var U1 = Number(Uc) + Number(step) * m[0] / 2;
@@ -232,7 +222,7 @@ function runge() {
 		Uc = Number(Uc) + Number(step) / 6 * (m[0] + 2*m[1] + 2*m[2] + m[3]);
 		Resistance = getResistance(I);
 		U = I * Resistance;
-		//console.log(I);
+		
 		solI.push(I);
 		solUc.push(Uc);
 		solR.push(Resistance);
@@ -241,8 +231,56 @@ function runge() {
 	}
 	
 }
+
+function getITrap(In, Inp1, Ucn, step) {
+	var Resistancen = getResistance(In);
+	var Resistance = getResistance(Inp1);
+	console.log(In, Inp1, Ucn, step);
+	var res =  (Number(-2 * ck * Resistancen * In * step) + 
+	Number(4 * ck * In * lk) - Number(2 * ck * In * rk * step) + 
+	Number(4 * ck * Ucn * step) - Number(In * step * step)) / 
+	(Number(4 * ck * lk) + Number(2 * ck * rk * step) + 
+	Number(2 * ck * Resistance * step) + Number(step * step));
+console.log(res); return res;	
+}
+
+function trapetze() {
+	var Resistancen = getResistance(I0);
+	var In = I0;
+	var Ucn = Uc0;
+	var U = In * Resistancen;
+	var t = 0;
 	
-function trapeze() {
+	var I = 0;
+	var Uc = 0;
+	var Resistance = 0;
+	var In1 = 0;
+	
+	for(var count = 0; count < stepn; count++) {
+		t += Number(step);
+		
+		Resistancen = getResistance(In);
+		I = (Number(-2 * ck * Resistancen * In * step) + Number(4 * ck * In * lk) - Number(2 * ck * In * rk * step) + Number(4 * ck * Ucn * step) - Number(In * step * step)) / (Number(4 * ck * lk) + Number(2 * ck * rk * step) + Number(2 * ck * Resistancen * step) + Number(step * step));
+	
+		do {
+			In1 = I;
+			Resistance = getResistance(In1);
+			I = (Number(-2 * ck * Resistancen * In * step) + Number(4 * ck * In * lk) - Number(2 * ck * In * rk * step) + Number(4 * ck * Ucn * step) - Number(In * step * step)) / (Number(4 * ck * lk) + Number(2 * ck * rk * step) + Number(2 * ck * Resistance * step) + Number(step * step));
+			console.log(Resistance);
+		} while (Math.abs(Number(In1) - Number(I)) / I > 1e-5);
+		Uc = Number(Ucn) - Number(step * (Number(In) + Number(I))) / 2 / ck;
+		Resistance = getResistance(I);
+		U = I * Resistance;
+		
+		solI.push(I);
+		solUc.push(Uc);
+		solR.push(Resistance);
+		solU.push(U);
+		solT.push(t);
+		
+		In = I;
+		Ucn = Uc;
+	}
 	
 }
 
@@ -250,7 +288,7 @@ var options = {
 	showPoint: false,
 	axisX: {
 		labelInterpolationFnc: function(value) {
-		  return Math.floor(value*100)/100;
+		  return Math.floor(value*100000)/100;
 		}
 	}
 }
@@ -260,7 +298,7 @@ function go() {
 			runge();
 		}
 		else {
-			trapeze();
+			trapetze();
 		}
 		
 		var data = {
@@ -273,9 +311,7 @@ function go() {
 			series: [solR]
 		};
 		new Chartist.Line('#chart2', data2, options);
-		console.log(data, solT, solI);
-		 
-		// new Chartist.Line('.ct-chart-2', data2, options);
+		//console.log(data, solT, solI);
 }
 
 $(document).ready(function() {
@@ -287,31 +323,29 @@ $(document).ready(function() {
 		for(var l = 1; l < 4; l++) {
 			logsigmat.push(Math.log(sigma[k][l]));
 			lognt.push(Math.log(n[k][l]));
-			//console.log(sigma[k][l]);
 		}
-		//console.log(logsigmat);
 		logsigma.push(logsigmat);
 		logn.push(lognt);
 	}
 	go();
 	$('input').on('change', function() {
 		solI = [];
-solUc = [];
-solR = [];
-solU = [];
-solT = [];
- Tw = $('#tw').val();
- R = $('#r').val();
- I0 = $('#i0').val();
- Uc0 = $('#uc0').val();
- le = $('#le').val();
- lk = $('#lk').val();
- ck = $('#ck').val();
- rk = $('#rk').val();
- p0 = $('#p0').val();
- tstart = $('#ts').val();
- step = $('#step').val();
- stepn = $('#stepn').val();
+		solUc = [];
+		solR = [];
+		solU = [];
+		solT = [];
+		Tw = $('#tw').val();
+		R = $('#r').val();
+		I0 = $('#i0').val();
+		Uc0 = $('#uc0').val();
+		le = $('#le').val();
+		lk = $('#lk').val();
+		ck = $('#ck').val();
+		rk = $('#rk').val();
+		p0 = $('#p0').val();
+		tstart = $('#ts').val();
+		step = $('#step').val();
+		stepn = $('#stepn').val();
 		go();
 	});
 });
