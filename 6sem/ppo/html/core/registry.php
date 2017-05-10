@@ -22,8 +22,8 @@ class Registry
 
   public function Get($name)
   {
-    $res = $this->Check();
-    if(!res)
+    $res = $this->Check($name);
+    if(!$res)
     {
       throw new Exception("Trying to access to non-registered object!");
     }

@@ -28,9 +28,8 @@ class Request
       $this->action = strtolower($routes[0]);
       if (!empty($routes[1]) && $routes[1] != '')
       {
-        $this->args = explode('&', $routes[1]);
+        parse_str($routes[1], $this->args);
       }
-
     }
 
   }

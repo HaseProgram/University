@@ -13,6 +13,11 @@ class Controller
     $this->view = new View();
   }
 
+  public function Location($path)
+  {
+    header('Location: http://localhost/' . $path);
+  }
+
 }
 
  ?>

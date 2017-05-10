@@ -1,5 +1,6 @@
 <?php
 require_once "core/controller.php";
+require_once "core/registry.php";
 
 class ControllerGroup extends Controller
 {
@@ -9,18 +10,23 @@ class ControllerGroup extends Controller
     $this->model = new ModelGroup();
   }
 
-  public function ActionShow()
+  public function ActionShow($args)
   {
     $replace = array(
       'title' => "All groups!",
-      'data' => $this->model->GetGroups()
+      'data' => $this->model->GetGroups($args),
+      'add' => !isset($args['group'])
     );
     $this->view->Render("all_view.php", 'main_view.php', $replace);
   }
 
   public function ActionEdit($args)
   {
-    var_dump($args);
+    $replace = array(
+      'title' => "All groups!",
+      'data' => $this->model->Edit($args)
+    );
+    $this->Location("group/show");
   }
 
 }

@@ -18,8 +18,8 @@
   catch (Exception $e)
   {
     $frontController = FrontController::GetInstance();
-    $frontController->ConnectController("404");
-    $frontController->Call("main");
+    $frontController->ConnectController("Error");
+    $frontController->Call("main", $e);
   }
 
  ?>

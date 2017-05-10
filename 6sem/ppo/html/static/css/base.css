@@ -1,0 +1,93 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+html, body {
+	height: 100%;
+	min-width: 460px;
+}
+
+input {
+	margin: 1px;
+}
+
+form {
+	margin-bottom: 25px;
+}
+
+li {
+	padding: 5px;
+}
+
+.form-group {
+	text-align: left;
+}
+
+.content {
+	width: 90%;
+	margin: auto;
+	text-align: center;
+}
+
+.content > h2 {
+	text-align: center;
+}
+
+.clear-fix::after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 0px;
+    visibility: hidden;
+}
+
+input:focus, textarea:focus {
+	-webkit-box-shadow: 0px 0px 12px -8px rgba(51,121,183,1) !important;
+	-moz-box-shadow: 0px 0px 12px -8px rgba(51,121,183,1) !important;
+	box-shadow: 0px 0px 12px -8px rgba(51,121,183,1) !important;
+	border-color: #337ab7;
+}
+
+.rounded > span > button {
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 30px;
+	outline: none;
+}
+
+/* FIX Bootstrap bug */
+.row {
+	margin: 0px !important;
+}
+
+.block {
+	display: inline-block;
+	padding: 20px;
+	margin: 40px;
+	vertical-align: top;
+	width: 250px;
+}
+
+.block:hover {
+	background: #fcfcfc;
+}
+
+.block > .name {
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #f2f2f2;
+}
+
+ul
+{
+	list-style-type: none;
+	padding: 0px;
+	font-size: 16px;
+}
+
+ul > li
+{
+	padding-top: 5px;
+}
