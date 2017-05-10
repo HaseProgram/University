@@ -1,8 +1,8 @@
 <?php
 
-function change_key($key,$new_key,$arr)
+function change_key($key,$new_key,&$arr)
 {
-    if(!array_key_exists($new_key,$arr))
+    if(!array_key_exists($new_key,$arr) || $key == $new_key)
     {
         $arr[$new_key]=$arr[$key];
         unset($arr[$key]);
@@ -55,13 +55,16 @@ class CommandEdit implements CommandInterface
 
   public function Execute()
   {
-    foreach ($this->items as $key => $data)
+    foreach ($this->items as $key => $new_key)
     {
       if(!array_key_exists($key, $this->arr))
       {
         throw new Exception("Can't edit $key: source item not found!");
       }
-      $this->arr[$key] = $data;
+      if(!change_key($key, $new_key, $this->arr))
+      {
+        throw new Exception("Can't edit $key to $new_key. $new_key already exists!");
+      }
     }
 
     return $this->arr;
@@ -81,7 +84,7 @@ class CommandDelete implements CommandInterface
 
   public function Execute()
   {
-    foreach ($this->keys as $key)
+    foreach ($this->keys as $key => $value)
     {
       if(!array_key_exists($key, $this->arr))
       {

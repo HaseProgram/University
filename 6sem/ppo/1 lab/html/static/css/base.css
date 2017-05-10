@@ -78,6 +78,28 @@ input:focus, textarea:focus {
 	font-weight: bold;
 	padding-bottom: 10px;
 	border-bottom: 1px solid #f2f2f2;
+	color: #aaa;
+}
+
+.block > .block-footer {
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 10px;
+	border-top: 1px solid #f2f2f2;
+	color: #aaa;
+}
+
+.max {
+	color: #55a191;
+}
+
+.min {
+	color: #cd6c59;
+}
+
+.avg {
+	color: #fcc884;
 }
 
 ul

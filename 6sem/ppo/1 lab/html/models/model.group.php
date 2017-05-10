@@ -36,6 +36,34 @@ class ModelGroup extends Model
     $this->groupsArr = $_SESSION['GROUPS_ARR'];
   }
 
+  public function StudNumber($groupID)
+  {
+    if(is_array($this->groupsArr[$groupID]))
+    {
+      return count($this->groupsArr[$groupID]);
+    }
+    return 0;
+  }
+
+  public function Rating($groupID)
+  {
+    $rating = array();
+    $rating["min"] = 101;
+    $rating["max"] = -1;
+    $rating["avg"] = 0;
+    if(is_array($this->groupsArr[$groupID]))
+    {
+      foreach($this->groupsArr[$groupID] as $student)
+      {
+        if($student->Rating > $rating["max"]) $rating["max"] = $student->Rating;
+        if($student->Rating < $rating["min"]) $rating["min"] = $student->Rating;
+        $rating["avg"] += $student->Rating;
+      }
+      $rating["avg"] /= count($this->groupsArr[$groupID]);
+    }
+    return $rating;
+  }
+
   public function GetGroups($args = null)
   {
     $_SESSION['GROUPS_ARR'] = $this->groupsArr;
