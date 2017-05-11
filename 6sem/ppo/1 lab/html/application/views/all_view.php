@@ -11,10 +11,10 @@
     <div class="block-content">
       <ul>
     <?php
-      foreach($group as $student)
+      foreach($group as $id => $student)
       {
     ?>
-        <li><?=$student->Name?> <?=$student->Surname?></li>
+        <li><a href="/student/show?group=<?=$groupname?>&id=<?=$id?>"><?=$student->Name?> <?=$student->Surname?></a></li>
     <?php
       }
     ?>
@@ -30,7 +30,7 @@
    <div class="block-content">
      <form id="add-group">
        <div class="form-group">
-         <input id="gname" type="text" class="form-control" placeholder="Название группы">
+         <input id="gname" type="text" class="form-control" placeholder="Название группы" required>
          <small id="emailHelp" class="form-text text-muted">Имя должно быть уникальным!</small>
        </div>
        <button class="btn btn-primary" type="submit">Добавить</button>

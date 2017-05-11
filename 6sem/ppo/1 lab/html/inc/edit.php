@@ -29,6 +29,7 @@ class CommandAdd implements CommandInterface
 
   public function Execute()
   {
+
     foreach ($this->items as $key => $data)
     {
       if(array_key_exists($key, $this->arr))
@@ -84,13 +85,14 @@ class CommandDelete implements CommandInterface
 
   public function Execute()
   {
-    foreach ($this->keys as $key => $value)
+    foreach ($this->keys as $key => $delete)
     {
-      if(!array_key_exists($key, $this->arr))
+      if(!array_key_exists($delete, $this->arr))
       {
-        throw new Exception("Can't delete $key: source item not found!");
+        throw new Exception("Can't delete $delete: source item not found!");
       }
-      unset($this->arr[$key]);
+
+      unset($this->arr[$delete]);
     }
 
     return $this->arr;

@@ -6,9 +6,9 @@ class Registry
 
   public function __construct() {}
 
-  public function Add($name, $type = true)
+  public function Add($name, $type = true, $contra = false)
   {
-    $this->registry[$name] = $type;
+    $this->registry[$name] = array($type, $contra);
   }
 
   public function Check($name)
@@ -27,7 +27,17 @@ class Registry
     {
       throw new Exception("Trying to access to non-registered object!");
     }
-    return $res;
+    return $res[0];
+  }
+
+  public function GetContra($name)
+  {
+    $res = $this->Check($name);
+    if(!$res)
+    {
+      throw new Exception("Trying to access to non-registered object!");
+    }
+    return $res[1];
   }
 }
 

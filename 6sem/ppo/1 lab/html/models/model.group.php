@@ -7,33 +7,9 @@ require_once "inc/edit.php";
 class ModelGroup extends Model
 {
 
-  private $groups;
-  private $groupsArr;
-
   public function __construct()
   {
     parent::__construct();
-    $this->groups = new Registry();
-    $this->init();
-  }
-
-  private function init()
-  {
-    if(!isset($_SESSION['GROUPS_ARR']))
-    {
-      $groupsArr = array();
-      foreach($this->data as $student)
-      {
-        if(!$this->groups->Check($student->Group))
-        {
-          $this->groups->add($student->Group);
-          $groupsArr["$student->Group"] = array();
-        }
-        array_push($groupsArr["$student->Group"], $student);
-      }
-      $_SESSION['GROUPS_ARR'] = $groupsArr;
-    }
-    $this->groupsArr = $_SESSION['GROUPS_ARR'];
   }
 
   public function StudNumber($groupID)
@@ -51,6 +27,11 @@ class ModelGroup extends Model
     $rating["min"] = 101;
     $rating["max"] = -1;
     $rating["avg"] = 0;
+    $count = count($this->groupsArr[$groupID]);
+    if($count == 0)
+    {
+      return array("min" => 0, "max" => 0, "avg" => 0);
+    }
     if(is_array($this->groupsArr[$groupID]))
     {
       foreach($this->groupsArr[$groupID] as $student)
@@ -59,7 +40,7 @@ class ModelGroup extends Model
         if($student->Rating < $rating["min"]) $rating["min"] = $student->Rating;
         $rating["avg"] += $student->Rating;
       }
-      $rating["avg"] /= count($this->groupsArr[$groupID]);
+      $rating["avg"] /= $count;
     }
     return $rating;
   }

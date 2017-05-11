@@ -16,10 +16,10 @@
     <div class="block-content">
       <ul>
     <?php
-      foreach($group as $student)
+      foreach($group as $id => $student)
       {
     ?>
-        <li><?=$student->Name?> <?=$student->Surname?></li>
+        <li><a href="/student/show?group=<?=$groupname?>&id=<?=$id?>"><?=$student->Name?> <?=$student->Surname?></a></li>
     <?php
       }
     ?>
@@ -37,7 +37,7 @@
       <form id="edit-group">
         <div class="form-group">
           <label for="gname">Имя группы</label>
-          <input id="gname" type="text" class="form-control" value="<?=$groupname?>">
+          <input id="gname" type="text" class="form-control" value="<?=$groupname?>" required>
           <small id="emailHelp" class="form-text text-muted">Имя должно быть уникальным!</small>
         </div>
         <button class="btn btn-primary" type="submit">Изменить</button>
@@ -75,9 +75,34 @@
            return false;
          });
 
+         $("#add-stud").submit(function() {
+           var stname = $('#gstudname').val();
+           var stsurname = $('#gstudsurname').val();
+           var stsecname = $('#gstudsecname').val();
+           var strate = $('#gstudrate').val();
+           var strole = $('#gstudrole').val();
+           var formData = {};
+           formData["<?=$groupname?>"] = {};
+           formData["<?=$groupname?>"]["Name"] = stname;
+           formData["<?=$groupname?>"]["Surname"] = stsurname;
+           formData["<?=$groupname?>"]["SecondName"] = stsecname;
+           formData["<?=$groupname?>"]["Rating"] = strate;
+           formData["<?=$groupname?>"]["Role"] = strole;
+           formData["<?=$groupname?>"]["Group"] = "<?=$groupname?>";
+           $.ajax({
+             url:'/student/edit?action=add',
+             type:'POST',
+             data:'EDIT_DATA=' + $.toJSON(formData),
+             success: function(res) {
+                 $(".content").html(res);
+             }
+           });
+           return false;
+         });
+
          $("#delete-group").submit(function() {
            var formData = {};
-           formData["<?=$groupname?>"] = true;
+           formData["DELETE"] = "<?=$groupname?>";
            $.ajax({
              url:'/group/edit?action=delete',
              type:'POST',
