@@ -1,5 +1,7 @@
 <?php
 
+require_once "registry.php";
+
 class Memory
 {
   public function __construct()
@@ -10,9 +12,9 @@ class Memory
     }
   }
 
-  public function NewAction($action, $controller)
+  public function NewAction($action, $commands)
   {
-    array_push($_SESSION['UNDO'], array($action => $controller));
+    array_push($_SESSION['UNDO'], array($action => $commands));
     $_SESSION['REDO'] = array();
   }
 
@@ -24,10 +26,11 @@ class Memory
       throw new Exception("Trying undo empty action");
     }
 
-    array_push($_SESSION['REDO'], $action);
-
-    $controller = current($action)->Get(key($action));
+    $controller = current($action)->GetContra(key($action));
     $controller->SetArray($arr);
+
+
+    array_push($_SESSION['REDO'], $action);
     return $controller->Execute();
   }
 
@@ -36,13 +39,13 @@ class Memory
     $action = array_pop($_SESSION['REDO']);
     if($action == NULL)
     {
-      throw new Exception("Trying undo empty action");
+      throw new Exception("Trying redo empty action");
     }
 
-    array_push($_SESSION['UNDO'], $action);
-
-    $controller = current($action)->GetContra(key($action));
+    $controller = current($action)->Get(key($action));
     $controller->SetArray($arr);
+
+    array_push($_SESSION['UNDO'], $action);
     return $controller->Execute();
   }
 }

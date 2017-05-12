@@ -1,7 +1,6 @@
 <?php
 
 require_once "core/model.php";
-require_once "core/registry.php";
 require_once "inc/edit.php";
 
 class ModelGroup extends Model
@@ -73,11 +72,13 @@ class ModelGroup extends Model
     }
 
     $commands = new Registry();
-    $commands->Add('add', new CommandAdd($this->groupsArr, null, $data), new CommandDelete(null, null, array("DELETE" => key($data))));
-    $commands->Add('edit', new CommandEdit($this->groupsArr, null, $data), new CommandEdit(null, null, @array_flip((array)$data)));
-    $commands->Add('delete', new CommandDelete($this->groupsArr, null, $data), new CommandAdd(null, null, $this->GetGroups(array("group" => current($data)))));
+    $commands->Add('add', new CommandAdd(null, null, $data), new CommandDelete(null, null, array("DELETE" => key($data))));
+    $commands->Add('edit', new CommandEdit(null, null, $data), new CommandEdit(null, null, @array_flip((array)$data)));
+    $commands->Add('delete', new CommandDelete(null, null, $data), new CommandAdd(null, null, $this->GetGroups(array("group" => current($data)))));
 
+    $this->groupsArr = $commands->Get($args['action'])->SetArray($this->groupsArr);
     $this->groupsArr = $commands->Get($args['action'])->Execute();
+    $this->memory->NewAction($args['action'], $commands);
     $_SESSION['GROUPS_ARR'] = $this->groupsArr;
   }
 

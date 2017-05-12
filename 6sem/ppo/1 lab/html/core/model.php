@@ -1,15 +1,19 @@
 <?php
+require_once "registry.php";
+require_once "memory.php";
 
 class Model
 {
   protected $data;
   protected $groupsArr;
   private $registry;
+  protected $memory;
 
   protected $history;
 
   public function __construct()
   {
+    $this->memory = new Memory();
     $this->data = json_decode(file_get_contents(ROOT_DIR . '/groups.json'));
     $this->registry = new Registry();
     if(!isset($_SESSION['GROUPS_ARR']))

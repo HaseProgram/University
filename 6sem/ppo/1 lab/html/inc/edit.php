@@ -68,7 +68,7 @@ class CommandAdd implements CommandInterface
     {
       $copy = $this->arr;
     }
-
+    $this->arr = null;
     return $copy;
   }
 }
@@ -127,7 +127,7 @@ class CommandEdit implements CommandInterface
     {
       $copy = $this->arr;
     }
-
+    $this->arr = null;
     return $copy;
   }
 }
@@ -181,7 +181,7 @@ class CommandDelete implements CommandInterface
     {
       $copy = $this->arr;
     }
-
+    $this->arr = null;
     return $copy;
   }
 }

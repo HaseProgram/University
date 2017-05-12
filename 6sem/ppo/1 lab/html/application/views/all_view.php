@@ -1,4 +1,10 @@
   <h2>Списки групп</h2>
+  <center>
+  <?php
+  if(!empty($_SESSION['UNDO'])) echo '<a href="/memory/undo/"><span class="glyphicon glyphicon-step-backward"></span> Отменить</a>&nbsp;';
+  if(!empty($_SESSION['REDO'])) echo '<a href="/memory/redo/">Применить <span class="glyphicon glyphicon-step-forward"></span></a>&nbsp;';
+  ?>
+</center>
 <?php
   foreach ($data as $groupname => $group)
   {

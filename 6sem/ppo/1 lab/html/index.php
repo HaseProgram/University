@@ -1,5 +1,9 @@
 <?php
+  require_once "inc/edit.php";
+  require_once "core/registry.php";
   session_start();
+  //$_SESSION = [];
+  //var_dump($_SESSION); die();
   define("ROOT_DIR", __DIR__);
 
   require_once "request.php";
