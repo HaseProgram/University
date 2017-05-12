@@ -14,6 +14,10 @@ if(!$ajax)
   </head>
   <body>
     <div class="content">
+      <?php
+        if(!empty($_SESSION['UNDO'])) echo '<a href="/memory/undo/">Отменить</a>&nbsp;';
+        if(!empty($_SESSION['REDO'])) echo '<a href="/memory/redo/">Применить</a>&nbsp;';
+        ?>
       <?php include 'application/views/' . $content ?>
     </div>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>

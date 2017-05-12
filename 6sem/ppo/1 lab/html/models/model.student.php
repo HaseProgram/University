@@ -44,10 +44,10 @@ class ModelStudent extends Model
     $index = count($group) + 1;
 
     $commands = new Registry();
-    $commands->Add('add', new CommandAdd($group,array($index => current($data))), new CommandDelete($group, array("delete" => $index)));
-    $commands->Add('delete', new CommandDelete($group, $data));
+    $commands->Add('add', new CommandAdd($this->groupsArr, key($data), array($index => current($data)), true), new CommandDelete(null, key($data), array("delete" => $index)));
+    $commands->Add('delete', new CommandDelete($this->groupsArr, key($data), $data), new CommandAdd(null, key($data), array(current($data) => $this->GetStudent(key($data), current($data))), true));
 
-    $this->groupsArr[key($data)] = $commands->Get($args['action'])->Execute();
+    $this->groupsArr = $commands->Get($args['action'])->Execute();
 
     $_SESSION['GROUPS_ARR'] = $this->groupsArr;
   }

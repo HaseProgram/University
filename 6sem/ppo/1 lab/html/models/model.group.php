@@ -50,9 +50,9 @@ class ModelGroup extends Model
     $_SESSION['GROUPS_ARR'] = $this->groupsArr;
     if(is_array($args) && isset($args['group']))
     {
-      if(!array_key_exists($args['group'], $this->groupsArr))
+      if(!@array_key_exists($args['group'], $this->groupsArr))
       {
-        throw new Exception("Group not found!");
+        return array();
       }
       return array($args['group'] => $this->groupsArr[$args['group']]);
     }
@@ -73,9 +73,9 @@ class ModelGroup extends Model
     }
 
     $commands = new Registry();
-    $commands->Add('add', new CommandAdd($this->groupsArr, $data));
-    $commands->Add('edit', new CommandEdit($this->groupsArr, $data));
-    $commands->Add('delete', new CommandDelete($this->groupsArr, $data));
+    $commands->Add('add', new CommandAdd($this->groupsArr, null, $data), new CommandDelete(null, null, array("DELETE" => key($data))));
+    $commands->Add('edit', new CommandEdit($this->groupsArr, null, $data), new CommandEdit(null, null, @array_flip((array)$data)));
+    $commands->Add('delete', new CommandDelete($this->groupsArr, null, $data), new CommandAdd(null, null, $this->GetGroups(array("group" => current($data)))));
 
     $this->groupsArr = $commands->Get($args['action'])->Execute();
     $_SESSION['GROUPS_ARR'] = $this->groupsArr;
