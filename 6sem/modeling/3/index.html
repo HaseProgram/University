@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>3 lab</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/graph.css">
+		<script src="js/graph.js"></script>
+	</head>
+	<body>
+		<h3>Лабораторная работа #3</h3>
+		<div class="row">
+			<div class="col-md-8 col-lg-10">
+					<div class="ct-chart" id="chart1" style="height: 400px"></div>
+			</div>	
+			<div class="col-md-4 col-lg-2">
+				<form class="form-horizontal" id="dataform">		
+					<div class="form-group">
+						<label for="r" class="control-label col-sm-3">R:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="r" name="r" value="0.5">
+							<div class="input-group-addon">СМ</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="l" class="control-label col-sm-3">l:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="l" name="l" value="10">
+							<div class="input-group-addon">СМ</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="t" class="control-label col-sm-3">T окр. среды:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="t" name="t" value="300">
+							<div class="input-group-addon">К</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="f0" class="control-label col-sm-3">F0:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="f0" name="f0" value="100">
+							<div class="input-group-addon">ВТ/(СМ<sup>2</sup>*K)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="k0" class="control-label col-sm-3">K0:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="k0" name="k0" value="0.1">
+							<div class="input-group-addon">ВТ/(СМ*K)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="kn" class="control-label col-sm-3">KN:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="kn" name="kn" value="0.2">
+							<div class="input-group-addon">ВТ/(СМ*K)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="a0" class="control-label col-sm-3">α0:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="a0" name="a0" value="1e-2">
+							<div class="input-group-addon">ВТ/(СМ<sup>2</sup>*K)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="an" class="control-label col-sm-3">αN:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="an" name="an" value="0.9e-2">
+							<div class="input-group-addon">ВТ/(СМ<sup>2</sup>*K)</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="stepn" class="control-label col-sm-3">Step num:</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" class="form-control" id="stepn" name="stepn" value="100">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="content"></div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/solution.js"></script>
+	</body>
+</html>
