@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lab 2</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-2.3.3.css">
+		<script>
+			var N = 10;
+		</script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+  	<div id="qunit-fixture"></div>
+		<center><h3>
+			<div id="output"></div>
+			<div id="minmax"></div>
+		</h3></center>
+
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+		<script src="http://code.jquery.com/qunit/qunit-2.3.3.js" type="text/javascript"></script>
+		<script src="queue.js"></script>
+		<script src="tests.js"></script>
+		<script>
+		function addNew(queue,elem) {
+			queue.remove();
+			queue.add(Math.round(elem));
+		}
+
+		$( document ).ready(function() {
+			let queue = new Q();
+			for(var i = 0; i < N; i++) {
+				queue.add(i);
+			}
+
+			var delay = 1000;
+			var timerAddFunction = function() {
+				addNew(queue, Math.random() * (100));
+		    clearInterval(timerAdd);
+		    delay = Math.round(Math.random() * (3000));
+		    timerAdd = setInterval(timerAddFunction, delay);
+			}
+			var timerAdd = setInterval(timerAddFunction, delay);
+
+			var timerUpdate = setInterval(function() {
+				queue.print();
+				document.getElementById('minmax').innerHTML = 'Min: ' + queue.minimum() + '; Max: ' + queue.maximum();
+			}, 3000);
+		});
+		</script>
+	</body>
+<html>
