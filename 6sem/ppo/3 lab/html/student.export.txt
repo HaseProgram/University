@@ -1,0 +1,6 @@
+ID:0
+Group: ГР1
+Name: Игорь
+Surname: Аверьянов
+Rating: 100
+Role: student
