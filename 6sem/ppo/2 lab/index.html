@@ -23,6 +23,7 @@
 		function addNew(queue,elem) {
 			queue.remove();
 			queue.add(Math.round(elem));
+			console.log(queue.print(false));
 		}
 
 		$( document ).ready(function() {
@@ -41,7 +42,7 @@
 			var timerAdd = setInterval(timerAddFunction, delay);
 
 			var timerUpdate = setInterval(function() {
-				queue.print();
+				queue.print(true);
 				document.getElementById('minmax').innerHTML = 'Min: ' + queue.minimum() + '; Max: ' + queue.maximum();
 			}, 3000);
 		});

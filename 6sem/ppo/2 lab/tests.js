@@ -49,5 +49,5 @@ QUnit.test("Print.", function( assert ) {
   Queue.add(300);
   Queue.add(-100);
   Queue.add(0);
-  assert.ok(Queue.print() == "100<br>200<br>300<br>-100<br>0<br>", "Queue is: 100, 200, 300, -100, 0; print is 100<br>200<br>300<br>-100<br>0<br>, Passed!" );
+  assert.ok(Queue.print(true) == "100<br>200<br>300<br>-100<br>0<br>", "Queue is: 100, 200, 300, -100, 0; print is 100<br>200<br>300<br>-100<br>0<br>, Passed!" );
 });
